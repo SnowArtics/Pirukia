@@ -9,13 +9,18 @@ public class UIEventManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject mainUI, buildUI, statUI, registerUI;
+    private Button button;
 
     private GameObject clickObject;
-    private BuildUIEventManager buildUIEvent = new BuildUIEventManager();
-    private StatUIEventManager statUIEvent = new StatUIEventManager();
-    private RegisterUIEventManager registerUIEvent = new RegisterUIEventManager();
+    private BuildUIEventManager buildUIEvent;
+    private StatUIEventManager statUIEvent;
+    private RegisterUIEventManager registerUIEvent;
 
     public void Start() {
+        buildUIEvent = buildUI.GetComponent<BuildUIEventManager>();
+        statUIEvent = statUI.GetComponent<StatUIEventManager>();
+        registerUIEvent = registerUI.GetComponent<RegisterUIEventManager>();
+
         buildUI.SetActive(false);
         statUI.SetActive(false);
         registerUI.SetActive(false);
@@ -23,33 +28,41 @@ public class UIEventManager : MonoBehaviour
     }
 
     public void Update() {
-
+        if(!buildUI.activeSelf) {
+            buildUIEvent.Set(false);
+//            buildUIEvent.OnPressButton(button);
+        }
     }
 
     // 버튼 클릭 이벤트에 대한 함수
-    public void ButtonClick() {
+    public void ButtonClick() {      
         // 현재 클릭한 게임 오브젝트(버튼)를 저장
         clickObject = EventSystem.current.currentSelectedGameObject;
         string buttonName = "";
 
-        // 버튼을 누르지 않으면 발생하는 null 값 무시
         try {
-            buttonName = clickObject.name;              // 클릭한 버튼의 이름을 buttonName에 저장
+            // 클릭한 버튼의 이름을 buttonName에 저장
+            buttonName = clickObject.name;
+            button = clickObject.GetComponent<Button>();
             Debug.Log(buttonName);
         }
+        // 버튼을 누르지 않으면 발생하는 null 값 무시
         catch (NullReferenceException) { }
 
+        // 각 클릭한 버튼에 따른 UI 표출
         switch (buttonName) {
-            case "BuildButton":
+            case "BuildButton":         // 건설 버튼 클릭
                 ClickedBuild();
+                buildUIEvent.Set(true);
+                buildUIEvent.OnPressButton(button);
                 break;
-            case "StatButton":
+            case "StatButton":          // 통계 버튼 클릭
                 ClickedStat();
                 break;
-            case "RegisterButton":
+            case "RegisterButton":      // 신도 등록 버튼 클릭
                 ClickedRegister();
                 break;
-            case "ExitButton":
+            case "ExitButton":          // 나가기 버튼(X) 클릭
                 CloseUI();
                 break;
         }
@@ -60,23 +73,20 @@ public class UIEventManager : MonoBehaviour
         statUI.SetActive(false);
         registerUI.SetActive(false);
 
-        buildUIEvent.Test();
+        // 기본적으로 마을 건물 UI만 나타나도록 설정
+        buildUIEvent.BuildVillage();
     }
 
     public void ClickedStat() {
         buildUI.SetActive(false);
         statUI.SetActive(true);
         registerUI.SetActive(false);
-
-        statUIEvent.Test();
     }
 
     public void ClickedRegister() {
         buildUI.SetActive(false);
         statUI.SetActive(false);
         registerUI.SetActive(true);
-
-        registerUIEvent.Test();
     }
 
     public void CloseUI() {

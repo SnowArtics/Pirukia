@@ -6,14 +6,14 @@ using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
 
-public class BuildStructure : MonoBehaviour
+public class DatabaseManage : MonoBehaviour
 {
 
     void Start()
     {
         DBCreate();
         DBConnectionCheck();
-        DatabaseRead("SELECT * from build");
+        DatabaseAllRead("SELECT * from build");
     }
 
     void Awake() {
@@ -57,7 +57,11 @@ public class BuildStructure : MonoBehaviour
         }
     }
 
-    public void DatabaseRead(string query) {        // 인자로 쿼리문을 받는다.
+    public void DatabaseRead(string query) {
+
+    }
+
+    public void DatabaseAllRead(string query) {        // 인자로 쿼리문을 받는다.
         // DB 열기
         IDbConnection dbConn = new SqliteConnection(GetDBFilePath());
         dbConn.Open();
