@@ -30,7 +30,15 @@ public class UIEventManager : MonoBehaviour
     public void Update() {
         if(!buildUI.activeSelf) {
             buildUIEvent.Set(false);
-//            buildUIEvent.OnPressButton(button);
+            buildUIEvent.OnPressButton();
+        }
+        if(!statUI.activeSelf) {
+            statUIEvent.Set(false);
+            statUIEvent.OnPressButton();
+        }
+        if(!registerUI.activeSelf) {
+            registerUIEvent.Set(false);
+            registerUIEvent.OnPressButton();
         }
     }
 
@@ -43,8 +51,10 @@ public class UIEventManager : MonoBehaviour
         try {
             // 클릭한 버튼의 이름을 buttonName에 저장
             buttonName = clickObject.name;
-            button = clickObject.GetComponent<Button>();
-            Debug.Log(buttonName);
+            if (buttonName != "ExitButton") {
+                button = clickObject.GetComponent<Button>();
+                Debug.Log(button.name);
+            }
         }
         // 버튼을 누르지 않으면 발생하는 null 값 무시
         catch (NullReferenceException) { }
@@ -54,13 +64,17 @@ public class UIEventManager : MonoBehaviour
             case "BuildButton":         // 건설 버튼 클릭
                 ClickedBuild();
                 buildUIEvent.Set(true);
-                buildUIEvent.OnPressButton(button);
+                buildUIEvent.OnPressButton();
                 break;
             case "StatButton":          // 통계 버튼 클릭
                 ClickedStat();
+                statUIEvent.Set(true);
+                statUIEvent.OnPressButton();
                 break;
             case "RegisterButton":      // 신도 등록 버튼 클릭
                 ClickedRegister();
+                registerUIEvent.Set(true);
+                registerUIEvent.OnPressButton();
                 break;
             case "ExitButton":          // 나가기 버튼(X) 클릭
                 CloseUI();

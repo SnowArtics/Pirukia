@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class StatUIEventManager : MonoBehaviour
 {
+    [SerializeField]
+    private Button statButton;
+
     private bool isPressed;
     public bool Get() { return isPressed; }
     public void Set(bool isPressed) { this.isPressed = isPressed; }
@@ -14,5 +17,15 @@ public class StatUIEventManager : MonoBehaviour
 
     }
 
-
+    public void OnPressButton() {
+        ColorBlock cb = statButton.colors;
+        if (isPressed) {
+            cb.normalColor = Color.gray;
+            statButton.colors = cb;
+        }
+        else {
+            cb.normalColor = Color.white;
+            statButton.colors = cb;
+        }
+    }
 }

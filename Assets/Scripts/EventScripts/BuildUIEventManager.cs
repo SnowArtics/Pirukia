@@ -7,13 +7,9 @@ using UnityEngine.UI;
 public class BuildUIEventManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject buildUI;
+    private GameObject buildUI, villageStructure, religionStructure, otherStructure;
     [SerializeField]
-    private GameObject villageStructure;
-    [SerializeField]
-    private GameObject religionStructure;
-    [SerializeField]
-    private GameObject otherStructure;
+    private Button buildButton;
 
     private bool isPressed;
     public bool Get() { return isPressed; }
@@ -25,7 +21,7 @@ public class BuildUIEventManager : MonoBehaviour
     }
 
     public void Update() {
-        
+        Debug.Log(isPressed);
     }
 
     public void Test() {
@@ -50,15 +46,15 @@ public class BuildUIEventManager : MonoBehaviour
         otherStructure.SetActive(true);
     }
 
-    public void OnPressButton(Button button) {
-        ColorBlock cb = button.colors;
+    public void OnPressButton() {
+        ColorBlock cb = buildButton.colors;
         if(isPressed) {
             cb.normalColor = Color.gray;
-            button.colors = cb;
+            buildButton.colors = cb;
         }
         else {
             cb.normalColor = Color.white;
-            button.colors = cb;
+            buildButton.colors = cb;
         }
     }
 }
