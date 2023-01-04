@@ -12,11 +12,6 @@ public class StatUIEventManager : MonoBehaviour
     public bool Get() { return isPressed; }
     public void Set(bool isPressed) { this.isPressed = isPressed; }
 
-    public void Test() {
-        Debug.Log("통계 UI 접근 테스트 =)");
-
-    }
-
     public void OnPressButton() {
         ColorBlock cb = statButton.colors;
         if (isPressed) {

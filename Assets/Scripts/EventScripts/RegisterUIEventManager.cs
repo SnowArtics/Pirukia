@@ -12,11 +12,6 @@ public class RegisterUIEventManager : MonoBehaviour
     public bool Get() { return isPressed; }
     public void Set(bool isPressed) { this.isPressed = isPressed; }
 
-    public void Test() {
-        Debug.Log("신도 등록 UI 접근 테스트 =)");
-
-    }
-
     public void OnPressButton() {
         ColorBlock cb = registerButton.colors;
         if (isPressed) {
