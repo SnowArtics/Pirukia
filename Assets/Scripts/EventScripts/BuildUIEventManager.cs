@@ -10,12 +10,14 @@ public class BuildUIEventManager : MonoBehaviour
     private GameObject buildUI, villageStructure, religionStructure, otherStructure;
     [SerializeField]
     private Button buildButton;
-
     
     private bool isPressed;                 // 버튼이 눌러진 상태인지 저장
     public bool Get() { return isPressed; }
     public void Set(bool isPressed) { this.isPressed = isPressed; }
 
+    public void Awake() {
+        
+    }
 
     public void Start() {
         isPressed = false;

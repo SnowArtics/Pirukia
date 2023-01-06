@@ -13,26 +13,9 @@ public class DatabaseManage : MonoBehaviour
     private IDbCommand DBCommand;
     private IDataReader dataReader;
 
-    void Start()
-    {
-        DBCreate();
-        DatabaseAllRead("SELECT * from build");
-        CloseDatabase();
-    }
-
-    void Awake() {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DBCreate() {
         filepath = string.Empty;
-        DBConnection = new SqliteConnection(GetDBFilePath());                 // DB파일을 연결하는 변수
+        DBConnection = new SqliteConnection(GetDBFilePath());                               // DB파일을 연결하는 변수
 
         filepath = Application.dataPath + "/StreamingAssets/Building_Database.db";          // DB파일 경로 설정
 
@@ -55,28 +38,35 @@ public class DatabaseManage : MonoBehaviour
         return str;
     }
 
-    public void DatabaseRead(string query) {
+    // SQL 쿼리를 받아와 DB 내의 데이터를 찾아내 반환하는 함수
+    public string DBRead(string query) {
+        string result;
 
+        DBCommand = DBConnection.CreateCommand();           // SQL 명령어 리스트를 불러옴
+        DBCommand.CommandText = query;                      // 입력받은 쿼리를 입력
+        dataReader = DBCommand.ExecuteReader();             // SQL 쿼리를 실행
+
+        result = dataReader.GetValue(0).ToString();         // 찾아낸 DB의 첫번째 열 반환
+
+        return result;
     }
 
     // DB를 전부 읽어들이는 함수
-    public void DatabaseAllRead(string query) {        // 인자로 쿼리문을 받는다.        
-        // 쿼리 입력
+    public void DBAllRead(string query) {        // 인자로 쿼리문을 받는다.        
+        // 쿼리 입력 및 실행
         DBCommand = DBConnection.CreateCommand();
         DBCommand.CommandText = query;
 
-        // 쿼리 실행
         dataReader = DBCommand.ExecuteReader();
 
         while (dataReader.Read()) {
-            // 0번, 1번, 5번 필드 읽기
-            Debug.Log(dataReader.GetInt32(0) + ", " + dataReader.GetString(1) + ", " + dataReader.GetInt32(5));
+            // 실행 영역
         }
     }
 
     // 열린 DB를 닫는 함수
+    // DB를 열 때 실행한 순서의 반대로 닫아준다.
     public void CloseDatabase() {
-        // 생성 순서와 반대로 닫아준다.
         dataReader.Dispose();
         dataReader = null;
         DBCommand.Dispose();
