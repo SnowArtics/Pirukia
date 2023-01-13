@@ -38,17 +38,23 @@ public class DatabaseManage : MonoBehaviour
         return str;
     }
 
-    // SQL 쿼리를 받아와 DB 내의 데이터를 찾아내 반환하는 함수
-    public string DBRead(string query) {
+    // SQL 쿼리를 받아와 DB 내의 데이터를 한 가지만 반환하는 함수
+    public string DBReadOne(string item, int index) {
         string result;
+        string query = "SELECT " + item + " from build where BUILDING_CODE=" + index.ToString();
 
-        DBCommand = DBConnection.CreateCommand();           // SQL 명령어 리스트를 불러옴
-        DBCommand.CommandText = query;                      // 입력받은 쿼리를 입력
-        dataReader = DBCommand.ExecuteReader();             // SQL 쿼리를 실행
-
+        dataReader = ExecuteDB(query);                      // 명령문을 실행
         result = dataReader.GetValue(0).ToString();         // 찾아낸 DB의 첫번째 열 반환
 
         return result;
+    }
+
+    public IDataReader DBReadLine(int index) {
+        string query = "SELECT * from build where BUILDING_CODE=" + index.ToString();
+
+        dataReader = ExecuteDB(query);                      // 명령문을 실행
+
+        return dataReader;
     }
 
     // DB를 전부 읽어들이는 함수
@@ -73,5 +79,15 @@ public class DatabaseManage : MonoBehaviour
         DBCommand = null;
         DBConnection.Close();
         DBConnection = null;
+    }
+
+    public IDataReader ExecuteDB(string query) {
+        IDataReader result;
+
+        DBCommand = DBConnection.CreateCommand();           // SQL 명령어 리스트를 불러옴
+        DBCommand.CommandText = query;                      // 입력받은 쿼리를 입력
+        result = DBCommand.ExecuteReader();             // SQL 쿼리를 실행
+
+        return result;
     }
 }
