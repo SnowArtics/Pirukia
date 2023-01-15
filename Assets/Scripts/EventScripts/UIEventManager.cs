@@ -8,23 +8,23 @@ using System;
 public class UIEventManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject mainUI, buildUI, statUI, registerUI;
+    private GameObject mainUI, buildUI, statUI, memberUI;
     private Button button;
 
     private GameObject clickObject;
     private BuildUIEventManager buildUIEvent;
     private StatUIEventManager statUIEvent;
-    private RegisterUIEventManager registerUIEvent;
+    private MemberUIEventManager memberUIEvent;
 
     public void Start() {
         buildUIEvent = buildUI.GetComponent<BuildUIEventManager>();
         statUIEvent = statUI.GetComponent<StatUIEventManager>();
-        registerUIEvent = registerUI.GetComponent<RegisterUIEventManager>();
+        memberUIEvent = memberUI.GetComponent<MemberUIEventManager>();
 
         // 각 UI 창을 닫은 채로 씬을 시작한다.
         buildUI.SetActive(false);
         statUI.SetActive(false);
-        registerUI.SetActive(false);
+        memberUI.SetActive(false);
 
     }
 
@@ -38,9 +38,9 @@ public class UIEventManager : MonoBehaviour
             statUIEvent.Set(false);
             statUIEvent.OnPressButton();
         }
-        if(!registerUI.activeSelf) {
-            registerUIEvent.Set(false);
-            registerUIEvent.OnPressButton();
+        if(!memberUI.activeSelf) {
+            memberUIEvent.Set(false);
+            memberUIEvent.OnPressButton();
         }
     }
 
@@ -72,10 +72,10 @@ public class UIEventManager : MonoBehaviour
                 statUIEvent.Set(true);
                 statUIEvent.OnPressButton();
                 break;
-            case "RegisterButton":      // 신도 등록 버튼 클릭
+            case "MemberButton":      // 신도 등록 버튼 클릭
                 ClickedRegister();
-                registerUIEvent.Set(true);
-                registerUIEvent.OnPressButton();
+                memberUIEvent.Set(true);
+                memberUIEvent.OnPressButton();
                 break;
             case "ExitButton":          // 나가기 버튼(X) 클릭
                 CloseUI();
@@ -87,7 +87,7 @@ public class UIEventManager : MonoBehaviour
     public void ClickedBuild() {
         buildUI.SetActive(true);
         statUI.SetActive(false);
-        registerUI.SetActive(false);
+        memberUI.SetActive(false);
 
         // 기본적으로 마을 건물 UI만 나타나도록 설정
         buildUIEvent.BuildVillage();
@@ -97,20 +97,20 @@ public class UIEventManager : MonoBehaviour
     public void ClickedStat() {
         buildUI.SetActive(false);
         statUI.SetActive(true);
-        registerUI.SetActive(false);
+        memberUI.SetActive(false);
     }
 
     // 신도 등록 버튼을 눌렀을 때 실행
     public void ClickedRegister() {
         buildUI.SetActive(false);
         statUI.SetActive(false);
-        registerUI.SetActive(true);
+        memberUI.SetActive(true);
     }
 
     // 닫기 버튼을 눌렀을 때 실행
     public void CloseUI() {
         buildUI.SetActive(false);
         statUI.SetActive(false);
-        registerUI.SetActive(false);
+        memberUI.SetActive(false);
     }
 }

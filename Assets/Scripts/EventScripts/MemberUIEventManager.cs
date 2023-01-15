@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RegisterUIEventManager : MonoBehaviour
+public class MemberUIEventManager : MonoBehaviour
 {
     [SerializeField]
-    private Button registerButton;
+    private Button memberButton;
 
     private bool isPressed;
     public bool Get() { return isPressed; }
     public void Set(bool isPressed) { this.isPressed = isPressed; }
 
     public void OnPressButton() {
-        ColorBlock cb = registerButton.colors;
+        ColorBlock cb = memberButton.colors;
         if (isPressed) {
             cb.normalColor = Color.gray;
-            registerButton.colors = cb;
+            memberButton.colors = cb;
         }
         else {
             cb.normalColor = Color.white;
-            registerButton.colors = cb;
+            memberButton.colors = cb;
         }
     }
 }
