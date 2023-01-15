@@ -64,9 +64,15 @@ public class BuildUIPreset : MonoBehaviour
     public void StructureCount(int index) {
         string countText = string.Empty;
         int count = buildingState.get(index);
-        int total = int.Parse(database.DBSelectOne("PRODUCTION_OUTPUT", index + 1));
+        int total = int.Parse(database.DBSelectOne("LIMIT_BUILDING", index + 1));
 
-        countText = count.ToString() + "/" + total.ToString();
+        if (total < 0) {
+            countText = count.ToString() + "/¡Ä";
+        }
+        else {
+            countText = count.ToString() + "/" + total.ToString();
+        }
+
         villageCountLists[index].text = countText;
     }
 }
