@@ -39,7 +39,7 @@ public class DatabaseManage : MonoBehaviour
     }
 
     // SQL 쿼리를 받아와 DB 내의 데이터를 한 가지만 반환하는 함수
-    public string DBReadOne(string item, int index) {
+    public string DBSelectOne(string item, int index) {
         string result;
         string query = "SELECT " + item + " from build where BUILDING_CODE=" + index.ToString();
 
@@ -49,7 +49,8 @@ public class DatabaseManage : MonoBehaviour
         return result;
     }
 
-    public IDataReader DBReadLine(int index) {
+    // 해당 BUILDING_CODE에 해당하는 열 전체를 받아오는 함수
+    public IDataReader DBSelectLine(int index) {
         string query = "SELECT * from build where BUILDING_CODE=" + index.ToString();
 
         dataReader = ExecuteDB(query);                      // 명령문을 실행
@@ -58,7 +59,7 @@ public class DatabaseManage : MonoBehaviour
     }
 
     // DB를 전부 읽어들이는 함수
-    public void DBAllRead(string query) {        // 인자로 쿼리문을 받는다.        
+    public void DBSelectAll(string query) {        // 인자로 쿼리문을 받는다.        
         // 쿼리 입력 및 실행
         DBCommand = DBConnection.CreateCommand();
         DBCommand.CommandText = query;
@@ -72,7 +73,7 @@ public class DatabaseManage : MonoBehaviour
 
     // 열린 DB를 닫는 함수
     // DB를 열 때 실행한 순서의 반대로 닫아준다.
-    public void CloseDatabase() {
+    public void CloseDB() {
         dataReader.Dispose();
         dataReader = null;
         DBCommand.Dispose();
