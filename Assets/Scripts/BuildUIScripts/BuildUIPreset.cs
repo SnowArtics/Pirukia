@@ -14,13 +14,13 @@ public class BuildUIPreset : MonoBehaviour
     private List<TextMeshProUGUI> villageNameLists = new List<TextMeshProUGUI>();
     [SerializeField]
     private List<TextMeshProUGUI> villageInfoLists = new List<TextMeshProUGUI>();
-    [SerializeField]
-    private List<TextMeshProUGUI> villageCountLists = new List<TextMeshProUGUI>();
 
     private DatabaseManage database;
     private BuildingState buildingState;
+    private string strRequire;
 
     public void Awake() {
+        strRequire = string.Empty;
         buildingState = this.GetComponent<BuildingState>();
         database = dbManageSystem.GetComponent<DatabaseManage>();
         database.DBCreate();        // DB를 연다.
@@ -29,20 +29,18 @@ public class BuildUIPreset : MonoBehaviour
         for (int i = 0; i < villageNameLists.Count; i++) {
             string name = database.DBSelectOne("BUILDING_NAME", i+1);               // DB에서 건물 이름을 받아온다.
             villageNameLists[i].text = name;                                        // 받아온 이름들을 실제 버튼의 text로 변경
-
-            IDataReader content = database.DBSelectLine(i+1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
-            StructureInfo(content, i);                                              // 건물의 정보를 DB 값으로 변경
-            
         }
     }
 
     public void Update() {
-        for(int i = 0; i < villageCountLists.Count; i++) {
-            StructureCount(i);
+        for(int i = 0; i < villageNameLists.Count; i++) {
+            IDataReader content = database.DBSelectLine(i + 1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
+            strRequire = StructureInfo(content, i) + "\n" + StructureCount(i);
+            villageInfoLists[i].text = strRequire;
         }
     }
 
-    public void StructureInfo(IDataReader data, int index) {
+    public string StructureInfo(IDataReader data, int index) {
         string info = string.Empty;
         int countWood = 0;
         int countMetal = 0;
@@ -57,22 +55,22 @@ public class BuildUIPreset : MonoBehaviour
             countTime = data.GetInt32(6);
         }
 
-        info = countWood.ToString() + "/" + countMetal.ToString() + "/" + countMoney.ToString() + "/" + countTime.ToString();
-        villageInfoLists[index].text = info;
+        info = "목재\t: " + countWood.ToString() + "\n석재\t: " + countMetal.ToString() + "\n돈\t: " + countMoney.ToString() + "\n시간\t: " + countTime.ToString();
+        return info;
     }
 
-    public void StructureCount(int index) {
+    public string StructureCount(int index) {
         string countText = string.Empty;
         int count = buildingState.get(index);
         int total = int.Parse(database.DBSelectOne("LIMIT_BUILDING", index + 1));
 
         if (total < 0) {
-            countText = count.ToString() + "/∞";
+            countText = "건축물\t: " + count.ToString() + "/∞";
         }
         else {
-            countText = count.ToString() + "/" + total.ToString();
+            countText = "건축물\t: " + count.ToString() + "/" + total.ToString();
         }
 
-        villageCountLists[index].text = countText;
+        return countText;
     }
 }
