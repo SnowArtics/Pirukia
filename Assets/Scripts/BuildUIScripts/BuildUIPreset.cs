@@ -33,13 +33,14 @@ public class BuildUIPreset : MonoBehaviour
     }
 
     public void Update() {
-        for(int i = 0; i < villageNameLists.Count; i++) {
+        for(int i = 0; i < 10; i++) {
             IDataReader content = database.DBSelectLine(i + 1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
-            strRequire = StructureInfo(content, i) + "\n" + StructureCount(i);
-            villageInfoLists[i].text = strRequire;
+            strRequire = StructureInfo(content, i) + "\n" + StructureCount(i);          // 건설에 필요한 자원과 현재 개수를 string형으로 저장한다.
+            villageInfoLists[i].text = strRequire;                                      // 각 리스트에 해당 문자열을 저장한다.
         }
     }
 
+    // 건설에 필요한 자원을 DB에서 받아오는 함수
     public string StructureInfo(IDataReader data, int index) {
         string info = string.Empty;
         int countWood = 0;
@@ -55,15 +56,32 @@ public class BuildUIPreset : MonoBehaviour
             countTime = data.GetInt32(6);
         }
 
-        info = "목재\t: " + countWood.ToString() + "\n석재\t: " + countMetal.ToString() + "\n돈\t: " + countMoney.ToString() + "\n시간\t: " + countTime.ToString();
-        return info;
+        // 버튼이 남으면 DB값이 아니라 빈칸임을 출력한다.
+        if (villageNameLists[index].text == "-") {
+            return "빈칸입니다.";
+        }
+        else {
+            info = "목재\t: " + countWood.ToString() + "\n석재\t: " + countMetal.ToString() + "\n돈\t: " + countMoney.ToString() + "\n시간\t: " + countTime.ToString();
+            return info;
+        }
     }
 
+    // 건물의 현재 개수와 총 가능 개수를 출력하는 함수
     public string StructureCount(int index) {
         string countText = string.Empty;
-        int count = buildingState.get(index);
-        int total = int.Parse(database.DBSelectOne("LIMIT_BUILDING", index + 1));
+        string totalText = database.DBSelectOne("LIMIT_BUILDING", index + 1);       // build 테이블에서 총 건설 가능 수를 받아온다.
+        int count = buildingState.get(index);                                       // 현재 건설되어 있는 건축물의 수를 받아온다.
+        int total;
 
+        // 버튼이 남으면 DB값이 아니라 공백을 출력한다.
+        if (totalText == "-") {
+            return countText;
+        }
+        else {
+            total = int.Parse(totalText);           // 위에서 받아온 총 건설 가능 개수를 int형으로 변환한다.
+        }
+
+        // DB에서 건설 가능 개수 -1은 무한대 건설 가능이므로, 무한대 기호로 출력한다.
         if (total < 0) {
             countText = "건축물\t: " + count.ToString() + "/∞";
         }

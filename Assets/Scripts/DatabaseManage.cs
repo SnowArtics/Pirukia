@@ -5,6 +5,7 @@ using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
 using System.Data.Common;
+using System.Linq.Expressions;
 
 public class DatabaseManage : MonoBehaviour
 {
@@ -43,9 +44,12 @@ public class DatabaseManage : MonoBehaviour
         string result;
         string query = "SELECT " + item + " from build where BUILDING_CODE=" + index.ToString();
 
-        dataReader = ExecuteDB(query);                      // 명령문을 실행
-        result = dataReader.GetValue(0).ToString();         // 찾아낸 DB의 첫번째 열 반환
 
+        dataReader = ExecuteDB(query);                      // 명령문을 실행
+        result = dataReader.GetValue(0).ToString();         // 찾아낸 데이터를 string으로 형 변환
+
+        // DB 내에 존재하지 않는 경우(result가 빈칸인 경우)에는 DB 값이 아닌 -로 반환한다.
+        if (result == "") { return "-"; }
         return result;
     }
 
