@@ -1,26 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BuildUITooltip : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject tooltipUI;
-    [SerializeField]
-    private TextMeshProUGUI infoBuild;
-
-    public void ShowTooltip(string info) {
-        tooltipUI.SetActive(true);
-        infoBuild.text = info;
-
-        for(; ; ) {
-
-        }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
-    public void HideTooltip(string info) {
-        tooltipUI.SetActive(false);
+    public void OnMouseOver() {
+        Debug.Log("Tooltip!!!!!!");
     }
 }
