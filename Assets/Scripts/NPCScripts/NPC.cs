@@ -6,7 +6,7 @@ public class NPC : MonoBehaviour
 {
     // npc의 고유한 이름
     [SerializeField]
-    private string name;
+    private string npcName;
 
     // npc의 이동속도
     [SerializeField]
