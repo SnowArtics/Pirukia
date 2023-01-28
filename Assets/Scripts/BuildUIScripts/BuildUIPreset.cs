@@ -56,7 +56,7 @@ public class BuildUIPreset : MonoBehaviour
             countTime = data.GetInt32(6);
         }
 
-        // 버튼이 남으면 DB값이 아니라 빈칸임을 출력한다.
+        // 버튼이 남으면 DB값이 아니라 빈칸임을 출력한다.(임시)
         if (villageNameLists[index].text == "-") {
             return "빈칸입니다.";
         }
