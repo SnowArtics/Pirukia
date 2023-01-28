@@ -28,6 +28,7 @@ public class PanelContentBuilder : MonoBehaviour
 
     // 표시할 데이터 저장 배열
     private int numData;
+    [SerializeField]
     private float [] statusData;
 
     [SerializeField]
@@ -103,5 +104,10 @@ public class PanelContentBuilder : MonoBehaviour
         string si = siPrefix(num);
 
         return String.Format("{0}{1}\n", si, currentUnit);
+    }
+
+    private void Update()
+    {
+        refreshValue();
     }
 }
