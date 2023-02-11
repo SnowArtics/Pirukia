@@ -9,7 +9,7 @@ namespace TMPro.Examples
     {
 
         public int SpawnType = 0;
-        public int NumberOfNPC = 12;
+        public int NumberOfBeliver = 12;
 
         public Font TheFont;
 
@@ -23,13 +23,13 @@ namespace TMPro.Examples
         void Start()
         {
 
-            for (int i = 0; i < NumberOfNPC; i++)
+            for (int i = 0; i < NumberOfBeliver; i++)
             {
                 if (SpawnType == 0)
                 {
                     // TextMesh Pro Implementation     
                     //go.transform.localScale = new Vector3(2, 2, 2);
-                    GameObject go = new GameObject(); //"NPC " + i);
+                    GameObject go = new GameObject(); //"Beliver " + i);
                     go.transform.position = new Vector3(Random.Range(-95f, 95f), 0.5f, Random.Range(-95f, 95f));
 
                     //go.transform.position = new Vector3(0, 1.01f, 0);
@@ -54,7 +54,7 @@ namespace TMPro.Examples
                 else
                 {
                     // TextMesh Implementation
-                    GameObject go = new GameObject(); //"NPC " + i);
+                    GameObject go = new GameObject(); //"Beliver " + i);
                     go.transform.position = new Vector3(Random.Range(-95f, 95f), 0.5f, Random.Range(-95f, 95f));
 
                     //go.transform.position = new Vector3(0, 1.01f, 0);

@@ -9,7 +9,7 @@ namespace TMPro.Examples
     {
 
         public int SpawnType = 0;
-        public int NumberOfNPC = 12;
+        public int NumberOfBeliver = 12;
 
         public bool IsTextObjectScaleStatic;
         private TextMeshProFloatingText floatingText_Script;
@@ -18,7 +18,7 @@ namespace TMPro.Examples
         void Start()
         {
 
-            for (int i = 0; i < NumberOfNPC; i++)
+            for (int i = 0; i < NumberOfBeliver; i++)
             {
 
 
