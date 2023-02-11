@@ -5,6 +5,7 @@ using System.Data;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildUIPreset : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class BuildUIPreset : MonoBehaviour
     [SerializeField]
     private List<TextMeshProUGUI> villageNameLists = new List<TextMeshProUGUI>();
     [SerializeField]
-    private List<TextMeshProUGUI> villageInfoLists = new List<TextMeshProUGUI>();
+    private List<GameObject> villageButtonLists = new List<GameObject>();
 
     private DatabaseManage database;
     private BuildingState buildingState;
@@ -21,7 +22,7 @@ public class BuildUIPreset : MonoBehaviour
 
     public void Awake() {
         strRequire = string.Empty;
-        buildingState = this.GetComponent<BuildingState>();
+        buildingState = GetComponent<BuildingState>();
         database = dbManageSystem.GetComponent<DatabaseManage>();
         database.DBCreate();        // DB를 연다.
 
@@ -29,6 +30,8 @@ public class BuildUIPreset : MonoBehaviour
         for (int i = 0; i < villageNameLists.Count; i++) {
             string name = database.DBSelectOne("BUILDING_NAME", i+1);               // DB에서 건물 이름을 받아온다.
             villageNameLists[i].text = name;                                        // 받아온 이름들을 실제 버튼의 text로 변경
+            villageButtonLists[i].name = name;                                      // 버튼의 이름을 실제 건물 명으로 변경
+            
         }
     }
 
@@ -36,7 +39,7 @@ public class BuildUIPreset : MonoBehaviour
         for(int i = 0; i < 10; i++) {
             IDataReader content = database.DBSelectLine(i + 1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
             strRequire = StructureInfo(content, i) + "\n" + StructureCount(i);          // 건설에 필요한 자원과 현재 개수를 string형으로 저장한다.
-            villageInfoLists[i].text = strRequire;                                      // 각 리스트에 해당 문자열을 저장한다.
+//            villageButtonLists[i].text = strRequire;                                      // 각 리스트에 해당 문자열을 저장한다.
         }
     }
 
@@ -58,7 +61,7 @@ public class BuildUIPreset : MonoBehaviour
 
         // 버튼이 남으면 DB값이 아니라 빈칸임을 출력한다.
         if (villageNameLists[index].text == "-") {
-            return "빈칸입니다.";
+            return "N/A";
         }
         else {
             info = "목재\t: " + countWood.ToString() + "\n석재\t: " + countMetal.ToString() + "\n돈\t: " + countMoney.ToString() + "\n시간\t: " + countTime.ToString();
