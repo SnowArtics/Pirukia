@@ -18,10 +18,12 @@ public class BuildUIPreset : MonoBehaviour
 
     private DatabaseManage database;
     private BuildingState buildingState;
-    private string strRequire;
+    private List<string> specBuild = new List<string>();
+
+    public string Get(int index) { return specBuild[index]; }
+    public void Set(string str) { specBuild.Add(str); }
 
     public void Awake() {
-        strRequire = string.Empty;
         buildingState = GetComponent<BuildingState>();
         database = dbManageSystem.GetComponent<DatabaseManage>();
         database.DBCreate();        // DB를 연다.
@@ -38,8 +40,7 @@ public class BuildUIPreset : MonoBehaviour
     public void Update() {
         for(int i = 0; i < 10; i++) {
             IDataReader content = database.DBSelectLine(i + 1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
-            strRequire = StructureInfo(content, i) + "\n" + StructureCount(i);          // 건설에 필요한 자원과 현재 개수를 string형으로 저장한다.
-//            villageButtonLists[i].text = strRequire;                                      // 각 리스트에 해당 문자열을 저장한다.
+            Set(StructureInfo(content, i) + "\n" + StructureCount(i));                  // 건설에 필요한 자원과 현재 개수를 specBuild 리스트에 저장한다.
         }
     }
 

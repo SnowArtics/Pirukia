@@ -63,16 +63,18 @@ public class DatabaseManage : MonoBehaviour
     }
 
     // DB를 전부 읽어들이는 함수
-    public void DBSelectAll(string query) {        // 인자로 쿼리문을 받는다.        
+    public IDataReader DBSelectAll() {        // 인자로 쿼리문을 받는다.        
         // 쿼리 입력 및 실행
         DBCommand = DBConnection.CreateCommand();
-        DBCommand.CommandText = query;
+        DBCommand.CommandText = "SELECT * from build";
 
         dataReader = DBCommand.ExecuteReader();
 
-        while (dataReader.Read()) {
-            // 실행 영역
-        }
+        return dataReader;
+
+        //       while (dataReader.Read()) {
+        // 실행 영역
+        //       }
     }
 
     // 열린 DB를 닫는 함수
@@ -91,7 +93,7 @@ public class DatabaseManage : MonoBehaviour
 
         DBCommand = DBConnection.CreateCommand();           // SQL 명령어 리스트를 불러옴
         DBCommand.CommandText = query;                      // 입력받은 쿼리를 입력
-        result = DBCommand.ExecuteReader();             // SQL 쿼리를 실행
+        result = DBCommand.ExecuteReader();                 // SQL 쿼리를 실행
 
         return result;
     }
