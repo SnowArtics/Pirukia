@@ -18,7 +18,7 @@ public class BuildingState : MonoBehaviour
 
     public void Awake() {
         int count = 0;
-        IDataReader dataReader = null;
+        IDataReader dataReader;
         database = dbManage.GetComponent<DatabaseManage>();
         database.DBCreate();
 

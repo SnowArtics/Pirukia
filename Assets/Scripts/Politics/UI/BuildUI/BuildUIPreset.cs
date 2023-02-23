@@ -21,26 +21,27 @@ public class BuildUIPreset : MonoBehaviour
     private List<string> specBuild = new List<string>();
 
     public string Get(int index) { return specBuild[index]; }
-    public void Set(string str) { specBuild.Add(str); }
+    public void Set(int index, string str) { specBuild[index] = str; }
 
     public void Awake() {
         buildingState = GetComponent<BuildingState>();
         database = dbManageSystem.GetComponent<DatabaseManage>();
         database.DBCreate();        // DB를 연다.
 
+        for(int i = 0; i < 10; i++) { specBuild.Add(String.Empty); }
+
         // 버튼의 이름과 정보를 build 테이블의 정보로 변경
         for (int i = 0; i < villageNameLists.Count; i++) {
             string name = database.DBSelectOne("BUILDING_NAME", i+1);               // DB에서 건물 이름을 받아온다.
             villageNameLists[i].text = name;                                        // 받아온 이름들을 실제 버튼의 text로 변경
             villageButtonLists[i].name = name;                                      // 버튼의 이름을 실제 건물 명으로 변경
-            
         }
     }
 
     public void Update() {
         for(int i = 0; i < 10; i++) {
             IDataReader content = database.DBSelectLine(i + 1);                         // DB에서 건물에 해당하는 데이터값을 받아온다.
-            Set(StructureInfo(content, i) + "\n" + StructureCount(i));                  // 건설에 필요한 자원과 현재 개수를 specBuild 리스트에 저장한다.
+            Set(i, StructureInfo(content, i) + "\n" + StructureCount(i));                  // 건설에 필요한 자원과 현재 개수를 specBuild 리스트에 저장한다.
         }
     }
 

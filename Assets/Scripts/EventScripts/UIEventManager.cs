@@ -109,8 +109,7 @@ public class UIEventManager : MonoBehaviour
 
     // 닫기 버튼을 눌렀을 때 실행
     public void CloseUI() {
-        buildUI.SetActive(false);
-        statUI.SetActive(false);
-        memberUI.SetActive(false);
+        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+        (clickedButton.transform.parent).gameObject.SetActive(false);
     }
 }

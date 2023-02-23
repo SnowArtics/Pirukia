@@ -6,26 +6,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuildUITooltip : MonoBehaviour
+public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private GameObject tooltip, ctxTooltip;
     private GameObject dbManage;
     private BuildUIPreset preset;
     private DatabaseManage database;
 
-    TextMeshProUGUI ctx;
-    IDataReader data;
+    private TextMeshProUGUI ctx;
+    private IDataReader data;
     private string buttonName;
+    private bool isPointerEnter;
 
     public void Awake() {
         GameObject canvas = GameObject.Find("Canvas");
-        tooltip = (canvas.transform.GetChild(4)).gameObject;
+        tooltip = (canvas.transform.GetChild(5)).gameObject;
         ctxTooltip = (tooltip.transform.GetChild(0)).gameObject;
         dbManage = GameObject.Find("DatabaseSystem");
 
         ctx = ctxTooltip.GetComponent<TextMeshProUGUI>();
-        GameObject buildUI = canvas.transform.GetChild(1).gameObject;
-        preset = buildUI.GetComponent<BuildUIPreset>();
+        GameObject buildUIEventMng = GameObject.Find("BuildUIEventSystem");
+        preset = buildUIEventMng.GetComponent<BuildUIPreset>();
         
         database = dbManage.GetComponent<DatabaseManage>();
         database.DBCreate();
@@ -34,31 +35,33 @@ public class BuildUITooltip : MonoBehaviour
     }
 
     private void Update() {
+        if (isPointerEnter) {
+            buttonName = this.name;
 
-    }
+            if (buttonName == "-" || buttonName.StartsWith("Str")) {
+                ctx.text = "N/A";
+            }
+            else {
+                tooltip.SetActive(true);
+                // 버튼의 이름을 갖는 BUILDING_CODE를 DB에서 찾아 변수에 저장
+                IDataReader codeData = database.ExecuteDB("SELECT * from build where BUILDING_NAME=\"" + buttonName + "\"");
+                int buildCode = int.Parse(codeData.GetValue(0).ToString());
 
-    public void onTooltip() { 
-        buttonName = this.name;
-        Debug.Log(buttonName + " is on.");
-        tooltip.SetActive(true);
+                string buildData = preset.Get(buildCode - 1);
 
-        if (buttonName == "-" || buttonName.StartsWith("Str")) {
-            ctx.text = "N/A";
-        }
-        else {
-            // 버튼의 이름을 갖는 BUILDING_CODE를 DB에서 찾아 변수에 저장
-            IDataReader codeData = database.ExecuteDB("SELECT * from build where BUILDING_NAME=\"" + buttonName + "\"");
-            int buildCode = int.Parse(codeData.GetValue(0).ToString());
-
-            string buildData = preset.Get(buildCode-1);
-
-            ctx.text = buildData;
+                ctx.text = buildData;
+            }
         }
     }
 
-    public void offTooltip() {
+    public void OnPointerEnter(PointerEventData eventData) { 
+        isPointerEnter = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        isPointerEnter = false;
+
         buttonName = this.name;
-        Debug.Log(buttonName + " is out.");
         tooltip.SetActive(false);
 
         ctx.text = "";
