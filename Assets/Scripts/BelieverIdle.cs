@@ -40,19 +40,23 @@ public class BelieverIdle : MonoBehaviour
 
         switch (direction) {
             case 2: {       // 남쪽으로 이동
-                    transform.Translate((new Vector3(0,0,-1)) * speed * Time.deltaTime);
+                    Vector3 vec = new Vector3(-1, 0, -1);
+                    transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
             case 4: {       // 서쪽으로 이동
-                    transform.Translate((new Vector3(-1,0,0)) * speed * Time.deltaTime);
+                    Vector3 vec = new Vector3(-1, 0, 1);
+                    transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
             case 6: {       // 동쪽으로 이동
-                    transform.Translate((new Vector3(1,0,0)) * speed * Time.deltaTime);
+                    Vector3 vec = new Vector3(1, 0, -1);
+                    transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
             case 8: {       // 북쪽으로 이동
-                    transform.Translate((new Vector3(0,0,1)) * speed * Time.deltaTime);
+                    Vector3 vec = new Vector3(1, 0, 1);
+                    transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
         }
@@ -74,7 +78,7 @@ public class BelieverIdle : MonoBehaviour
     }
 
     public void Awake() {
-        SetSpeed(3);
+        SetSpeed(2);
         SetLoyalty(10);
     }
 
