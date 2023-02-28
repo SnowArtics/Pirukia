@@ -36,8 +36,6 @@ public class BelieverIdle : MonoBehaviour
     }
 
     void Walk(int direction) {
-        Vector3 pos = transform.position;
-
         switch (direction) {
             case 2: {       // 남쪽으로 이동
                     Vector3 vec = new Vector3(-1, 0, -1);
@@ -65,7 +63,6 @@ public class BelieverIdle : MonoBehaviour
     public void RandomWalk(int direction) {
         this.animation = GetAnimation(group + direction);       // 신 분류 코드(2자리) + 행동 코드(2자리)
         SetAnimation(animation);
-
         Walk(direction);
     }
 
@@ -78,7 +75,7 @@ public class BelieverIdle : MonoBehaviour
     }
 
     public void Awake() {
-        SetSpeed(2);
+        SetSpeed(4);
         SetLoyalty(10);
     }
 
@@ -92,7 +89,26 @@ public class BelieverIdle : MonoBehaviour
     }
 
     public IEnumerator Idle() {
-        int direction = (Random.Range(1, 4) * 2);                    // 2,4,6,8 내에서 난수 생성하여 임의의 방향 지정
+        float posX = this.transform.position.x;
+        float posZ = this.transform.position.z;
+        int direction;
+
+        if (posX <= 2) {
+            if (posZ <= 2) { direction = 8; }                   // 맵의 가장 아래쪽으로 가면 북 방향으로만 이동
+            else if (posZ >= 98) { direction = 6; }            // 맵의 가장 왼쪽으로 가면 동 방향으로만 이동
+            else { direction = Random.Range(3, 5) * 2; }        // 맵의 3사분면 끝에 도달하면 동, 북 방향으로 이동
+        }
+        else if(posX >= 98) {
+            if (posZ <= 2) { direction = 4; }                   // 맵의 가장 오른쪽으로 가면 서 방향으로 이동
+            else if (posZ >= 98) { direction = 2; }            // 맵의 가장 위쪽으로 가면 남 방향으로 이동
+            else { direction = Random.Range(1, 3) * 2; }        // 맵의 1사분면 끝에 도달하면 남, 서 방향으로 이동
+        }
+        else {
+            if (posZ <= 2) { direction = Random.Range(1, 3) * 4; }          // 맵의 4사분면 끝에 도달하면 북, 서 방향으로 이동
+            else if (posZ >= 98) { direction = (Random.Range(1, 3) * 4) - 2; }   // 맵의 2사분면 끝에 도달하면 남, 동 방향으로 이동
+            else { direction = (Random.Range(1, 5) * 2); }      // 필드 내부에 있으면 2,4,6,8 중에 난수 생성하여 임의의 방향 지정
+        }
+
         moveTime = 0;
 
         // 2초 동안 RandomWalk() 함수 실행
@@ -100,6 +116,10 @@ public class BelieverIdle : MonoBehaviour
             RandomWalk(direction);
             yield return null;
         }
+
+        // 좌표의 소수점을 반올림해서 정수로 처리
+        Vector3 pos = this.transform.position;
+        this.transform.position = new Vector3(Mathf.Round(pos.x), pos.y, Mathf.Round(pos.z));
 
         // 2초 경과 후, 코루틴 종료(다시 대기 상태로 전환)
         moveTime = 0;
