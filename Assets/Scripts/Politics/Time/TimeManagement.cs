@@ -36,6 +36,13 @@ public class TimeManagement : MonoBehaviour
         Update_lightAngle();
     }
 
+    void Update_time()
+    {
+        Update_second();
+        // 1시간 = 60분 * 60초 -> 3600
+        this.time = (float)(this.second / 3600);
+    }
+
     private void Update_second()
     {
         Set_second(Time.deltaTime / GAME_TIME);
@@ -53,13 +60,6 @@ public class TimeManagement : MonoBehaviour
         // GetOldAllBeliever(deltaDay);
     }
 
-    void Update_time()
-    {
-        Update_second();
-        // 1시간 = 60분 * 60초 -> 3600
-        this.time = (float)(this.second / 3600);
-    }
-
     void Set_time(float tTime)
     {
         // 0보다 작은값이 들어오면 0으로 받음
@@ -75,7 +75,9 @@ public class TimeManagement : MonoBehaviour
         this.angleModifier = (this.time > 4) && (this.time < 22) ? ANGLE_MODIFIER_DAY : ANGLE_MODIFIER_NIGHT;
         // 시간에 따라 태양의 고도를 조정 (시간플로우차트: 현실시간으로 -> 현실시간에선)
         // 0은 한밤중 -90도
-        this.lightAngle = (float)(this.second * this.angleModifier) - 90;
+        // 260 / 24 = 15
+        // this.lightAngle = (float)(this.time * 15 * this.angleModifier) - 90;
+        this.lightAngle = (float)(this.time * 15) - 90;
         sun.transform.localEulerAngles = new Vector3(this.lightAngle, 0, 0);
     }
 

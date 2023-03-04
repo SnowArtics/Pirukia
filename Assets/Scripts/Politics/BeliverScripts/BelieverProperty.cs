@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeliverManage : MonoBehaviour
+public class BelieverProperty : MonoBehaviour
 {
+    [SerializeField]
+    GameObject believerObj;
+
     // Start is called before the first frame update
     void Start()
     {
