@@ -1736,6 +1736,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   believerObj: {fileID: 0}
+  textNameObj: {fileID: 0}
+  textLevelObj: {fileID: 0}
 --- !u!1 &233784442
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,6 +3078,7 @@ GameObject:
   - component: {fileID: 382095645}
   - component: {fileID: 382095644}
   - component: {fileID: 382095643}
+  - component: {fileID: 382095646}
   m_Layer: 0
   m_Name: Prayer
   m_TagString: Believer
@@ -3095,9 +3098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217abab264b6b54458986099ed8327e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
   speed: 0
-  loyalty: 0
   animation: 
   group: 0
 --- !u!212 &382095644
@@ -3167,6 +3168,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &382095646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382095642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ea0257282abc640a4ff76e4d02a297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  believerName: 
+  speed: 0
+  believerAnimation: 
+  group: 0
+  loyalty: 0
+  workGroup: 0
+  workSpeed: 0
 --- !u!1001 &385270470
 PrefabInstance:
   m_ObjectHideFlags: 0

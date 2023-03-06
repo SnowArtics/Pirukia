@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: ANGLE_MODIFIER_* 상수 조절, 신도 관련 기능 추가
-public class TimeManagement : MonoBehaviour
+public class TimeSystem : MonoBehaviour
 {
     [SerializeField]
     private GameObject sun;

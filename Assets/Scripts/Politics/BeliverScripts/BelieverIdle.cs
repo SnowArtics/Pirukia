@@ -5,11 +5,7 @@ using UnityEngine;
 public class BelieverIdle : MonoBehaviour
 {
     [SerializeField]
-    private new string name;        // 신도의 이름
-    [SerializeField]
     private int speed;              // 신도의 이동 속도
-    [SerializeField]
-    private int loyalty;            // 신도의 충성도
     [SerializeField]
     private new string animation;   // 출력할 애니메이션
     [SerializeField]
@@ -70,13 +66,8 @@ public class BelieverIdle : MonoBehaviour
         this.speed = speed;
     }
 
-    public void SetLoyalty(int loyalty) {
-        this.loyalty = loyalty;
-    }
-
     public void Awake() {
         SetSpeed(4);
-        SetLoyalty(10);
     }
 
     public void Update() {
