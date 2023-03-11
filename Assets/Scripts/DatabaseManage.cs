@@ -6,6 +6,7 @@ using Mono.Data.Sqlite;
 using System.IO;
 using System.Data.Common;
 using System.Linq.Expressions;
+using System;
 
 public class DatabaseManage : MonoBehaviour
 {
@@ -94,6 +95,24 @@ public class DatabaseManage : MonoBehaviour
         DBCommand = DBConnection.CreateCommand();           // SQL 명령어 리스트를 불러옴
         DBCommand.CommandText = query;                      // 입력받은 쿼리를 입력
         result = DBCommand.ExecuteReader();                 // SQL 쿼리를 실행
+
+        return result;
+    }
+
+    // 특정 건물에 대한 DB 값을 리스트에 정리해서 반환
+    public List<string> DBSelectStructure(string name) {
+        List<string> result = new List<string>();
+
+        DBCommand = DBConnection.CreateCommand();
+        DBCommand.CommandText = "SELECT * from build where BUILDING_NAME=\"" + name + "\"";
+        dataReader= DBCommand.ExecuteReader();
+
+
+        while(dataReader.Read()) {
+            for (int idx = 0; idx < 12; idx++) {
+                result.Add(dataReader.GetValue(idx).ToString());
+            }
+        }
 
         return result;
     }

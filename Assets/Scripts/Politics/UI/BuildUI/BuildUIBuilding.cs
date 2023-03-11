@@ -7,10 +7,12 @@ using UnityEngine;
 public class BuildUIBuilding : MonoBehaviour {
     private GameObject tooltip;
     private GameObject eventSystem;
+    private GameObject buildUIEventSystem;
     private DatabaseManage dbSystem;
     private ErrorEventManager errEventMng;
     private BuildingState buildState;
     private int buildCode;
+    private string buttonName;
 
     private int buildingCount;                      // 현재 건설중인 건물 개수
     private int buildedCount;                       // 건설 완료된 건물 개수
@@ -19,9 +21,10 @@ public class BuildUIBuilding : MonoBehaviour {
     private void Awake() {
         buildingCount = 0;
         buildedCount = 0;
-        limitCount = 0; 
+        limitCount = 0;
+        buildUIEventSystem = GameObject.Find("BuildUIEventSystem");
 
-        buildState = (GameObject.Find("BuildUIEventSystem")).GetComponent<BuildingState>();
+        buildState = buildUIEventSystem.GetComponent<BuildingState>();
         dbSystem = GameObject.Find("DatabaseSystem").GetComponent<DatabaseManage>();
         eventSystem = GameObject.Find("EventSystem");
         errEventMng = eventSystem.GetComponent<ErrorEventManager>();
@@ -31,7 +34,8 @@ public class BuildUIBuilding : MonoBehaviour {
     }
 
     public void onClickButton() {
-        
+        buttonName = this.name;
+        buildCode = int.Parse(dbSystem.DBSelectStructure(buttonName)[0]);
         buildedCount = chkBuildedBuild();
         limitCount = chkLimitBuild();
         int curBuild = buildingCount + buildedCount;
@@ -40,9 +44,12 @@ public class BuildUIBuilding : MonoBehaviour {
  //           BuildUITooltip uITooltip = this.GetComponent<BuildUITooltip>();
  //           uITooltip.onTooltip();
 
-            Debug.Log(this.name + " 건설 시작!!");
+            Debug.Log(buttonName + " 건설 시작!!");
             buildState.addBuilding(buildCode - 1);
-            // 건물 진행
+
+            // 건축물에 대한 DB 값을 리스트에 저장하고 buildingToEdit 함수로 전달해 편집 모드로 진행한다.
+            List<string> buildingDataList = dbSystem.DBSelectStructure(this.name);
+            buildUIEventSystem.GetComponent<BuildUIEditMode>().buildingToEdit(buildingDataList);
         }
         else if (limitCount == -2) { }
         else {
@@ -50,24 +57,21 @@ public class BuildUIBuilding : MonoBehaviour {
         }
     }
 
+    // DB에서 건축물의 건설 제한 수를 받아온다.
     public int chkLimitBuild() {
-        string buttonName = this.name;
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
-            IDataReader codeData = dbSystem.ExecuteDB("SELECT LIMIT_BUILDING from build where BUILDING_NAME=\"" + buttonName + "\"");
-            int buildLimit = int.Parse(codeData.GetValue(0).ToString());
+            int buildLimit = int.Parse((dbSystem.DBSelectStructure(buttonName))[11]);
 
             return buildLimit;
         }
     }
 
+    // 현재 지어진 건축물의 개수를 받아온다.
     public int chkBuildedBuild() {
-        string buttonName = this.name;
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
-            IDataReader codeData = dbSystem.ExecuteDB("SELECT * from build where BUILDING_NAME=\"" + buttonName + "\"");
-            buildCode = int.Parse(codeData.GetValue(0).ToString());
-
+            int buildCode = int.Parse((dbSystem.DBSelectStructure(buttonName))[0]);
             int buildCount = buildState.get(buildCode - 1);
 
             return buildCount;
