@@ -19,11 +19,11 @@ public class DatabaseManage : MonoBehaviour
         filepath = string.Empty;
         DBConnection = new SqliteConnection(GetDBFilePath());                               // DB파일을 연결하는 변수
 
-        filepath = Application.dataPath + "/StreamingAssets/Building_Database.db";          // DB파일 경로 설정
+        filepath = Application.dataPath + "/StreamingAssets/Building_DB.db";                // DB파일 경로 설정
 
         // 파일이 없을 경우, 설정한 경로로 DB 파일을 복사
         if (!File.Exists(filepath)) {
-            File.Copy(Application.streamingAssetsPath + "/StreamingAssets/Building_Database.db", filepath);
+            File.Copy(Application.streamingAssetsPath + "/StreamingAssets/Building_DB.db", filepath);
         }
 
         // DB 파일을 연결
@@ -35,7 +35,7 @@ public class DatabaseManage : MonoBehaviour
         string str = string.Empty;
 
         // DB 파일 경로를 str 변수에 저장
-        str = "URI=file:" + Application.dataPath + "/StreamingAssets/Building_Database.db";
+        str = "URI=file:" + Application.dataPath + "/StreamingAssets/Building_DB.db";
 
         return str;
     }
@@ -43,7 +43,7 @@ public class DatabaseManage : MonoBehaviour
     // SQL 쿼리를 받아와 DB 내의 데이터를 한 가지만 반환하는 함수
     public string DBSelectOne(string item, int index) {
         string result;
-        string query = "SELECT " + item + " from build where BUILDING_CODE=" + index.ToString();
+        string query = "SELECT " + item + " from Building where Id=" + index.ToString();
 
 
         dataReader = ExecuteDB(query);                      // 명령문을 실행
@@ -56,7 +56,7 @@ public class DatabaseManage : MonoBehaviour
 
     // 해당 BUILDING_CODE에 해당하는 열 전체를 받아오는 함수
     public IDataReader DBSelectLine(int index) {
-        string query = "SELECT * from build where BUILDING_CODE=" + index.ToString();
+        string query = "SELECT * from Building where Id=" + index.ToString();
 
         dataReader = ExecuteDB(query);                      // 명령문을 실행
 
@@ -67,7 +67,7 @@ public class DatabaseManage : MonoBehaviour
     public IDataReader DBSelectAll() {        // 인자로 쿼리문을 받는다.        
         // 쿼리 입력 및 실행
         DBCommand = DBConnection.CreateCommand();
-        DBCommand.CommandText = "SELECT * from build";
+        DBCommand.CommandText = "SELECT * from Building";
 
         dataReader = DBCommand.ExecuteReader();
 
@@ -100,11 +100,11 @@ public class DatabaseManage : MonoBehaviour
     }
 
     // 특정 건물에 대한 DB 값을 리스트에 정리해서 반환
-    public List<string> DBSelectStructure(string name) {
+    public List<string> DBSelectBuilding(string name) {
         List<string> result = new List<string>();
 
         DBCommand = DBConnection.CreateCommand();
-        DBCommand.CommandText = "SELECT * from build where BUILDING_NAME=\"" + name + "\"";
+        DBCommand.CommandText = "SELECT * from Building where Name=\"" + name + "\"";
         dataReader= DBCommand.ExecuteReader();
 
 
@@ -113,6 +113,29 @@ public class DatabaseManage : MonoBehaviour
                 result.Add(dataReader.GetValue(idx).ToString());
             }
         }
+
+        return result;
+    }
+
+    public List<string> DBSelectResource(string name) {
+        List<string> result = new List<string>();
+
+        DBCommand = DBConnection.CreateCommand();
+        dataReader = ExecuteDB("SELECT Id from Building where Name=\"" + name + "\"");
+        string getId = dataReader.GetValue(0).ToString();
+
+        // Debug.Log(getId);
+
+        DBCommand.CommandText = "SELECT * from Resource where Id=" + getId;
+        dataReader = DBCommand.ExecuteReader();
+
+        while(dataReader.Read()) {
+            for (int idx = 0; idx < 3; idx++) {
+                result.Add(dataReader.GetValue(idx).ToString());
+            }
+        }
+
+        // Debug.Log(result[2]);
 
         return result;
     }

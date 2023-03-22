@@ -35,7 +35,7 @@ public class BuildUIBuilding : MonoBehaviour {
 
     public void onClickButton() {
         buttonName = this.name;
-        buildCode = int.Parse(dbSystem.DBSelectStructure(buttonName)[0]);
+        buildCode = int.Parse(dbSystem.DBSelectBuilding(buttonName)[0]);
         buildedCount = chkBuildedBuild();
         limitCount = chkLimitBuild();
         int curBuild = buildingCount + buildedCount;
@@ -48,7 +48,7 @@ public class BuildUIBuilding : MonoBehaviour {
             buildState.addBuilding(buildCode - 1);
 
             // 건축물에 대한 DB 값을 리스트에 저장하고 buildingToEdit 함수로 전달해 편집 모드로 진행한다.
-            List<string> buildingDataList = dbSystem.DBSelectStructure(this.name);
+            List<string> buildingDataList = dbSystem.DBSelectBuilding(this.name);
             buildUIEventSystem.GetComponent<BuildUIEditMode>().buildingToEdit(buildingDataList);
         }
         else if (limitCount == -2) { }
@@ -61,7 +61,7 @@ public class BuildUIBuilding : MonoBehaviour {
     public int chkLimitBuild() {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
-            int buildLimit = int.Parse((dbSystem.DBSelectStructure(buttonName))[11]);
+            int buildLimit = int.Parse((dbSystem.DBSelectBuilding(buttonName))[11]);
 
             return buildLimit;
         }
@@ -71,7 +71,7 @@ public class BuildUIBuilding : MonoBehaviour {
     public int chkBuildedBuild() {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
-            int buildCode = int.Parse((dbSystem.DBSelectStructure(buttonName))[0]);
+            int buildCode = int.Parse((dbSystem.DBSelectBuilding(buttonName))[0]);
             int buildCount = buildState.get(buildCode - 1);
 
             return buildCount;
