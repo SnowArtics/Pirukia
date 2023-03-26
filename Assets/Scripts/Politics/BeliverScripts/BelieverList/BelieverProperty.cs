@@ -1,3 +1,7 @@
+/* 신도목록 리스트에 표시될
+ * 개별 개체의 내용물 구성 컴포넌트
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,13 +31,24 @@ public class BelieverProperty : MonoBehaviour
         this.textLevel = (TextMesh)textLevel.GetComponent("TextMesh");
         // UI초기화
         this.textName.text = this.believerComp.GetName();
-        this.textLevel.text = composeLevelUI();
+        this.textLevel.text = composeStrLevel();
     }
 
-    private string composeLevelUI()
+    private string composeStrLevel()
     {
         // TODO: workGroup을 통해 한글 표출
         // TODO: 
         return "LV." + "0";
+    }
+
+    private void composeUI()
+    {
+        // TODO: 매 프래임 혹은 트리거에 의해
+        // 내용물을 갱신해 주는 함수 작성
+    }
+
+    private void Update()
+    {
+        
     }
 }
