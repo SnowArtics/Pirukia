@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BelieverProperty : MonoBehaviour
@@ -17,19 +18,25 @@ public class BelieverProperty : MonoBehaviour
 
     // GameObject에서 필요한 컴포넌트 객체를 저장할 변수
     private Believer believerComp;
-    private TextMesh textName;
-    private TextMesh textLevel;
+    private TextMeshProUGUI textName;
+    private TextMeshProUGUI textLevel;
 
     // Start is called before the first frame update
-    public void initBeliever(GameObject bel)
+    public void initBeliever(GameObject believer)
     {
         // Believer에서 필요한 컴포넌트 추출
-        this.believerObj = bel;
+        this.believerObj = believer;
         this.believerComp = (Believer) believerObj.GetComponent("Believer");
         // UI에 표시할 TextMesh 추출
-        this.textName = (TextMesh)textNameObj.GetComponent("TextMesh");
-        this.textLevel = (TextMesh)textLevel.GetComponent("TextMesh");
+        // Name
+        this.textNameObj = gameObject.transform.Find("NameButton").Find("Name").gameObject;
+        this.textName = textNameObj.GetComponent<TextMeshProUGUI>();
+        // Level
+        this.textLevelObj = gameObject.transform.Find("LevelButton").Find("Level").gameObject;
+        this.textLevel = textLevelObj.GetComponent<TextMeshProUGUI>();
         // UI초기화
+        Debug.Log(this.textName.ToString());
+        Debug.Log(this.believerComp.ToString());
         this.textName.text = this.believerComp.GetName();
         this.textLevel.text = composeStrLevel();
     }
@@ -47,6 +54,10 @@ public class BelieverProperty : MonoBehaviour
         // 내용물을 갱신해 주는 함수 작성
     }
 
+    private void Start()
+    {
+
+    }
     private void Update()
     {
         
