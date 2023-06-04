@@ -8,6 +8,10 @@ public class Believer : MonoBehaviour
     [SerializeField]
     private string believerName;
 
+    // believer의 나이
+    [SerializeField]
+    private int age;
+
     // believer의 이동속도
     [SerializeField]
     private int speed;
@@ -32,12 +36,22 @@ public class Believer : MonoBehaviour
     [SerializeField]
     private float workSpeed;
 
+    // DB에 저장할 때 필요한 고유 PK
+    private int believerId;
+
     // believer의 이름확인
     public string GetName()
     {
         // 테스트용 임시 신도이름
         this.believerName = "John";
         return believerName;
+    }
+
+    // believer의 나이 증가
+    public void IncreaseOneAge()
+    {
+        // 수명 체크를 여기서 하면 편할 듯 함.
+        this.age += 1;
     }
 
     // believer의 이동속도 조정 메서드
@@ -70,7 +84,7 @@ public class Believer : MonoBehaviour
     }
 
     // believer의 작업속도 조정 메서드
-    public void SetWorkSpeed(int workspeed)
+    public void SetWorkSpeed(float workspeed)
         // TODO: 매개변수와 속성의 타임을 일치시킬 필요가 있음
     {
         this.workSpeed = workspeed;
@@ -116,16 +130,29 @@ public class Believer : MonoBehaviour
         return;
     }
 
+    // 신도가 잠을 청하도록 함
+    // 본인의 판자촌으로 복귀
+    public void FallAsleep()
+    {
+        // TODO: 본인 집이 어딘지 저장해둘 필요가 있음
+        // TODO: 들어간 집 위에 'ZZZ'를 표시하면 좋을 듯
+    }
+
+    public void WakeUp()
+    {
+        // TODO: 잠에서 일어나서 할당된 임무 수행
+    }
+
     // animation DB접근
     // string GetAnimation(int serial)
     // TODO: 가능하면 Beliver관리 클래스에서 처리하고 싶음
-    public string QueryAnimation(int serial)
+    public string GetAnimation(int serial)
     {
         // TODO: DB접근 구현
         return "";
     }
 
-    // 생성될 때 신도목록에 정보 추가
+    // 씬에 생성될 때 신도목록에 정보 추가
     public GameObject believerListElementPref;
     public void Start()
     {
