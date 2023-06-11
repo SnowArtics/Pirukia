@@ -38,6 +38,16 @@ public class Believer : MonoBehaviour
 
     // DB에 저장할 때 필요한 고유 PK
     private int believerId;
+    
+    // 신도의 상태
+    public enum Status
+    {
+        IDLE,
+        ASSIGN,
+        SLEEP,
+        DEAD
+    }
+    private Status condition;
 
     // believer의 이름확인
     public string GetName()
@@ -140,7 +150,12 @@ public class Believer : MonoBehaviour
 
     public void WakeUp()
     {
-        // TODO: 잠에서 일어나서 할당된 임무 수행
+        // 자고있을 경우만 한정하면 죽거나 불침번일 경우도 처리 가능
+        if (condition == Status.SLEEP)
+        {
+            // workgroup의 0이 할당되지 않은 상태일 경우
+            condition = (this.workGroup == 0) ? Status.IDLE : Status.ASSIGN; 
+        }
     }
 
     // animation DB접근
