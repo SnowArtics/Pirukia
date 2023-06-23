@@ -39,7 +39,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 40, y: -60}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 280, y: 280}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7483968741753390482
@@ -131,6 +131,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7483968741753390494}
+        m_TargetAssemblyTypeName: BuildUIBuilding, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -228,8 +240,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC74\uBB3C\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98cba6e8497441d4fa6feb147125cb81, type: 2}
-  m_sharedMaterial: {fileID: -5364370214851464802, guid: 98cba6e8497441d4fa6feb147125cb81, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e7e4754a63c197548b904f58e726061d, type: 2}
+  m_sharedMaterial: {fileID: -3317102489535396876, guid: e7e4754a63c197548b904f58e726061d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

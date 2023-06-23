@@ -105,12 +105,11 @@ public class DatabaseManage : MonoBehaviour
 
         DBCommand = DBConnection.CreateCommand();
         DBCommand.CommandText = "SELECT * from Building where Name=\"" + name + "\"";
-        dataReader= DBCommand.ExecuteReader();
-
+        dataReader = DBCommand.ExecuteReader();
 
         while(dataReader.Read()) {
-            for (int idx = 0; idx < 12; idx++) {
-                result.Add(dataReader.GetValue(idx).ToString());
+            for (int idx = 0; idx < 16; idx++) {
+                result.Add((dataReader.GetValue(idx)).ToString());
             }
         }
 
@@ -131,7 +130,7 @@ public class DatabaseManage : MonoBehaviour
 
         while(dataReader.Read()) {
             for (int idx = 0; idx < 3; idx++) {
-                result.Add(dataReader.GetValue(idx).ToString());
+                result.Add((dataReader.GetValue(idx)).ToString());
             }
         }
 

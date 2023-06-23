@@ -5,14 +5,14 @@ using System.Linq.Expressions;
 using UnityEngine;
 
 public class BuildUIBuilding : MonoBehaviour {
-    private GameObject tooltip;
     private GameObject eventSystem;
     private GameObject buildUIEventSystem;
     private DatabaseManage dbSystem;
     private ErrorEventManager errEventMng;
     private BuildingState buildState;
-    private int buildCode;
+    private int buildId;
     private string buttonName;
+    private List<string> buildingDataList = new List<string>();
 
     private int buildingCount;                      // 현재 건설중인 건물 개수
     private int buildedCount;                       // 건설 완료된 건물 개수
@@ -35,7 +35,8 @@ public class BuildUIBuilding : MonoBehaviour {
 
     public void onClickButton() {
         buttonName = this.name;
-        buildCode = int.Parse(dbSystem.DBSelectBuilding(buttonName)[0]);
+        List<string> buildingDataList = dbSystem.DBSelectBuilding(buttonName);
+        buildId = int.Parse(buildingDataList[0]);
         buildedCount = chkBuildedBuild();
         limitCount = chkLimitBuild();
         int curBuild = buildingCount + buildedCount;
@@ -44,11 +45,10 @@ public class BuildUIBuilding : MonoBehaviour {
  //           BuildUITooltip uITooltip = this.GetComponent<BuildUITooltip>();
  //           uITooltip.onTooltip();
 
-            Debug.Log(buttonName + " 건설 시작!!");
-            buildState.addBuilding(buildCode - 1);
+            Debug.Log(buildingDataList[1] + " 건설 시작!!");
+            buildState.addBuilding(buildId);
 
-            // 건축물에 대한 DB 값을 리스트에 저장하고 buildingToEdit 함수로 전달해 편집 모드로 진행한다.
-            List<string> buildingDataList = dbSystem.DBSelectBuilding(this.name);
+            // 건축물에 대한 DB 값을 buildingToEdit 함수로 전달해 편집 모드로 진행한다.
             buildUIEventSystem.GetComponent<BuildUIEditMode>().buildingToEdit(buildingDataList);
         }
         else if (limitCount == -2) { }
@@ -61,7 +61,7 @@ public class BuildUIBuilding : MonoBehaviour {
     public int chkLimitBuild() {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
-            int buildLimit = int.Parse((dbSystem.DBSelectBuilding(buttonName))[11]);
+            int buildLimit = int.Parse((dbSystem.DBSelectBuilding(buttonName))[12]);
 
             return buildLimit;
         }
@@ -72,7 +72,7 @@ public class BuildUIBuilding : MonoBehaviour {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
             int buildCode = int.Parse((dbSystem.DBSelectBuilding(buttonName))[0]);
-            int buildCount = buildState.get(buildCode - 1);
+            int buildCount = buildState.get(buildCode);
 
             return buildCount;
         }

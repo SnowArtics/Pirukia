@@ -40,7 +40,7 @@ public class StrategyCameraControl : MonoBehaviour
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
         if (wheelInput != 0)//마우스 스크롤을 할때 판단
         {
-            transform.Translate(Vector3.forward * scrollSpeed * Time.deltaTime*wheelInput);
+            // transform.Translate(Vector3.forward * scrollSpeed * Time.deltaTime*wheelInput);
         }
 
         if (Input.GetMouseButtonDown(0))

@@ -14,13 +14,13 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private DatabaseManage database;
 
     private TextMeshProUGUI ctx;
-    private IDataReader data;
     private string buttonName;
     private bool isPointerEnter;
+    private int typeResource;
 
     public void Awake() {
         GameObject canvas = GameObject.Find("Canvas");
-        tooltip = (canvas.transform.GetChild(5)).gameObject;
+        tooltip = (canvas.transform.GetChild(6)).gameObject;
         ctxTooltip = (tooltip.transform.GetChild(0)).gameObject;
         dbManage = GameObject.Find("DatabaseSystem");
 
@@ -43,13 +43,20 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             }
             else {
                 tooltip.SetActive(true);
-                // 버튼의 이름을 갖는 BUILDING_CODE를 DB에서 찾아 변수에 저장
-                IDataReader codeData = database.ExecuteDB("SELECT * from build where BUILDING_NAME=\"" + buttonName + "\"");
-                int buildCode = int.Parse(codeData.GetValue(0).ToString());
+                string buildSpec = string.Empty;
 
-                string buildData = preset.Get(buildCode - 1);
+                // 버튼의 이름을 갖는 id를 DB에서 찾아 변수에 저장
+                IDataReader dataReader = database.ExecuteDB("SELECT * from building where Name=\"" + buttonName + "\"");
+                while (dataReader.Read()) {
+                    int buildId = dataReader.GetInt32(0);
+                    string[] buildResourceArr = dataReader.GetString(4).Split(',');
+                    int countArr = buildResourceArr.Length;
+                    buildSpec = preset.GetSpec(buildId);
 
-                ctx.text = buildData;
+                    int nHeight = (countArr * 30) + 80;
+                    tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(200, nHeight);
+                }
+                ctx.text = buildSpec;
             }
         }
     }
