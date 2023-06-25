@@ -90,12 +90,12 @@ public class StrategyCameraControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-
+            transform.Translate(Vector3.forward * scrollSpeed * Time.deltaTime * 0.05f);
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-
+            transform.Translate(Vector3.forward * scrollSpeed * Time.deltaTime * -0.05f);
         }
 
         if (Input.GetKey(KeyCode.R))
