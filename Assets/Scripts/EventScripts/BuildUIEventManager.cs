@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class BuildUIEventManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject buildUI, villageStructure, religionStructure, otherStructure;
+    [SerializeField]
+    private TextMeshProUGUI woodAmount, stoneAmount, ironAmount, goldAmount, reliAmount;
     [SerializeField]
     private Button buildButton;
     

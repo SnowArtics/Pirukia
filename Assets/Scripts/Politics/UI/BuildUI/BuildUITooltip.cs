@@ -54,7 +54,7 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                     buildSpec = preset.GetSpec(buildId);
 
                     int nHeight = (countArr * 30) + 80;
-                    tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(200, nHeight);
+                    tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(230, nHeight);
                 }
                 ctx.text = buildSpec;
             }

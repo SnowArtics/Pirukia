@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
+using TMPro;
 using UnityEngine;
 
 public class BuildUIBuilding : MonoBehaviour {
-    private GameObject eventSystem;
-    private GameObject buildUIEventSystem;
+    private GameObject eventSystem, buildUIEventSystem;
     private DatabaseManage dbSystem;
     private ErrorEventManager errEventMng;
     private BuildingState buildState;
