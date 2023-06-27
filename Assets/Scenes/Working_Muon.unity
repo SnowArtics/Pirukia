@@ -3037,8 +3037,10 @@ GameObject:
   - component: {fileID: 386718493}
   - component: {fileID: 386718492}
   - component: {fileID: 386718491}
+  - component: {fileID: 386718494}
+  - component: {fileID: 386718495}
   m_Layer: 0
-  m_Name: player_charter_0
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3124,13 +3126,45 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386718490}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 15.791189, y: 0.00000047683716, z: 14.60644}
+  m_LocalPosition: {x: 15.791189, y: 0, z: 14.60644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!143 &386718494
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386718490}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 6
+  m_Radius: 1.635
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 1
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 3.5, z: 0}
+--- !u!114 &386718495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386718490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b940d04f130eb4aa03f0bed4c8784a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
+  moveSpeed: 10
 --- !u!1 &404850278
 GameObject:
   m_ObjectHideFlags: 0
@@ -8371,7 +8405,7 @@ GameObject:
   - component: {fileID: 1036030524}
   m_Layer: 0
   m_Name: Believer
-  m_TagString: Untagged
+  m_TagString: Believer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8411,6 +8445,7 @@ MonoBehaviour:
   loyalty: 0
   workGroup: 0
   workSpeed: 0
+  believerList: {fileID: 1974823454}
   believerListElementPref: {fileID: 1183388414334032651, guid: 788b61cb49d87e240bb5c284ff0f0af9, type: 3}
 --- !u!95 &1036030526
 Animator:
@@ -8591,7 +8626,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046265384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfaf5d36699e6f8469078fd8701ce82e, type: 3}
   m_Name: 
@@ -10237,7 +10272,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 716200244}
   m_HandleRect: {fileID: 716200243}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
