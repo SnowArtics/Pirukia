@@ -11,6 +11,9 @@ public class BelieverIdle : MonoBehaviour
     [SerializeField]
     private int group;              // 해당 신도가 믿는 신의 그룹번호
 
+    // 애니메이션 관리
+    private Animator animator;
+
     private AnimationWalkList nowWalk;
     private float moveTime = 0;
     private enum AnimationWalkList  { none,
@@ -31,6 +34,7 @@ public class BelieverIdle : MonoBehaviour
         return walkMotion;
     }
 
+    // 애니메이션 처리를 SetAnimation에서 하긴 해야겠지만 일단은 여기서 시도
     void Walk(int direction) {
         switch (direction) {
             case 2: {       // 남쪽으로 이동
@@ -54,6 +58,8 @@ public class BelieverIdle : MonoBehaviour
                     break;
             }
         }
+        animator.SetBool("isWalk", true);
+        animator.SetInteger("toward", direction);
     }
 
     public void RandomWalk(int direction) {
@@ -68,6 +74,7 @@ public class BelieverIdle : MonoBehaviour
 
     public void Awake() {
         SetSpeed(4);
+        animator = gameObject.GetComponent<Animator>();
     }
 
     public void Update() {
@@ -114,6 +121,7 @@ public class BelieverIdle : MonoBehaviour
 
         // 2초 경과 후, 코루틴 종료(다시 대기 상태로 전환)
         moveTime = 0;
+        animator.SetBool("isWalk", false);
         yield break;
     }
 }

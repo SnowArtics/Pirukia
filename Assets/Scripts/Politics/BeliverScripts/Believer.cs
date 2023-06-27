@@ -52,8 +52,6 @@ public class Believer : MonoBehaviour
     // believer의 이름확인
     public string GetName()
     {
-        // 테스트용 임시 신도이름
-        this.believerName = "John";
         return believerName;
     }
 
@@ -168,10 +166,12 @@ public class Believer : MonoBehaviour
     }
 
     // 씬에 생성될 때 신도목록에 정보 추가
+    public GameObject believerList;
     public GameObject believerListElementPref;
-    public void Start()
+    public void Awake()
     {
-        Transform believerListObj = GameObject.FindWithTag("BelieverList").transform;
+        Transform believerListObj = believerList.transform;
+        Debug.Log(believerListObj);
         GameObject element = Instantiate(believerListElementPref, believerListObj);
 
         // 목록 내용 채워넣기
