@@ -15,16 +15,9 @@ public class DatabaseManage : MonoBehaviour
     private IDbConnection DBConnection;
     private IDbCommand DBCommand;
     private IDataReader dataReader;
-    [SerializeField]
-    private Dictionary<int, int> produceResource = new Dictionary<int, int>();
-
-    public int getResource(int id) { return produceResource[id]; }
-    public void setResource(int id, int value) { produceResource[id] = value; } 
-
 
     private void Awake() {
-        setResource(101, 0);
-        setResource(102, 0);
+
     }
 
     public void DBCreate() {

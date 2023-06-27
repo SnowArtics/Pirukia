@@ -2061,13 +2061,14 @@ GameObject:
   - component: {fileID: 382095644}
   - component: {fileID: 382095643}
   - component: {fileID: 382095646}
+  - component: {fileID: 382095647}
   m_Layer: 0
   m_Name: Believer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &382095643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2166,6 +2167,26 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!95 &382095647
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382095642}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &382246859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7483968741753390494, guid: e65c243d14981a74aaf08c1a82f6c802, type: 3}
@@ -5690,7 +5711,6 @@ GameObject:
   - component: {fileID: 1046265385}
   - component: {fileID: 1046265388}
   - component: {fileID: 1046265389}
-  - component: {fileID: 1046265390}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5792,20 +5812,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plane: {fileID: 1002994274}
   itemPrefeb: {fileID: 77348098381476326, guid: bb2462e219866444dae391e6cd72830b, type: 3}
---- !u!114 &1046265390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046265384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cb4f9a65adb4ba4bb3f82f89ed9446b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  editTilePrefab: {fileID: 941542016399265672, guid: 77f7762b6e7726841b7d4509c4cdf26c, type: 3}
-  parentTilePrefab: {fileID: 1314026822}
 --- !u!1 &1058069260
 GameObject:
   m_ObjectHideFlags: 0
@@ -6064,6 +6070,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editTilePrefab: {fileID: 941542016399265672, guid: 77f7762b6e7726841b7d4509c4cdf26c, type: 3}
   parentTilePrefab: {fileID: 1314026822}
+  shackSprite: {fileID: 5263995548664669748, guid: d1ae256495ff94a4da37142019176a5c, type: 3}
+  granarySprite: {fileID: 5641347075343825921, guid: 21d20a0ae194d4d4386cf5a3a7498f9d, type: 3}
+  appleOrchardSprite: {fileID: 6608100449727786058, guid: 56dffcd229e617349a2ddd00732e2e75, type: 3}
+  altarSprite: {fileID: 7282873875555719957, guid: 3e44bdc0658b34a47ae3e612a0de330e, type: 3}
 --- !u!1 &1128357819
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ TagManager:
   - Believer
   - BelieverList
   - TimeManagement
+  - Tiles
   layers:
   - Default
   - TransparentFX

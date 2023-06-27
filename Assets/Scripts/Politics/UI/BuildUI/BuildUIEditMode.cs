@@ -11,9 +11,11 @@ public class BuildUIEditMode : MonoBehaviour
 {
     [SerializeField]
     private GameObject editTilePrefab, parentTilePrefab;
+    [SerializeField]
+    private GameObject shackSprite, granarySprite, appleOrchardSprite, altarSprite;
     private GameObject canvas, buildUI, buildingModeUI, toolTip;
-    // private GameObject[,] tmpBuildingTiles;
-    private GameObject tmpBuildingTiles;
+    private GameObject tmpBuildingTiles, tmpBuilding;
+    private ErrorEventManager errorEventManage;
     private BuildUITileCollision tileCollision;
     private bool isEdit, isMouseLeftClicked;
     private List<string> buildDatabase = new List<string>();
@@ -33,6 +35,7 @@ public class BuildUIEditMode : MonoBehaviour
 
     public void Awake() {
         canvas = GameObject.Find("Canvas");
+        errorEventManage = GameObject.Find("EventSystem").GetComponent<ErrorEventManager>();
         buildingModeUI = canvas.transform.GetChild(0).gameObject;
         buildUI = canvas.transform.GetChild(2).gameObject;
         toolTip = canvas.transform.GetChild(6).gameObject;
@@ -51,26 +54,33 @@ public class BuildUIEditMode : MonoBehaviour
             hitPos.y = 0.3f;
 
             // 타일을 칸 단위로 움직이도록 설정
-            if(tmpBuildingTiles != null && !isMouseLeftClicked) {
+            if (tmpBuildingTiles != null && !isMouseLeftClicked) {
                 float newPosX = Mathf.Floor(hitPos.x / 2) * 2;
                 float newPosZ = Mathf.Floor(hitPos.z / 2) * 2;
 
-                if(sizeX % 2 != 0) { newPosX += 1; }
-                if(sizeY % 2 != 0) { newPosZ += 1; }
+                if (sizeX % 2 != 0) { newPosX += 1; }
+                if (sizeY % 2 != 0) { newPosZ += 1; }
 
                 tmpBuildingTiles.transform.position = new Vector3(newPosX, tmpBuildingTiles.transform.position.y, newPosZ);
+                tmpBuilding.transform.position = new Vector3(newPosX, 0f, newPosZ);
 
-                if(tileCollision.getCollision()) {
+                if (tileCollision.getCollision()) {
                     SpriteRenderer renderer = tmpBuildingTiles.GetComponent<SpriteRenderer>();
                     renderer.color = new Color(1f, 0f, 0f, 0.3f);   // green
-                } else {
+                }
+                else {
                     SpriteRenderer renderer = tmpBuildingTiles.GetComponent<SpriteRenderer>();
                     renderer.color = new Color(0f, 1f, 0f, 0.3f);   // red
                 }
 
                 if (Input.GetMouseButtonDown(0)) {
-                    StartBuilding();
-                    isMouseLeftClicked = false;
+                    if (tileCollision.getCollision()) {
+                        errorEventManage.CollisionBuildingError();
+                    }
+                    else {
+                        StartBuilding();
+                        isMouseLeftClicked = false;
+                    }
                 }
             }
         }
@@ -95,16 +105,23 @@ public class BuildUIEditMode : MonoBehaviour
         sizeX = int.Parse(tmpSize[0]);
         sizeY = int.Parse(tmpSize[1]);
         int cntTiles = sizeX * sizeY;
+
+        if (buildDatabase[1] == "Shack") { tmpBuilding = Instantiate(shackSprite); }
+        else if (buildDatabase[1] == "Granary") { tmpBuilding = Instantiate(granarySprite); }
+        else if (buildDatabase[1] == "AppleOrchard") { tmpBuilding = Instantiate(appleOrchardSprite); }
+        else if (buildDatabase[1] == "Altar") { tmpBuilding = Instantiate(altarSprite); }
+
+        // 타일 프리팹을 생성하고 위치를 조정한다.
         tmpBuildingTiles = Instantiate(editTilePrefab, parentTilePrefab.transform);
-        tmpBuildingTiles.name = buildDatabase[2];
+        tmpBuildingTiles.name = buildDatabase[1];
         tmpBuildingTiles.transform.localScale = new Vector3(sizeX, sizeY, 1);
         tileCollision = tmpBuildingTiles.GetComponent<BuildUITileCollision>();
     }
 
     // 건물 설치 실행
     public void StartBuilding() {
-        buildingModeUI.SetActive(false);
-        parentTilePrefab.SetActive(false);
+        // buildingModeUI.SetActive(false);
+        // parentTilePrefab.SetActive(false);
         // buildingPosList.Add(tmpBuildingTiles);
 
         // 건물 데이터를 초기화 한다.

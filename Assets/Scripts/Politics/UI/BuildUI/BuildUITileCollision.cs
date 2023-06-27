@@ -13,7 +13,7 @@ public class BuildUITileCollision : MonoBehaviour
     }
 
     private void OnTriggerStay(Collider other) {
-        if (other.gameObject.name.StartsWith("buildModeTile")) {
+        if (other.CompareTag("Tiles")) {
             isCollided = true;
         }
     }
