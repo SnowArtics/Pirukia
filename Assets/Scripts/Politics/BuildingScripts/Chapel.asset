@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3b04de8aa4ecb43a74b15c3a1534ff, type: 3}
   m_Name: Chapel
   m_EditorClassIdentifier: 
-  id: 71
-  name: Chapel
-  nameKr: "\uC608\uBC30\uB2F9"
-  volume: 2*2
-  buildCtResource: 6500000066000000c9000000
-  buildCtResourceAmount: 140000001400000014000000
-  buildCtTime: 100
-  productionResource: 2e010000
+  id: 70
+  name: Altar
+  nameKr: "\uC9C8\uC11C\uC2E0\uC758 \uC81C\uB2E8"
+  volume: 1*1
+  buildCtResource: 6500000066000000
+  buildCtResourceAmount: 1400000014000000
+  buildCtTime: 30
+  productionResource: 2d010000
   produtionOutputPerBeliever: 02000000
   limitHuman: 20
   constructionAnim: 
-  buildImage: Anim_Chapel
+  buildImage: Anim_Altar
   limitBuilding: 1
   consumeResource: ffffffff
   consumeResourceAmount: ffffffff

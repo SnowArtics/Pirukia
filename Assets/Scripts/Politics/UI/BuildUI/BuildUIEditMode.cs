@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -9,14 +10,18 @@ using static UnityEditor.Progress;
 public class BuildUIEditMode : MonoBehaviour
 {
     [SerializeField]
-    private GameObject allowTilePrefab, deniedTilePrefab, parentTilePrefab;
+    private GameObject editTilePrefab, parentTilePrefab;
     private GameObject canvas, buildUI, buildingModeUI, toolTip;
-    private GameObject[,] tmpBuildingTiles;
+    // private GameObject[,] tmpBuildingTiles;
+    private GameObject tmpBuildingTiles;
+    private BuildUITileCollision tileCollision;
     private bool isEdit, isMouseLeftClicked;
     private List<string> buildDatabase = new List<string>();
     private List<GameObject[,]> buildingPosList = new List<GameObject[,]>();
-    private int sizeX, sizeZ;                // 건물 크기(칸)을 저장(x, z)
+    private int sizeX, sizeY;                // 건물 크기(칸)을 저장(x, y)
     private Vector3 pos, mousePos;
+
+    public Tuple<int, int> getSizeBuilding() { return new Tuple<int, int>(sizeX, sizeY);  }
     public void buildingToEdit (List<string> list) {
         buildDatabase = list;
         isEdit = true;
@@ -47,13 +52,22 @@ public class BuildUIEditMode : MonoBehaviour
 
             // 타일을 칸 단위로 움직이도록 설정
             if(tmpBuildingTiles != null && !isMouseLeftClicked) {
-                for(int i = 0; i < sizeX; i++) {
-                    for( int j = 0; j < sizeZ; j++) {
-                        tmpBuildingTiles[i, j].transform.position = new Vector3((Mathf.Floor(hitPos.x / 2) * 2 + 1) + (i * 2),
-                                                                             tmpBuildingTiles[i,j].transform.position.y,
-                                                                             (Mathf.Floor(hitPos.z / 2) * 2 + 1) + (j * 2));
-                    }
+                float newPosX = Mathf.Floor(hitPos.x / 2) * 2;
+                float newPosZ = Mathf.Floor(hitPos.z / 2) * 2;
+
+                if(sizeX % 2 != 0) { newPosX += 1; }
+                if(sizeY % 2 != 0) { newPosZ += 1; }
+
+                tmpBuildingTiles.transform.position = new Vector3(newPosX, tmpBuildingTiles.transform.position.y, newPosZ);
+
+                if(tileCollision.getCollision()) {
+                    SpriteRenderer renderer = tmpBuildingTiles.GetComponent<SpriteRenderer>();
+                    renderer.color = new Color(1f, 0f, 0f, 0.3f);   // green
+                } else {
+                    SpriteRenderer renderer = tmpBuildingTiles.GetComponent<SpriteRenderer>();
+                    renderer.color = new Color(0f, 1f, 0f, 0.3f);   // red
                 }
+
                 if (Input.GetMouseButtonDown(0)) {
                     StartBuilding();
                     isMouseLeftClicked = false;
@@ -79,29 +93,19 @@ public class BuildUIEditMode : MonoBehaviour
         // DB에서 건물 크기 값을 받아와 Array에 저장
         string[] tmpSize = buildDatabase[3].Split('*');
         sizeX = int.Parse(tmpSize[0]);
-        sizeZ = int.Parse(tmpSize[1]);
-        int cntTiles = sizeX * sizeZ;
-        tmpBuildingTiles = new GameObject[sizeX, sizeZ];
-
-        // 건물 크기만큼 타일 프리팹 생성, 위치 조정
-        for(int i = 0; i < sizeX; i++) {
-            for(int j = 0; j < sizeZ; j++) {
-                tmpBuildingTiles[i, j] = Instantiate(allowTilePrefab);
-                tmpBuildingTiles[i, j].transform.SetParent(parentTilePrefab.transform, false);
-                tmpBuildingTiles[i, j].transform.position = new Vector3(tmpBuildingTiles[i, j].transform.position.x + (i*2),
-                                                                     tmpBuildingTiles[i, j].transform.position.y,
-                                                                     tmpBuildingTiles[i, j].transform.position.z + (j*2));
-            }
-        }
-
-        
+        sizeY = int.Parse(tmpSize[1]);
+        int cntTiles = sizeX * sizeY;
+        tmpBuildingTiles = Instantiate(editTilePrefab, parentTilePrefab.transform);
+        tmpBuildingTiles.name = buildDatabase[2];
+        tmpBuildingTiles.transform.localScale = new Vector3(sizeX, sizeY, 1);
+        tileCollision = tmpBuildingTiles.GetComponent<BuildUITileCollision>();
     }
 
     // 건물 설치 실행
     public void StartBuilding() {
         buildingModeUI.SetActive(false);
         parentTilePrefab.SetActive(false);
-        buildingPosList.Add(tmpBuildingTiles);
+        // buildingPosList.Add(tmpBuildingTiles);
 
         // 건물 데이터를 초기화 한다.
         buildDatabase.Clear();

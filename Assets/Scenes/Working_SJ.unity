@@ -2025,7 +2025,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &341519306
 MonoBehaviour:
@@ -5347,7 +5347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 820, y: 451.5}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &947600159
@@ -5610,7 +5610,6 @@ GameObject:
   - component: {fileID: 1002994277}
   - component: {fileID: 1002994276}
   - component: {fileID: 1002994275}
-  - component: {fileID: 1002994278}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -5678,20 +5677,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1002994278
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002994274}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &1046265384
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,8 +5804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb4f9a65adb4ba4bb3f82f89ed9446b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowTilePrefab: {fileID: 3531027848776595242, guid: 68d357c686bce8f4fadb4605f5ed44a7, type: 3}
-  deniedTilePrefab: {fileID: 4073413918341739818, guid: 4b34ae66e76023c419fcced696629f64, type: 3}
+  editTilePrefab: {fileID: 941542016399265672, guid: 77f7762b6e7726841b7d4509c4cdf26c, type: 3}
   parentTilePrefab: {fileID: 1314026822}
 --- !u!1 &1058069260
 GameObject:
@@ -6078,8 +6062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb4f9a65adb4ba4bb3f82f89ed9446b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowTilePrefab: {fileID: 3531027848776595242, guid: 68d357c686bce8f4fadb4605f5ed44a7, type: 3}
-  deniedTilePrefab: {fileID: 4073413918341739818, guid: 4b34ae66e76023c419fcced696629f64, type: 3}
+  editTilePrefab: {fileID: 941542016399265672, guid: 77f7762b6e7726841b7d4509c4cdf26c, type: 3}
   parentTilePrefab: {fileID: 1314026822}
 --- !u!1 &1128357819
 GameObject:
@@ -11035,7 +11018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4254693567301169518, guid: 6d1036a4a17429c4299ed436458c44c6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4254693567301169518, guid: 6d1036a4a17429c4299ed436458c44c6, type: 3}
       propertyPath: m_LocalPosition.x

@@ -7,6 +7,7 @@ using System.IO;
 using System.Data.Common;
 using System.Linq.Expressions;
 using System;
+using Mono.Cecil;
 
 public class DatabaseManage : MonoBehaviour
 {
@@ -14,6 +15,17 @@ public class DatabaseManage : MonoBehaviour
     private IDbConnection DBConnection;
     private IDbCommand DBCommand;
     private IDataReader dataReader;
+    [SerializeField]
+    private Dictionary<int, int> produceResource = new Dictionary<int, int>();
+
+    public int getResource(int id) { return produceResource[id]; }
+    public void setResource(int id, int value) { produceResource[id] = value; } 
+
+
+    private void Awake() {
+        setResource(101, 0);
+        setResource(102, 0);
+    }
 
     public void DBCreate() {
         filepath = string.Empty;
@@ -78,17 +90,6 @@ public class DatabaseManage : MonoBehaviour
         //       }
     }
 
-    // 열린 DB를 닫는 함수
-    // DB를 열 때 실행한 순서의 반대로 닫아준다.
-    public void CloseDB() {
-        dataReader.Dispose();
-        dataReader = null;
-        DBCommand.Dispose();
-        DBCommand = null;
-        DBConnection.Close();
-        DBConnection = null;
-    }
-
     public IDataReader ExecuteDB(string query) {
         IDataReader result;
 
@@ -137,5 +138,16 @@ public class DatabaseManage : MonoBehaviour
         // Debug.Log(result[2]);
 
         return result;
+    }
+
+    // 열린 DB를 닫는 함수
+    // DB를 열 때 실행한 순서의 반대로 닫아준다.
+    public void CloseDB() {
+        dataReader.Dispose();
+        dataReader = null;
+        DBCommand.Dispose();
+        DBCommand = null;
+        DBConnection.Close();
+        DBConnection = null;
     }
 }

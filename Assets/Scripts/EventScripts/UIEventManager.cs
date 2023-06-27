@@ -54,7 +54,8 @@ public class UIEventManager : MonoBehaviour
         try {
             // 클릭한 버튼의 이름을 buttonName에 저장
             buttonName = clickObject.name;
-            if (buttonName != "ExitButton") {                   // 닫기 버튼(ExitButton)이면 무시
+            // 닫기 버튼(ExitButton)이면 무시
+            if (buttonName != "ExitButton") {
                 button = clickObject.GetComponent<Button>();
             }
         }
