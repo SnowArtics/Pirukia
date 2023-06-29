@@ -49,37 +49,42 @@ public class BuildUIPreset : MonoBehaviour
             string nameKr = database.DBSelectOne("Name_KR", building.Key);
             int grpBuilding = building.Key / 10;
 
+            /* 각 분류 코드 별로 건물을 별도의 리스트에 저장 */
             switch(grpBuilding) {
+                // ID 00~19일 경우 주거 관련 건물
                 case 0:
                 case 1:
                     residentButtonLists[ri].name = building.Value;
                     residentButtonLists[ri].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ri++;
                     break;
+                // ID 20~39일 경우 식량 관련 건물
                 case 2:
                 case 3:
                     foodButtonLists[fi].name = building.Value;
                     foodButtonLists[fi].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     fi++;
                     break;
+                // ID 40~49일 경우 경제 관련 건물
                 case 4:
                     economyButtonLists[ei].name = building.Value;
                     economyButtonLists[ei].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ei++;
                     break;
+                // ID 50~69일 경우 산업 관련 건물
                 case 5:
                 case 6:
                     industryButtonLists[ii].name = building.Value;
                     industryButtonLists[ii].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ii++;
                     break;
+                // ID 70~79일 경우 신앙 관련 건물
                 case 7:
-                    Debug.Log(building.Key);
-                    Debug.Log(nameKr);
                     religionButtonLists[li].name = building.Value;
                     religionButtonLists[li].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     li++;
                     break;
+                // ID 80~99일 경우 기타(군사) 관련 건물
                 case 8:
                 case 9:
                     otherButtonLists[oi].name = building.Value;
@@ -97,7 +102,7 @@ public class BuildUIPreset : MonoBehaviour
         }
     }
 
-    // 건설에 필요한 자원을 DB에서 받아오는 함수
+    /* 건설에 필요한 자원을 DB에서 받아오는 함수 */
     public string StructureInfo(IDataReader data, int index) {
         string info = string.Empty;
         int countWoodPlank = 0;         // 나무 판자 개수(101)

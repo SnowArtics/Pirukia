@@ -12,15 +12,16 @@ public class BuildUIEditMode : MonoBehaviour
     [SerializeField]
     private GameObject editTilePrefab, parentTilePrefab;
     [SerializeField]
-    private GameObject shackSprite, granarySprite, appleOrchardSprite, altarSprite;
+    private GameObject shackSprite, granarySprite, appleOrchardSprite, altarSprite, buildingDust;
     private GameObject canvas, buildUI, buildingModeUI, toolTip;
-    private GameObject tmpBuildingTiles, tmpBuilding;
+    private GameObject tmpBuildingTiles, tmpBuilding, tmpDust;
+    private ResourceManagement resourceManagement;
     private ErrorEventManager errorEventManage;
     private BuildUITileCollision tileCollision;
     private bool isEdit, isMouseLeftClicked;
     private List<string> buildDatabase = new List<string>();
     private List<GameObject[,]> buildingPosList = new List<GameObject[,]>();
-    private int sizeX, sizeY;                // °Ç¹° Å©±â(Ä­)À» ÀúÀå(x, y)
+    private int sizeX, sizeY;                // ê±´ë¬¼ í¬ê¸°(ì¹¸)ì„ ì €ì¥(x, y)
     private Vector3 pos, mousePos;
 
     public Tuple<int, int> getSizeBuilding() { return new Tuple<int, int>(sizeX, sizeY);  }
@@ -29,12 +30,9 @@ public class BuildUIEditMode : MonoBehaviour
         isEdit = true;
     }
 
-    public void Start() {
-        
-    }
-
     public void Awake() {
         canvas = GameObject.Find("Canvas");
+        resourceManagement = GameObject.Find("ResourceSystem").GetComponent<ResourceManagement>();
         errorEventManage = GameObject.Find("EventSystem").GetComponent<ErrorEventManager>();
         buildingModeUI = canvas.transform.GetChild(0).gameObject;
         buildUI = canvas.transform.GetChild(2).gameObject;
@@ -44,16 +42,16 @@ public class BuildUIEditMode : MonoBehaviour
     }
 
     public void Update() {
-        // ¸¶¿ì½º Ä¿¼­ÀÇ ÁÂÇ¥¸¦ ¹Ş¾Æ¼­ ÀúÀå
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œì˜ ì¢Œí‘œë¥¼ ë°›ì•„ì„œ ì €ì¥
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // ¸¶¿ì½º Ä¿¼­ À§Ä¡¿¡ µû¶ó °Ç¹° ¼³Ä¡ Å¸ÀÏ À§Ä¡ ÀÌµ¿
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œ ìœ„ì¹˜ì— ë”°ë¼ ê±´ë¬¼ ì„¤ì¹˜ íƒ€ì¼ ìœ„ì¹˜ ì´ë™
         if (Physics.Raycast(ray, out hit, 100f)) {
             Vector3 hitPos = hit.point;
             hitPos.y = 0.3f;
 
-            // Å¸ÀÏÀ» Ä­ ´ÜÀ§·Î ¿òÁ÷ÀÌµµ·Ï ¼³Á¤
+            // íƒ€ì¼ì„ ì¹¸ ë‹¨ìœ„ë¡œ ì›€ì§ì´ë„ë¡ ì„¤ì •
             if (tmpBuildingTiles != null && !isMouseLeftClicked) {
                 float newPosX = Mathf.Floor(hitPos.x / 2) * 2;
                 float newPosZ = Mathf.Floor(hitPos.z / 2) * 2;
@@ -78,29 +76,29 @@ public class BuildUIEditMode : MonoBehaviour
                         errorEventManage.CollisionBuildingError();
                     }
                     else {
-                        StartBuilding();
+                        StartBuilding(newPosX, newPosZ);
                         isMouseLeftClicked = false;
                     }
                 }
             }
         }
 
-        // °Ç¹° ¼³Ä¡ ¸ğµå¿¡ ÁøÀÔ ½Ã, ÇÔ¼ö ½ÇÇà
+        // ê±´ë¬¼ ì„¤ì¹˜ ëª¨ë“œì— ì§„ì… ì‹œ, í•¨ìˆ˜ ì‹¤í–‰
         if (isEdit) {
             OnEditMode();
             isEdit = false;
         }
     }
 
-    // ÆíÁı ¸ğµå¿¡ µé¾î°¬À» ¶§ ¼öÇà
+    // í¸ì§‘ ëª¨ë“œì— ë“¤ì–´ê°”ì„ ë•Œ ìˆ˜í–‰
     public void OnEditMode() {
         buildingModeUI.SetActive(true);
         parentTilePrefab.SetActive(true);
         buildUI.SetActive(false);
         toolTip.SetActive(false);
-        Debug.Log(buildDatabase[2] + "À»(¸¦) ¼³Ä¡ÇÒ À§Ä¡¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä.");
+        Debug.Log(buildDatabase[2] + "ì„(ë¥¼) ì„¤ì¹˜í•  ìœ„ì¹˜ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”.");
 
-        // DB¿¡¼­ °Ç¹° Å©±â °ªÀ» ¹Ş¾Æ¿Í Array¿¡ ÀúÀå
+        // DBì—ì„œ ê±´ë¬¼ í¬ê¸° ê°’ì„ ë°›ì•„ì™€ Arrayì— ì €ì¥
         string[] tmpSize = buildDatabase[3].Split('*');
         sizeX = int.Parse(tmpSize[0]);
         sizeY = int.Parse(tmpSize[1]);
@@ -111,21 +109,61 @@ public class BuildUIEditMode : MonoBehaviour
         else if (buildDatabase[1] == "AppleOrchard") { tmpBuilding = Instantiate(appleOrchardSprite); }
         else if (buildDatabase[1] == "Altar") { tmpBuilding = Instantiate(altarSprite); }
 
-        // Å¸ÀÏ ÇÁ¸®ÆÕÀ» »ı¼ºÇÏ°í À§Ä¡¸¦ Á¶Á¤ÇÑ´Ù.
+        // íƒ€ì¼ í”„ë¦¬íŒ¹ì„ ìƒì„±í•˜ê³  ìœ„ì¹˜ë¥¼ ì¡°ì •í•œë‹¤.
         tmpBuildingTiles = Instantiate(editTilePrefab, parentTilePrefab.transform);
         tmpBuildingTiles.name = buildDatabase[1];
         tmpBuildingTiles.transform.localScale = new Vector3(sizeX, sizeY, 1);
         tileCollision = tmpBuildingTiles.GetComponent<BuildUITileCollision>();
     }
 
-    // °Ç¹° ¼³Ä¡ ½ÇÇà
-    public void StartBuilding() {
-        // buildingModeUI.SetActive(false);
-        // parentTilePrefab.SetActive(false);
-        // buildingPosList.Add(tmpBuildingTiles);
+    // ê±´ë¬¼ ì„¤ì¹˜ ì‹¤í–‰
+    public void StartBuilding(float posX, float posZ) {
+        /* ê±´ë¬¼ ê±´ì„¤ ì¤‘ì¼ ë•Œ êµ¬ë¦„ ìŠ¤í”„ë¼ì´íŠ¸ë¡œ ê°€ë¦°ë‹¤. */
+        tmpDust = Instantiate(buildingDust);
+        tmpDust.transform.position = new Vector3(posX-1, 0f, posZ-1);
+        StartCoroutine(CompleteBuild());
 
-        // °Ç¹° µ¥ÀÌÅÍ¸¦ ÃÊ±âÈ­ ÇÑ´Ù.
+        /* ê±´ë¬¼ ìì› ì²´í¬ í›„ ì°¨ê° */
+        CheckResource();
+
+        // ê±´ë¬¼ ë°ì´í„°ë¥¼ ì´ˆê¸°í™” í•œë‹¤.
         buildDatabase.Clear();
         tmpBuildingTiles = null;
+        buildingModeUI.SetActive(false);
+    }
+
+    public void CheckResource() {
+        Dictionary<int, float> storeResource = new Dictionary<int, float>();        // í˜„ì¬ ìƒì‚°ëœ ìì›ë“¤ì˜ ì •ë³´
+        string[] needResource = buildDatabase[4].Split(',');                        // ê±´ë¬¼ ê±´ì„¤ì— í•„ìš”í•œ ìì› ì¢…ë¥˜
+        string[] needResourceAmount = buildDatabase[5].Split(',');                  // ê±´ë¬¼ ê±´ì„¤ì— í•„ìš”í•œ ìì› ì–‘
+        string[] produceResource = buildDatabase[7].Split(',');                     // ê±´ë¬¼ ê±´ì„¤ ì‹œ, ìƒì‚°ë˜ëŠ” ìì› ì¢…ë¥˜
+        string[] produceResourceAmount = buildDatabase[8].Split(",");               // ê±´ë¬¼ ê±´ì„¤ ì‹œ, ìƒì‚°ë˜ëŠ” ìì› ì–‘
+
+        int idxNeed, idxProduce;
+        float amountNeed, amountProduce;
+
+        for(int i = 0; i < needResource.Length; i++) {
+            idxNeed = int.Parse(needResource[i]);
+            amountNeed = float.Parse(needResourceAmount[i]);
+
+            storeResource[idxNeed] = resourceManagement.GetResourceNum(idxNeed);
+
+            if (storeResource[idxNeed] < amountNeed) {
+                errorEventManage.NotEnoughResourceError();
+            } else {
+                resourceManagement.SetResourceNum(idxNeed, -amountNeed);
+            }
+        }
+
+    }
+
+    /* ê±´ë¬¼ ê±´ì„¤ ì‹œê°„ì´ ì§€ë‚˜ë©´ ê±´ì„¤ì¤‘ ìŠ¤í”„ë¼ì´íŠ¸ ì‚­ì œ */
+    public IEnumerator CompleteBuild() {
+        float buildTime = float.Parse(buildDatabase[6]);
+        Debug.Log(buildTime);
+
+        yield return new WaitForSecondsRealtime(buildTime);
+        Debug.Log(buildTime.ToString() + "ì´ˆ ê²½ê³¼");
+        tmpDust.SetActive(false);
     }
 }
