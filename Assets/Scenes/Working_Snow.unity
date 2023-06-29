@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7176,7 +7176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1092154534}
   m_Layer: 5
-  m_Name: WoodPlanks
+  m_Name: WoodPlank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7353,13 +7353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f97d38026c2df45a4f83a4b249d29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resource: {fileID: 1482474546}
-  IndustryStorage: {fileID: 455407371}
-  WoodPlanks: {fileID: 2083566732}
-  Stone: {fileID: 111019539}
-  FoodStorage: {fileID: 1525570583}
-  Apple: {fileID: 827798146}
-  Religiosity: {fileID: 1687092561}
+  IndustryStorageText: {fileID: 455407373}
+  WoodPlanksText: {fileID: 2083566734}
+  StoneText: {fileID: 111019541}
+  FoodStorageText: {fileID: 1525570585}
+  AppleText: {fileID: 827798148}
+  ReligiosityText: {fileID: 1687092563}
 --- !u!1001 &1199872015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13842,7 +13841,7 @@ GameObject:
   - component: {fileID: 2083566735}
   - component: {fileID: 2083566734}
   m_Layer: 5
-  m_Name: WoodPlanksText
+  m_Name: WoodPlankText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

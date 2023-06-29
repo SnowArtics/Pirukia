@@ -7,124 +7,49 @@ using TMPro;
 public class ResourceManagement : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("���⿡�� ���ҽ� UI�� �� �����ϴ� �θ� �־��ּ���")]
-    private GameObject resource;
+    private TextMeshProUGUI AppleText, WoodPlanksText, StoneText, ReligiosityText, FoodStorageText, IndustryStorageText;
+    // 생산 자원의 값을 저장
+    private Dictionary<int, float> resourceNum = new Dictionary<int, float>();
 
-    private float industryStorageNum = -1;
+    public float GetResourceNum(int idx) { return resourceNum[idx]; }
+    public void SetResourceNum(int idx, float value) {
+        resourceNum[idx] = value;
+
+        // 변경된 자원 값을 UI에 반영
+        foreach (KeyValuePair<int, float> r in resourceNum) {
+            if (r.Key / 100 == 1) { industryUsedSpaceNum += r.Value; }
+            if (r.Key / 100 == 0) { foodUsedSpaceNum += r.Value; }
+        }
+    }
+
     private float industryUsedSpaceNum = 0;
-    private float woodPlanksNum = -1;
-    private float stoneNum = -1;
-
-    private float foodStorageNum = 0;
     private float foodUsedSpaceNum = 0;
-    private float appleNum = 0;
-
-    private float religiosityNum = 0;
-
-    [SerializeField]
-    private GameObject IndustryStorage;
-    [SerializeField]
-    private GameObject WoodPlanks;
-    [SerializeField]
-    private GameObject Stone;
-    [SerializeField]
-    private GameObject FoodStorage;
-    [SerializeField]
-    private GameObject Apple;
-    [SerializeField]
-    private GameObject Religiosity;
-
-    private TextMeshProUGUI IndustryStorageText;
-    private TextMeshProUGUI WoodPlanksText;
-    private TextMeshProUGUI StoneText;
-    private TextMeshProUGUI FoodStorageText;
-    private TextMeshProUGUI AppleText;
-    private TextMeshProUGUI ReligiosityText;
 
     void Awake()
     {
-        industryStorageNum = 1000;
-        woodPlanksNum = 100;
-        stoneNum = 100;
-        industryUsedSpaceNum = woodPlanksNum + stoneNum;
-        religiosityNum = 100;
+        resourceNum[1] = 0;
+        resourceNum[101] = 100;          // UI 상에 나타나지 않게 해야 함
+        resourceNum[102] = 100;          // UI 상에 나타나지 않게 해야 함
 
-        IndustryStorageText = IndustryStorage.GetComponent<TextMeshProUGUI>();
-        WoodPlanksText = WoodPlanks.GetComponent<TextMeshProUGUI>();
-        StoneText = Stone.GetComponent<TextMeshProUGUI>();
-        FoodStorageText = FoodStorage.GetComponent<TextMeshProUGUI>();
-        AppleText = Apple.GetComponent<TextMeshProUGUI>();
-        ReligiosityText = Religiosity.GetComponent<TextMeshProUGUI>();
-    }
+        resourceNum[301] = 100;
+        resourceNum[401] = 0;
+        resourceNum[402] = 1000;
+        resourceNum[403] = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+        foreach (KeyValuePair<int, float> r in resourceNum) {
+            if (r.Key / 100 == 1) { industryUsedSpaceNum = r.Value; }
+            if (r.Key / 100 == 0) { foodUsedSpaceNum += r.Value; }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        industryUsedSpaceNum = woodPlanksNum + stoneNum;
-        foodUsedSpaceNum = appleNum;
-
-        IndustryStorageText.text = ((int)industryUsedSpaceNum).ToString() + " / " + ((int)industryStorageNum).ToString();
-        WoodPlanksText.text = ((int)woodPlanksNum).ToString();
-        StoneText.text = ((int)stoneNum).ToString();
-        FoodStorageText.text = ((int)foodUsedSpaceNum).ToString() + " / " + ((int)foodStorageNum).ToString();
-        AppleText.text = ((int)appleNum).ToString();
-        ReligiosityText.text = ((int)religiosityNum).ToString();
-    }
-
-    
-    //�� ���� Get, Set �Լ����Դϴ�.
-    float GetIndustryStorage()
-    {
-        return industryStorageNum;
-    }
-    float GetWoodPlanks()
-    {
-        return woodPlanksNum;
-    }
-    float GetStone()
-    {
-        return stoneNum;
-    }
-    float GetFoodStorage()
-    {
-        return foodStorageNum;
-    }
-    float GetApple()
-    {
-        return appleNum;
-    }
-    float GetReligiosity()
-    {
-        return religiosityNum;
-    }
-
-    void SetIndustryStorage(float _industryStoramge)
-    {
-        industryStorageNum = _industryStoramge;
-    }
-    void SetWoodPlanks(float _woodPlanks)
-    {
-        woodPlanksNum = _woodPlanks;
-    }
-    void SetStone(float _stone)
-    {
-        stoneNum = _stone;
-    }
-    void SetFoodStorage(float _foodStorage)
-    {
-        foodStorageNum = _foodStorage;
-    }
-    void SetApple(float _apple)
-    {
-        appleNum = _apple;
-    }
-    void SetReligiosity(float _religiosity)
-    {
-        religiosityNum = _religiosity;
+        IndustryStorageText.text = ((int)industryUsedSpaceNum).ToString() + " / " + ((int)resourceNum[402]).ToString();
+        WoodPlanksText.text = ((int)resourceNum[101]).ToString();
+        StoneText.text = ((int)resourceNum[102]).ToString();
+        FoodStorageText.text = ((int)foodUsedSpaceNum).ToString() + " / " + ((int)resourceNum[401]).ToString();
+        AppleText.text = ((int)resourceNum[1]).ToString();
+        ReligiosityText.text = ((int)resourceNum[301]).ToString();
     }
 }
