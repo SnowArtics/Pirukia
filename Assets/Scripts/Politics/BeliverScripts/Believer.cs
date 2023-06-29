@@ -39,7 +39,10 @@ public class Believer : MonoBehaviour
 
     // DB에 저장할 때 필요한 고유 PK
     private int believerId;
-    
+
+    // 신도목록 관리 컴포넌트
+    BelieverProperty elementComp;
+
     // 신도의 상태
     public enum Status
     {
@@ -53,6 +56,17 @@ public class Believer : MonoBehaviour
     // believer의 이름확인
     public string GetName()
     {
+        return believerName;
+    }
+
+    public string SetName(string name="안개")
+    {
+        // TODO: 데이터 베이스를 기반으로 이름 동적 생성 필요
+        this.believerName = name;
+        if (elementComp != null)
+        {
+            elementComp.composeUI();
+        }
         return believerName;
     }
 
@@ -126,13 +140,6 @@ public class Believer : MonoBehaviour
     {
         return this.workGroup;
     }
-
-    // believer의 위치이동
-    public void RandomWalk()
-    {
-        // TODO: 게임오브젝트를 무작위로 이동시켜야 함.
-        return;
-    }
     public void Walk(int direction)
     {
         // TODO: 게임오브젝트를 특정방위로 이동시켜야 함.
@@ -145,6 +152,8 @@ public class Believer : MonoBehaviour
     {
         // TODO: 본인 집이 어딘지 저장해둘 필요가 있음
         // TODO: 들어간 집 위에 'ZZZ'를 표시하면 좋을 듯
+
+        condition = Status.SLEEP;
     }
 
     public void WakeUp()
@@ -153,7 +162,7 @@ public class Believer : MonoBehaviour
         if (condition == Status.SLEEP)
         {
             // workgroup의 0이 할당되지 않은 상태일 경우
-            condition = (this.workGroup == 0) ? Status.IDLE : Status.ASSIGN; 
+            condition = (this.workGroup == -1) ? Status.IDLE : Status.ASSIGN; 
         }
     }
 
@@ -167,16 +176,20 @@ public class Believer : MonoBehaviour
     }
 
     // 씬에 생성될 때 신도목록에 정보 추가
-    public GameObject believerList;
+    private GameObject believerList;
     public GameObject believerListElementPref;
     public void Awake()
     {
+        // 무직
+        workGroup = -1;
+
+        believerList = GameObject.FindWithTag("BelieverList");
         Transform believerListObj = believerList.transform;
         Debug.Log(believerListObj);
         GameObject element = Instantiate(believerListElementPref, believerListObj);
 
         // 목록 내용 채워넣기
-        BelieverProperty elementComp = (BelieverProperty)element.GetComponent("BelieverProperty");
+        elementComp = (BelieverProperty)element.GetComponent("BelieverProperty");
         elementComp.initBeliever(gameObject);
     }
 }

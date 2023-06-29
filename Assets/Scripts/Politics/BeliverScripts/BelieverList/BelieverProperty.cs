@@ -46,10 +46,11 @@ public class BelieverProperty : MonoBehaviour
         return "LV." + "0";
     }
 
-    private void composeUI()
+    public void composeUI()
     {
         // TODO: 매 프래임 혹은 트리거에 의해
         // 내용물을 갱신해 주는 함수 작성
+        this.textName.text = this.believerComp.GetName();
     }
 
     private void Start()

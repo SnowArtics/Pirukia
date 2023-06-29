@@ -33,6 +33,27 @@ public class BelieverIdle : MonoBehaviour
         string walkMotion = "Anim_" + name + (AnimationWalkList) animation;
         return walkMotion;
     }
+    
+    // 길찾기
+    struct Point{
+        public int x, y;
+    }
+
+    Point CalcPosition(GameObject target)
+    {
+        Point pos;
+        pos.x = 1;
+        pos.y = 1;
+        return pos;
+    }
+
+    void findWay(GameObject target) {
+        int[,] grid = new int[50, 50];
+        for (int i = 0; i < 50; i++)
+            for (int j = 0; j < 50; j++)
+                grid[i, j] = 0;
+    }
+    // 길찾기 끝
 
     // 애니메이션 처리를 SetAnimation에서 하긴 해야겠지만 일단은 여기서 시도
     void Walk(int direction) {

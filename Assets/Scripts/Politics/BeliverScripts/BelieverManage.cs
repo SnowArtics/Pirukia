@@ -7,12 +7,17 @@ public class BelieverManage : MonoBehaviour
     [SerializeField]
     private List<GameObject> believers = new List<GameObject>();
     // Start is called before the first frame update
+    [SerializeField]
+    private GameObject believerPref;
+
     void Start()
     {
-        // Å×½ºÆ®¿ë: BelieverÅÂ±×¸¦ °¡Áø °´Ã¼µéÀ» °¡Á®¿À±â
+        // í…ŒìŠ¤íŠ¸ìš©: Believeríƒœê·¸ë¥¼ ê°€ì§„ ê°ì²´ë“¤ì„ ê°€ì ¸ì˜¤ê¸°
         believers.AddRange(GameObject.FindGameObjectsWithTag("Believer"));
-        // TODO: ÀúÀåµÈ µ¥ÀÌÅÍ¿¡¼­ ½ÅµµÁ¤º¸¸¦ °¡Á®¿Í ÃÊ±âÈ­
-
+        // TODO: ì €ì¥ëœ ë°ì´í„°ì—ì„œ ì‹ ë„ì •ë³´ë¥¼ ê°€ì ¸ì™€ ì´ˆê¸°í™”
+        AddBeliever();
+        AddBeliever();
+        AddBeliever();
     }
 
     // Update is called once per frame
@@ -21,10 +26,12 @@ public class BelieverManage : MonoBehaviour
 
     }
 
-    // ½Åµµ »ı¼º
+    // ì‹ ë„ ìƒì„±
     public void AddBeliever()
     {
-
+        GameObject believer = Instantiate(believerPref);
+        believers.Add(believer);
+        believer.GetComponent<Believer>().SetName($"ì•ˆê°œ{believers.Count}");
     }
 
     public List<GameObject> sortByName(bool isDes)

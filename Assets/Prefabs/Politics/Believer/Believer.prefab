@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ea0257282abc640a4ff76e4d02a297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  believerName: Mob
+  believerName: 
   age: 0
   speed: 0
   believerAnimation: 
@@ -127,8 +127,7 @@ MonoBehaviour:
   loyalty: 0
   workGroup: 0
   workSpeed: 0
-  believerList: {fileID: 0}
-  believerListElementPref: {fileID: 1183388414334032651, guid: 788b61cb49d87e240bb5c284ff0f0af9, type: 3}
+  believerListElementPref: {fileID: 3787453810040821293, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
 --- !u!114 &6650862245534429747
 MonoBehaviour:
   m_ObjectHideFlags: 0
