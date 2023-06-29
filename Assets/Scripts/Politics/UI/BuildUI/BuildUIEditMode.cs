@@ -20,12 +20,12 @@ public class BuildUIEditMode : MonoBehaviour
     private BuildUITileCollision tileCollision;
     private bool isEdit, isMouseLeftClicked;
     private List<string> buildDatabase = new List<string>();
-    private List<GameObject[,]> buildingPosList = new List<GameObject[,]>();
+    private List<GameObject> buildingPosList = new List<GameObject>();
     private int sizeX, sizeY;                // 건물 크기(칸)을 저장(x, y)
     private Vector3 pos, mousePos;
 
-    public Tuple<int, int> getSizeBuilding() { return new Tuple<int, int>(sizeX, sizeY);  }
-    public void buildingToEdit (List<string> list) {
+    public Tuple<int, int> GetSizeBuilding() { return new Tuple<int, int>(sizeX, sizeY); }
+    public void BuildingToEdit (List<string> list) {
         buildDatabase = list;
         isEdit = true;
     }
@@ -118,6 +118,7 @@ public class BuildUIEditMode : MonoBehaviour
 
     // 건물 설치 실행
     public void StartBuilding(float posX, float posZ) {
+        buildingPosList.Add(tmpBuilding);
         /* 건물 건설 중일 때 구름 스프라이트로 가린다. */
         tmpDust = Instantiate(buildingDust);
         tmpDust.transform.position = new Vector3(posX-1, 0f, posZ-1);
@@ -146,6 +147,7 @@ public class BuildUIEditMode : MonoBehaviour
             idxNeed = int.Parse(needResource[i]);
             amountNeed = float.Parse(needResourceAmount[i]);
 
+            Debug.Log(storeResource[idxNeed]);
             storeResource[idxNeed] = resourceManagement.GetResourceNum(idxNeed);
 
             if (storeResource[idxNeed] < amountNeed) {

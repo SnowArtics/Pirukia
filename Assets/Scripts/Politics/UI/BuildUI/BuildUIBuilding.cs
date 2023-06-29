@@ -14,9 +14,9 @@ public class BuildUIBuilding : MonoBehaviour {
     private string buttonName;
     private List<string> buildingDataList = new List<string>();
 
-    private int buildingCount;                      // ÇöÀç °Ç¼³ÁßÀÎ °Ç¹° °³¼ö
-    private int buildedCount;                       // °Ç¼³ ¿Ï·áµÈ °Ç¹° °³¼ö
-    private int limitCount;                         // °Ç¼³ °¡´ÉÇÑ °Ç¹° °³¼ö
+    private int buildingCount;                      // í˜„ì¬ ê±´ì„¤ì¤‘ì¸ ê±´ë¬¼ ê°œìˆ˜
+    private int buildedCount;                       // ê±´ì„¤ ì™„ë£Œëœ ê±´ë¬¼ ê°œìˆ˜
+    private int limitCount;                         // ê±´ì„¤ ê°€ëŠ¥í•œ ê±´ë¬¼ ê°œìˆ˜
 
     private void Awake() {
         buildingCount = 0;
@@ -45,11 +45,11 @@ public class BuildUIBuilding : MonoBehaviour {
  //           BuildUITooltip uITooltip = this.GetComponent<BuildUITooltip>();
  //           uITooltip.onTooltip();
 
-            Debug.Log(buildingDataList[1] + " °Ç¼³ ½ÃÀÛ!!");
+            Debug.Log(buildingDataList[1] + " ê±´ì„¤ ì‹œì‘!!");
             buildState.addBuilding(buildId);
 
-            // °ÇÃà¹°¿¡ ´ëÇÑ DB °ªÀ» buildingToEdit ÇÔ¼ö·Î Àü´ŞÇØ ÆíÁı ¸ğµå·Î ÁøÇàÇÑ´Ù.
-            buildUIEventSystem.GetComponent<BuildUIEditMode>().buildingToEdit(buildingDataList);
+            // ê±´ì¶•ë¬¼ì— ëŒ€í•œ DB ê°’ì„ buildingToEdit í•¨ìˆ˜ë¡œ ì „ë‹¬í•´ í¸ì§‘ ëª¨ë“œë¡œ ì§„í–‰í•œë‹¤.
+            buildUIEventSystem.GetComponent<BuildUIEditMode>().BuildingToEdit(buildingDataList);
         }
         else if (limitCount == -2) { }
         else {
@@ -57,7 +57,7 @@ public class BuildUIBuilding : MonoBehaviour {
         }
     }
 
-    // DB¿¡¼­ °ÇÃà¹°ÀÇ °Ç¼³ Á¦ÇÑ ¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
+    // DBì—ì„œ ê±´ì¶•ë¬¼ì˜ ê±´ì„¤ ì œí•œ ìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
     public int chkLimitBuild() {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
@@ -67,7 +67,7 @@ public class BuildUIBuilding : MonoBehaviour {
         }
     }
 
-    // ÇöÀç Áö¾îÁø °ÇÃà¹°ÀÇ °³¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
+    // í˜„ì¬ ì§€ì–´ì§„ ê±´ì¶•ë¬¼ì˜ ê°œìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
     public int chkBuildedBuild() {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {

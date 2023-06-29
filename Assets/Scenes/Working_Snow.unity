@@ -9078,12 +9078,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f97d38026c2df45a4f83a4b249d29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IndustryStorageText: {fileID: 455407373}
+  AppleText: {fileID: 827798148}
   WoodPlanksText: {fileID: 2083566734}
   StoneText: {fileID: 111019541}
-  FoodStorageText: {fileID: 1525570585}
-  AppleText: {fileID: 827798148}
   ReligiosityText: {fileID: 1687092563}
+  FoodStorageText: {fileID: 1525570585}
+  IndustryStorageText: {fileID: 455407373}
 --- !u!1001 &1199872015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11085,7 +11085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1461698598
 RectTransform:
   m_ObjectHideFlags: 0
