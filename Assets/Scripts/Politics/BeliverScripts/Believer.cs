@@ -4,42 +4,43 @@ using UnityEngine;
 
 public class Believer : MonoBehaviour
 {
-    // believerÀÇ °íÀ¯ÇÑ ÀÌ¸§
+    // believerì˜ ê³ ìœ í•œ ì´ë¦„
     [SerializeField]
     private string believerName;
 
-    // believerÀÇ ³ªÀÌ
+    // believerì˜ ë‚˜ì´
     [SerializeField]
     private int age;
 
-    // believerÀÇ ÀÌµ¿¼Óµµ
+    // believerì˜ ì´ë™ì†ë„
     [SerializeField]
     private int speed;
 
-    // believer°¡ ¼öÇàÇØ¾ßÇÏ´Â Çàµ¿
+    // believerê°€ ìˆ˜í–‰í•´ì•¼í•˜ëŠ” í–‰ë™
     [SerializeField]
     private string believerAnimation;
     
-    // believer°¡ ¼ÓÇÑ ¼¼·Â
+    // believerê°€ ì†í•œ ì„¸ë ¥
     [SerializeField]
     private int group;
     
-    // believer°¡ Áö´Ñ Ãæ¼ºµµ
+    // believerê°€ ì§€ë‹Œ ì¶©ì„±ë„
     [SerializeField]
     private int loyalty;
     
-    // believer°¡ ¼ÓÇÑ ÀÛ¾÷Àå
+    // believerê°€ ì†í•œ ì‘ì—…ì¥
     [SerializeField]
     private int workGroup;
+    private GameObject workSpace;
     
-    // believerÀÇ ÀÛ¾÷¼Óµµ
+    // believerì˜ ì‘ì—…ì†ë„
     [SerializeField]
     private float workSpeed;
 
-    // DB¿¡ ÀúÀåÇÒ ¶§ ÇÊ¿äÇÑ °íÀ¯ PK
+    // DBì— ì €ì¥í•  ë•Œ í•„ìš”í•œ ê³ ìœ  PK
     private int believerId;
     
-    // ½ÅµµÀÇ »óÅÂ
+    // ì‹ ë„ì˜ ìƒíƒœ
     public enum Status
     {
         IDLE,
@@ -49,23 +50,23 @@ public class Believer : MonoBehaviour
     }
     private Status condition;
 
-    // believerÀÇ ÀÌ¸§È®ÀÎ
+    // believerì˜ ì´ë¦„í™•ì¸
     public string GetName()
     {
         return believerName;
     }
 
-    // believerÀÇ ³ªÀÌ Áõ°¡
+    // believerì˜ ë‚˜ì´ ì¦ê°€
     public void IncreaseOneAge()
     {
-        // ¼ö¸í Ã¼Å©¸¦ ¿©±â¼­ ÇÏ¸é ÆíÇÒ µí ÇÔ.
+        // ìˆ˜ëª… ì²´í¬ë¥¼ ì—¬ê¸°ì„œ í•˜ë©´ í¸í•  ë“¯ í•¨.
         this.age += 1;
     }
 
-    // believerÀÇ ÀÌµ¿¼Óµµ Á¶Á¤ ¸Ş¼­µå
+    // believerì˜ ì´ë™ì†ë„ ì¡°ì • ë©”ì„œë“œ
     public void SetSpeed(int speed)
     {
-        // ÀÔ·ÂµÈ ¼Óµµ°¡ Á¤»óÀûÀÎÁö È®ÀÎ ÇÊ¿ä
+        // ì…ë ¥ëœ ì†ë„ê°€ ì •ìƒì ì¸ì§€ í™•ì¸ í•„ìš”
         this.speed = speed;
     }
     public int GetSpeed()
@@ -73,7 +74,7 @@ public class Believer : MonoBehaviour
         return this.speed;
     }
 
-    // believerÀÇ Ãæ¼ºµµ Á¶Á¤ ¸Ş¼­µå
+    // believerì˜ ì¶©ì„±ë„ ì¡°ì • ë©”ì„œë“œ
     public void SetLoyalty(int loyalty)
     {
         this.loyalty = loyalty;
@@ -84,16 +85,16 @@ public class Believer : MonoBehaviour
     }
     public int AccLoyalty(int loyalty)
     {
-        // Ãæ¼ºµµ °¡°¨ ¸Ş¼­µå
-        // ¹İÈ¯°ªÀ¸·Î °è»êÀÌ ¿Ï·áµÈ Ãæ¼ºµµ¸¦ °¡Áü
-        // TODO: °è»êÀÇ ¹«°á¼ºÀ» È®ÀÎÇÒ ÇÊ¿ä°¡ ÀÖÀ½
+        // ì¶©ì„±ë„ ê°€ê° ë©”ì„œë“œ
+        // ë°˜í™˜ê°’ìœ¼ë¡œ ê³„ì‚°ì´ ì™„ë£Œëœ ì¶©ì„±ë„ë¥¼ ê°€ì§
+        // TODO: ê³„ì‚°ì˜ ë¬´ê²°ì„±ì„ í™•ì¸í•  í•„ìš”ê°€ ìˆìŒ
         this.loyalty += loyalty;
         return this.loyalty;
     }
 
-    // believerÀÇ ÀÛ¾÷¼Óµµ Á¶Á¤ ¸Ş¼­µå
+    // believerì˜ ì‘ì—…ì†ë„ ì¡°ì • ë©”ì„œë“œ
     public void SetWorkSpeed(float workspeed)
-        // TODO: ¸Å°³º¯¼ö¿Í ¼Ó¼ºÀÇ Å¸ÀÓÀ» ÀÏÄ¡½ÃÅ³ ÇÊ¿ä°¡ ÀÖÀ½
+        // TODO: ë§¤ê°œë³€ìˆ˜ì™€ ì†ì„±ì˜ íƒ€ì„ì„ ì¼ì¹˜ì‹œí‚¬ í•„ìš”ê°€ ìˆìŒ
     {
         this.workSpeed = workspeed;
     }
@@ -103,20 +104,20 @@ public class Believer : MonoBehaviour
     }
     public float AccWorkSpeed(float workspeed)
     {
-        // ÀÛ¾÷¼Óµµ °¡°¨ ¸Ş¼­µå
-        // ¹İÈ¯°ªÀ¸·Î °è»êÀÌ ¿Ï·áµÈ ÀÛ¾÷¼Óµµ¸¦ °¡Áü
-        // TODO: °è»êÀÇ ¹«°á¼ºÀ» È®ÀÎÇÒ ÇÊ¿ä°¡ ÀÖÀ½
+        // ì‘ì—…ì†ë„ ê°€ê° ë©”ì„œë“œ
+        // ë°˜í™˜ê°’ìœ¼ë¡œ ê³„ì‚°ì´ ì™„ë£Œëœ ì‘ì—…ì†ë„ë¥¼ ê°€ì§
+        // TODO: ê³„ì‚°ì˜ ë¬´ê²°ì„±ì„ í™•ì¸í•  í•„ìš”ê°€ ìˆìŒ
         this.workSpeed += workspeed;
         return this.workSpeed;
     }
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤
+    // ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •
     public void SetAnimation(string animation)
     {
         this.believerAnimation = animation;
     }
 
-    // believerÀÇ ¼Ò¼Ó ÀÛ¾÷Àå Á¶Á¤ ¸Ş¼­µå
+    // believerì˜ ì†Œì† ì‘ì—…ì¥ ì¡°ì • ë©”ì„œë“œ
     public void SetWorkGroup(int workgroup)
     {
         this.workGroup = workgroup;
@@ -126,46 +127,46 @@ public class Believer : MonoBehaviour
         return this.workGroup;
     }
 
-    // believerÀÇ À§Ä¡ÀÌµ¿
+    // believerì˜ ìœ„ì¹˜ì´ë™
     public void RandomWalk()
     {
-        // TODO: °ÔÀÓ¿ÀºêÁ§Æ®¸¦ ¹«ÀÛÀ§·Î ÀÌµ¿½ÃÄÑ¾ß ÇÔ.
+        // TODO: ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ë¬´ì‘ìœ„ë¡œ ì´ë™ì‹œì¼œì•¼ í•¨.
         return;
     }
     public void Walk(int direction)
     {
-        // TODO: °ÔÀÓ¿ÀºêÁ§Æ®¸¦ Æ¯Á¤¹æÀ§·Î ÀÌµ¿½ÃÄÑ¾ß ÇÔ.
+        // TODO: ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ íŠ¹ì •ë°©ìœ„ë¡œ ì´ë™ì‹œì¼œì•¼ í•¨.
         return;
     }
 
-    // ½Åµµ°¡ ÀáÀ» Ã»ÇÏµµ·Ï ÇÔ
-    // º»ÀÎÀÇ ÆÇÀÚÃÌÀ¸·Î º¹±Í
+    // ì‹ ë„ê°€ ì ì„ ì²­í•˜ë„ë¡ í•¨
+    // ë³¸ì¸ì˜ íŒìì´Œìœ¼ë¡œ ë³µê·€
     public void FallAsleep()
     {
-        // TODO: º»ÀÎ ÁıÀÌ ¾îµòÁö ÀúÀåÇØµÑ ÇÊ¿ä°¡ ÀÖÀ½
-        // TODO: µé¾î°£ Áı À§¿¡ 'ZZZ'¸¦ Ç¥½ÃÇÏ¸é ÁÁÀ» µí
+        // TODO: ë³¸ì¸ ì§‘ì´ ì–´ë”˜ì§€ ì €ì¥í•´ë‘˜ í•„ìš”ê°€ ìˆìŒ
+        // TODO: ë“¤ì–´ê°„ ì§‘ ìœ„ì— 'ZZZ'ë¥¼ í‘œì‹œí•˜ë©´ ì¢‹ì„ ë“¯
     }
 
     public void WakeUp()
     {
-        // ÀÚ°íÀÖÀ» °æ¿ì¸¸ ÇÑÁ¤ÇÏ¸é Á×°Å³ª ºÒÄ§¹øÀÏ °æ¿ìµµ Ã³¸® °¡´É
+        // ìê³ ìˆì„ ê²½ìš°ë§Œ í•œì •í•˜ë©´ ì£½ê±°ë‚˜ ë¶ˆì¹¨ë²ˆì¼ ê²½ìš°ë„ ì²˜ë¦¬ ê°€ëŠ¥
         if (condition == Status.SLEEP)
         {
-            // workgroupÀÇ 0ÀÌ ÇÒ´çµÇÁö ¾ÊÀº »óÅÂÀÏ °æ¿ì
+            // workgroupì˜ 0ì´ í• ë‹¹ë˜ì§€ ì•Šì€ ìƒíƒœì¼ ê²½ìš°
             condition = (this.workGroup == 0) ? Status.IDLE : Status.ASSIGN; 
         }
     }
 
-    // animation DBÁ¢±Ù
+    // animation DBì ‘ê·¼
     // string GetAnimation(int serial)
-    // TODO: °¡´ÉÇÏ¸é Beliver°ü¸® Å¬·¡½º¿¡¼­ Ã³¸®ÇÏ°í ½ÍÀ½
+    // TODO: ê°€ëŠ¥í•˜ë©´ Beliverê´€ë¦¬ í´ë˜ìŠ¤ì—ì„œ ì²˜ë¦¬í•˜ê³  ì‹¶ìŒ
     public string GetAnimation(int serial)
     {
-        // TODO: DBÁ¢±Ù ±¸Çö
+        // TODO: DBì ‘ê·¼ êµ¬í˜„
         return "";
     }
 
-    // ¾À¿¡ »ı¼ºµÉ ¶§ ½Åµµ¸ñ·Ï¿¡ Á¤º¸ Ãß°¡
+    // ì”¬ì— ìƒì„±ë  ë•Œ ì‹ ë„ëª©ë¡ì— ì •ë³´ ì¶”ê°€
     public GameObject believerList;
     public GameObject believerListElementPref;
     public void Awake()
@@ -174,7 +175,7 @@ public class Believer : MonoBehaviour
         Debug.Log(believerListObj);
         GameObject element = Instantiate(believerListElementPref, believerListObj);
 
-        // ¸ñ·Ï ³»¿ë Ã¤¿ö³Ö±â
+        // ëª©ë¡ ë‚´ìš© ì±„ì›Œë„£ê¸°
         BelieverProperty elementComp = (BelieverProperty)element.GetComponent("BelieverProperty");
         elementComp.initBeliever(gameObject);
     }

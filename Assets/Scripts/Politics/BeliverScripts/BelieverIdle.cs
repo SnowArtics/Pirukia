@@ -5,13 +5,13 @@ using UnityEngine;
 public class BelieverIdle : MonoBehaviour
 {
     [SerializeField]
-    private int speed;              // ½ÅµµÀÇ ÀÌµ¿ ¼Óµµ
+    private int speed;              // ì‹ ë„ì˜ ì´ë™ ì†ë„
     [SerializeField]
-    private new string animation;   // Ãâ·ÂÇÒ ¾Ö´Ï¸ŞÀÌ¼Ç
+    private new string animation;   // ì¶œë ¥í•  ì• ë‹ˆë©”ì´ì…˜
     [SerializeField]
-    private int group;              // ÇØ´ç ½Åµµ°¡ ¹Ï´Â ½ÅÀÇ ±×·ì¹øÈ£
+    private int group;              // í•´ë‹¹ ì‹ ë„ê°€ ë¯¿ëŠ” ì‹ ì˜ ê·¸ë£¹ë²ˆí˜¸
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç °ü¸®
+    // ì• ë‹ˆë©”ì´ì…˜ ê´€ë¦¬
     private Animator animator;
 
     private AnimationWalkList nowWalk;
@@ -34,25 +34,25 @@ public class BelieverIdle : MonoBehaviour
         return walkMotion;
     }
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®¸¦ SetAnimation¿¡¼­ ÇÏ±ä ÇØ¾ß°ÚÁö¸¸ ÀÏ´ÜÀº ¿©±â¼­ ½Ãµµ
+    // ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬ë¥¼ SetAnimationì—ì„œ í•˜ê¸´ í•´ì•¼ê² ì§€ë§Œ ì¼ë‹¨ì€ ì—¬ê¸°ì„œ ì‹œë„
     void Walk(int direction) {
         switch (direction) {
-            case 2: {       // ³²ÂÊÀ¸·Î ÀÌµ¿
+            case 2: {       // ë‚¨ìª½ìœ¼ë¡œ ì´ë™
                     Vector3 vec = new Vector3(-1, 0, -1);
                     transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
-            case 4: {       // ¼­ÂÊÀ¸·Î ÀÌµ¿
+            case 4: {       // ì„œìª½ìœ¼ë¡œ ì´ë™
                     Vector3 vec = new Vector3(-1, 0, 1);
                     transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
-            case 6: {       // µ¿ÂÊÀ¸·Î ÀÌµ¿
+            case 6: {       // ë™ìª½ìœ¼ë¡œ ì´ë™
                     Vector3 vec = new Vector3(1, 0, -1);
                     transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
             }
-            case 8: {       // ºÏÂÊÀ¸·Î ÀÌµ¿
+            case 8: {       // ë¶ìª½ìœ¼ë¡œ ì´ë™
                     Vector3 vec = new Vector3(1, 0, 1);
                     transform.Translate(vec * speed * Time.deltaTime, Space.World);
                     break;
@@ -63,7 +63,7 @@ public class BelieverIdle : MonoBehaviour
     }
 
     public void RandomWalk(int direction) {
-        this.animation = GetAnimation(group + direction);       // ½Å ºĞ·ù ÄÚµå(2ÀÚ¸®) + Çàµ¿ ÄÚµå(2ÀÚ¸®)
+        this.animation = GetAnimation(group + direction);       // ì‹  ë¶„ë¥˜ ì½”ë“œ(2ìë¦¬) + í–‰ë™ ì½”ë“œ(2ìë¦¬)
         SetAnimation(animation);
         Walk(direction);
     }
@@ -80,7 +80,7 @@ public class BelieverIdle : MonoBehaviour
     public void Update() {
         moveTime += Time.deltaTime;
 
-        // 5ÃÊ°¡ Áö³ª¸é RandomWalk() ÇÔ¼ö¸¦ ½ÇÇàÇÏ´Â Idle() ÄÚ·çÆ¾ ½ÇÇà
+        // 5ì´ˆê°€ ì§€ë‚˜ë©´ RandomWalk() í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•˜ëŠ” Idle() ì½”ë£¨í‹´ ì‹¤í–‰
         if (moveTime >= 5) {
             StartCoroutine(Idle());
         }
@@ -92,34 +92,34 @@ public class BelieverIdle : MonoBehaviour
         int direction;
 
         if (posX <= 2) {
-            if (posZ <= 2) { direction = 8; }                   // ¸ÊÀÇ °¡Àå ¾Æ·¡ÂÊÀ¸·Î °¡¸é ºÏ ¹æÇâÀ¸·Î¸¸ ÀÌµ¿
-            else if (posZ >= 98) { direction = 6; }            // ¸ÊÀÇ °¡Àå ¿ŞÂÊÀ¸·Î °¡¸é µ¿ ¹æÇâÀ¸·Î¸¸ ÀÌµ¿
-            else { direction = Random.Range(3, 5) * 2; }        // ¸ÊÀÇ 3»çºĞ¸é ³¡¿¡ µµ´ŞÇÏ¸é µ¿, ºÏ ¹æÇâÀ¸·Î ÀÌµ¿
+            if (posZ <= 2) { direction = 8; }                   // ë§µì˜ ê°€ì¥ ì•„ë˜ìª½ìœ¼ë¡œ ê°€ë©´ ë¶ ë°©í–¥ìœ¼ë¡œë§Œ ì´ë™
+            else if (posZ >= 98) { direction = 6; }            // ë§µì˜ ê°€ì¥ ì™¼ìª½ìœ¼ë¡œ ê°€ë©´ ë™ ë°©í–¥ìœ¼ë¡œë§Œ ì´ë™
+            else { direction = Random.Range(3, 5) * 2; }        // ë§µì˜ 3ì‚¬ë¶„ë©´ ëì— ë„ë‹¬í•˜ë©´ ë™, ë¶ ë°©í–¥ìœ¼ë¡œ ì´ë™
         }
         else if(posX >= 98) {
-            if (posZ <= 2) { direction = 4; }                   // ¸ÊÀÇ °¡Àå ¿À¸¥ÂÊÀ¸·Î °¡¸é ¼­ ¹æÇâÀ¸·Î ÀÌµ¿
-            else if (posZ >= 98) { direction = 2; }            // ¸ÊÀÇ °¡Àå À§ÂÊÀ¸·Î °¡¸é ³² ¹æÇâÀ¸·Î ÀÌµ¿
-            else { direction = Random.Range(1, 3) * 2; }        // ¸ÊÀÇ 1»çºĞ¸é ³¡¿¡ µµ´ŞÇÏ¸é ³², ¼­ ¹æÇâÀ¸·Î ÀÌµ¿
+            if (posZ <= 2) { direction = 4; }                   // ë§µì˜ ê°€ì¥ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ë©´ ì„œ ë°©í–¥ìœ¼ë¡œ ì´ë™
+            else if (posZ >= 98) { direction = 2; }            // ë§µì˜ ê°€ì¥ ìœ„ìª½ìœ¼ë¡œ ê°€ë©´ ë‚¨ ë°©í–¥ìœ¼ë¡œ ì´ë™
+            else { direction = Random.Range(1, 3) * 2; }        // ë§µì˜ 1ì‚¬ë¶„ë©´ ëì— ë„ë‹¬í•˜ë©´ ë‚¨, ì„œ ë°©í–¥ìœ¼ë¡œ ì´ë™
         }
         else {
-            if (posZ <= 2) { direction = Random.Range(1, 3) * 4; }          // ¸ÊÀÇ 4»çºĞ¸é ³¡¿¡ µµ´ŞÇÏ¸é ºÏ, ¼­ ¹æÇâÀ¸·Î ÀÌµ¿
-            else if (posZ >= 98) { direction = (Random.Range(1, 3) * 4) - 2; }   // ¸ÊÀÇ 2»çºĞ¸é ³¡¿¡ µµ´ŞÇÏ¸é ³², µ¿ ¹æÇâÀ¸·Î ÀÌµ¿
-            else { direction = (Random.Range(1, 5) * 2); }      // ÇÊµå ³»ºÎ¿¡ ÀÖÀ¸¸é 2,4,6,8 Áß¿¡ ³­¼ö »ı¼ºÇÏ¿© ÀÓÀÇÀÇ ¹æÇâ ÁöÁ¤
+            if (posZ <= 2) { direction = Random.Range(1, 3) * 4; }          // ë§µì˜ 4ì‚¬ë¶„ë©´ ëì— ë„ë‹¬í•˜ë©´ ë¶, ì„œ ë°©í–¥ìœ¼ë¡œ ì´ë™
+            else if (posZ >= 98) { direction = (Random.Range(1, 3) * 4) - 2; }   // ë§µì˜ 2ì‚¬ë¶„ë©´ ëì— ë„ë‹¬í•˜ë©´ ë‚¨, ë™ ë°©í–¥ìœ¼ë¡œ ì´ë™
+            else { direction = (Random.Range(1, 5) * 2); }      // í•„ë“œ ë‚´ë¶€ì— ìˆìœ¼ë©´ 2,4,6,8 ì¤‘ì— ë‚œìˆ˜ ìƒì„±í•˜ì—¬ ì„ì˜ì˜ ë°©í–¥ ì§€ì •
         }
 
         moveTime = 0;
 
-        // 2ÃÊ µ¿¾È RandomWalk() ÇÔ¼ö ½ÇÇà
+        // 2ì´ˆ ë™ì•ˆ RandomWalk() í•¨ìˆ˜ ì‹¤í–‰
         for(moveTime = 0; moveTime <= 2; moveTime += Time.deltaTime) { 
             RandomWalk(direction);
             yield return null;
         }
 
-        // ÁÂÇ¥ÀÇ ¼Ò¼öÁ¡À» ¹İ¿Ã¸²ÇØ¼­ Á¤¼ö·Î Ã³¸®
+        // ì¢Œí‘œì˜ ì†Œìˆ˜ì ì„ ë°˜ì˜¬ë¦¼í•´ì„œ ì •ìˆ˜ë¡œ ì²˜ë¦¬
         Vector3 pos = this.transform.position;
         this.transform.position = new Vector3(Mathf.Round(pos.x), pos.y, Mathf.Round(pos.z));
 
-        // 2ÃÊ °æ°ú ÈÄ, ÄÚ·çÆ¾ Á¾·á(´Ù½Ã ´ë±â »óÅÂ·Î ÀüÈ¯)
+        // 2ì´ˆ ê²½ê³¼ í›„, ì½”ë£¨í‹´ ì¢…ë£Œ(ë‹¤ì‹œ ëŒ€ê¸° ìƒíƒœë¡œ ì „í™˜)
         moveTime = 0;
         animator.SetBool("isWalk", false);
         yield break;

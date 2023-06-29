@@ -1,5 +1,5 @@
-/* ½Åµµ¸ñ·Ï ¸®½ºÆ®¿¡ Ç¥½ÃµÉ
- * °³º° °³Ã¼ÀÇ ³»¿ë¹° ±¸¼º ÄÄÆ÷³ÍÆ®
+/* ì‹ ë„ëª©ë¡ ë¦¬ìŠ¤íŠ¸ì— í‘œì‹œë 
+ * ê°œë³„ ê°œì²´ì˜ ë‚´ìš©ë¬¼ êµ¬ì„± ì»´í¬ë„ŒíŠ¸
 */
 
 using System.Collections;
@@ -16,7 +16,7 @@ public class BelieverProperty : MonoBehaviour
     [SerializeField]
     GameObject textLevelObj;
 
-    // GameObject¿¡¼­ ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ® °´Ã¼¸¦ ÀúÀåÇÒ º¯¼ö
+    // GameObjectì—ì„œ í•„ìš”í•œ ì»´í¬ë„ŒíŠ¸ ê°ì²´ë¥¼ ì €ì¥í•  ë³€ìˆ˜
     private Believer believerComp;
     private TextMeshProUGUI textName;
     private TextMeshProUGUI textLevel;
@@ -24,34 +24,32 @@ public class BelieverProperty : MonoBehaviour
     // Start is called before the first frame update
     public void initBeliever(GameObject believer)
     {
-        // Believer¿¡¼­ ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ® ÃßÃâ
+        // Believerì—ì„œ í•„ìš”í•œ ì»´í¬ë„ŒíŠ¸ ì¶”ì¶œ
         this.believerObj = believer;
         this.believerComp = (Believer) believerObj.GetComponent("Believer");
-        // UI¿¡ Ç¥½ÃÇÒ TextMesh ÃßÃâ
+        // UIì— í‘œì‹œí•  TextMesh ì¶”ì¶œ
         // Name
-        this.textNameObj = gameObject.transform.Find("NameButton").Find("Name").gameObject;
+        this.textNameObj = gameObject.transform.Find("BelieverName").Find("NameText").gameObject;
         this.textName = textNameObj.GetComponent<TextMeshProUGUI>();
         // Level
-        this.textLevelObj = gameObject.transform.Find("LevelButton").Find("Level").gameObject;
-        this.textLevel = textLevelObj.GetComponent<TextMeshProUGUI>();
-        // UIÃÊ±âÈ­
-        Debug.Log(this.textName.ToString());
-        Debug.Log(this.believerComp.ToString());
+        //this.textLevelObj = gameObject.transform.Find("LevelButton").Find("Level").gameObject;
+        //this.textLevel = textLevelObj.GetComponent<TextMeshProUGUI>();
+        // UIì´ˆê¸°í™”
         this.textName.text = this.believerComp.GetName();
-        this.textLevel.text = composeStrLevel();
+        //this.textLevel.text = composeStrLevel();
     }
 
     private string composeStrLevel()
     {
-        // TODO: workGroupÀ» ÅëÇØ ÇÑ±Û Ç¥Ãâ
+        // TODO: workGroupì„ í†µí•´ í•œê¸€ í‘œì¶œ
         // TODO: 
         return "LV." + "0";
     }
 
     private void composeUI()
     {
-        // TODO: ¸Å ÇÁ·¡ÀÓ È¤Àº Æ®¸®°Å¿¡ ÀÇÇØ
-        // ³»¿ë¹°À» °»½ÅÇØ ÁÖ´Â ÇÔ¼ö ÀÛ¼º
+        // TODO: ë§¤ í”„ë˜ì„ í˜¹ì€ íŠ¸ë¦¬ê±°ì— ì˜í•´
+        // ë‚´ìš©ë¬¼ì„ ê°±ì‹ í•´ ì£¼ëŠ” í•¨ìˆ˜ ì‘ì„±
     }
 
     private void Start()

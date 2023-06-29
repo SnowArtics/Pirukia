@@ -1013,6 +1013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3787453810040821292}
+  - component: {fileID: 4743172771723106492}
   m_Layer: 5
   m_Name: BelieverButton
   m_TagString: Untagged
@@ -1042,6 +1043,21 @@ RectTransform:
   m_AnchoredPosition: {x: -94.85, y: 13.85}
   m_SizeDelta: {x: 193.92, y: 35.7}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &4743172771723106492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787453810040821293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835af04cf4d4bb640a19a56f18d64b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  believerObj: {fileID: 0}
+  textNameObj: {fileID: 3787453810035561816}
+  textLevelObj: {fileID: 0}
 --- !u!1 &3787453810441814732
 GameObject:
   m_ObjectHideFlags: 0
