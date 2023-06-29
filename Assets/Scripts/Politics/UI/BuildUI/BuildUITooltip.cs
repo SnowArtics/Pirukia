@@ -37,38 +37,30 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void Update() {
         if (isPointerEnter) {
             buttonName = this.name;
+            string buildSpec = string.Empty;
 
-            if (buttonName == "-" || buttonName.StartsWith("Str")) {
-                ctx.text = "N/A";
+            // 버튼의 이름을 갖는 id를 DB에서 찾아 변수에 저장
+            IDataReader dataReader = database.ExecuteDB("SELECT * from building where Name=\"" + buttonName + "\"");
+            while (dataReader.Read()) {
+                int buildId = dataReader.GetInt32(0);
+                string[] buildResourceArr = dataReader.GetString(4).Split(',');
+                int countArr = buildResourceArr.Length;
+                buildSpec = preset.GetSpec(buildId);
+
+                int nHeight = (countArr * 30) + 80;
+                tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(230, nHeight);
             }
-            else {
-                tooltip.SetActive(true);
-                string buildSpec = string.Empty;
-
-                // 버튼의 이름을 갖는 id를 DB에서 찾아 변수에 저장
-                IDataReader dataReader = database.ExecuteDB("SELECT * from building where Name=\"" + buttonName + "\"");
-                while (dataReader.Read()) {
-                    int buildId = dataReader.GetInt32(0);
-                    string[] buildResourceArr = dataReader.GetString(4).Split(',');
-                    int countArr = buildResourceArr.Length;
-                    buildSpec = preset.GetSpec(buildId);
-
-                    int nHeight = (countArr * 30) + 80;
-                    tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(230, nHeight);
-                }
-                ctx.text = buildSpec;
-            }
+            ctx.text = buildSpec;
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) { 
+    public void OnPointerEnter(PointerEventData eventData) {
+        tooltip.SetActive(true);
         isPointerEnter = true;
     }
 
     public void OnPointerExit(PointerEventData eventData) {
         isPointerEnter = false;
-
-        buttonName = this.name;
         tooltip.SetActive(false);
 
         ctx.text = "";

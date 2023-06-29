@@ -74,6 +74,8 @@ public class BuildUIPreset : MonoBehaviour
                     ii++;
                     break;
                 case 7:
+                    Debug.Log(building.Key);
+                    Debug.Log(nameKr);
                     religionButtonLists[li].name = building.Value;
                     religionButtonLists[li].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     li++;
