@@ -21,9 +21,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        Debug.Log($"Horizontal: {horizontal}");
         float vertical = Input.GetAxis("Vertical");
-        Debug.Log($"Vertical: {vertical}");
 
         // 움직이지 않을 때
         if (Math.Abs(horizontal) + Math.Abs(vertical) < float.Epsilon)
