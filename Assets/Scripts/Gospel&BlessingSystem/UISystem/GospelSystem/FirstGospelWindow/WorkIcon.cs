@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,11 @@ public class WorkIcon : MonoBehaviour
                 , IPointerEnterHandler
                 , IPointerExitHandler
 {
+    [SerializeField]
+    private GameObject gospelWindow;
+
+    private GameObject workWindow;
+
     GameObject text;
     GameObject parentObject;
 
@@ -20,6 +26,8 @@ public class WorkIcon : MonoBehaviour
         parentObject = transform.parent.gameObject;
 
         controlScript = parentObject.GetComponent<FirstGospelWindowControl>();
+
+        workWindow = gospelWindow.transform.GetChild(2).gameObject;
     }
 
     // Start is called before the first frame update
@@ -36,7 +44,9 @@ public class WorkIcon : MonoBehaviour
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Click");
+        parentObject.SetActive(false);
+        gospelWindow.SetActive(true);
+        workWindow.SetActive(true);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -49,8 +59,8 @@ public class WorkIcon : MonoBehaviour
         text.SetActive(true);
         controlScript.SetActiveExplain(true);
 
-        controlScript.SetExplainNameText("»î");
-        controlScript.SetExplainText("³ëµ¿ÀÌ¶õ ½Å¼ºÇÑ°ÍÀÌ´Ù.\n½Å¼ºÇÑ ³ëµ¿À» ¾î¶»°Ô ÇÒ ¼ö ÀÖ´Â°¡");
+        controlScript.SetExplainNameText("ì‚¶");
+        controlScript.SetExplainText("ë…¸ë™ì´ë€ ì‹ ì„±í•œê²ƒì´ë‹¤.\nì‹ ì„±í•œ ë…¸ë™ì„ ì–´ë–»ê²Œ í•  ìˆ˜ ìˆëŠ”ê°€");
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -49,8 +49,8 @@ public class WarIcon : MonoBehaviour
         text.SetActive(true);
         controlScript.SetActiveExplain(true);
 
-        controlScript.SetExplainNameText("ÀüÀï");
-        controlScript.SetExplainText("½Å²²¼­ º¸¿ìÇÏ»ç ÀÌ±³µµ¿¡°Ô Ã¶Åğ¸¦!");
+        controlScript.SetExplainNameText("ì „ìŸ");
+        controlScript.SetExplainText("ì‹ ê»˜ì„œ ë³´ìš°í•˜ì‚¬ \nì´êµë„ì—ê²Œ ì² í‡´ë¥¼!");
     }
 
     public void OnPointerExit(PointerEventData eventData)

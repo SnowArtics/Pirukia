@@ -12,6 +12,8 @@ public class GospelIcon : MonoBehaviour
 {
     [SerializeField]
     private GameObject explain;
+    [SerializeField]
+    private GameObject gospelWindow;
 
     private GameObject parentObject;
 
@@ -38,6 +40,7 @@ public class GospelIcon : MonoBehaviour
     public void OnPointerClick(PointerEventData eventData)
     {
         parentObject.SetActive(false);
+        gospelWindow.SetActive(true);
         Debug.Log("Click");
     }
 
@@ -49,7 +52,7 @@ public class GospelIcon : MonoBehaviour
     public void OnPointerEnter(PointerEventData eventData)
     {
         explain.SetActive(true);
-        explainText.text = "±³¸®¸¦ ¼¼¿ì°í, ½ÅµµµéÀ» ¿Ã¹Ù¸¥ ¹æÇâÀ¸·Î ÀÌ²ø¾îÁÖ¼¼¿ä.";
+        explainText.text = "êµë¦¬ë¥¼ ì„¸ìš°ê³ , ì‹ ë„ë“¤ì„ ì˜¬ë°”ë¥¸ ë°©í–¥ìœ¼ë¡œ ì´ëŒì–´ì£¼ì„¸ìš”.";
     }
 
     public void OnPointerExit(PointerEventData eventData)

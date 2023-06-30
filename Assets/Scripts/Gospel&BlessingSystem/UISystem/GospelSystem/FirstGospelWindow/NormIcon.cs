@@ -49,8 +49,8 @@ public class NormIcon : MonoBehaviour
         text.SetActive(true);
         controlScript.SetActiveExplain(true);
 
-        controlScript.SetExplainNameText("±Ô¹ü");
-        controlScript.SetExplainText("»ç¶÷Àº ¾î¸°¾ç°ú °°¾Æ ¸¶¶¥È÷ ±Ô¹üÀ¸·Î¼­ ÀÌ²ø¾î ÁÖ¾î¾ß ÇÑ´Ù.");
+        controlScript.SetExplainNameText("ê·œë²”");
+        controlScript.SetExplainText("ì‚¬ëŒì€ ì–´ë¦°ì–‘ê³¼ ê°™ì•„ \në§ˆë•…íˆ ê·œë²”ìœ¼ë¡œì„œ \nì´ëŒì–´ ì£¼ì–´ì•¼ í•œë‹¤.");
     }
 
     public void OnPointerExit(PointerEventData eventData)

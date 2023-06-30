@@ -29,8 +29,8 @@ public class FirstGospelWindowControl : MonoBehaviour
 
     void Awake()
     {
-        explainName = transform.GetChild(5).gameObject;
-        explain = transform.GetChild(6).gameObject;
+        explainName = transform.GetChild(6).gameObject;
+        explain = transform.GetChild(7).gameObject;
 
         explainNameText = explainName.GetComponent<TextMeshProUGUI>();
         explainText = explain.GetComponent<TextMeshProUGUI>();
