@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 6650862245534429745}
   - component: {fileID: 6650862245534429746}
   - component: {fileID: 6650862245534429747}
+  - component: {fileID: 8090687752455169932}
+  - component: {fileID: 2642457196764670740}
+  - component: {fileID: 1936340787992487466}
   m_Layer: 0
   m_Name: Believer
   m_TagString: Believer
@@ -143,3 +146,54 @@ MonoBehaviour:
   speed: 0
   animation: 
   group: 0
+--- !u!136 &8090687752455169932
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650862245534429748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.81000006
+  m_Height: 3.34
+  m_Direction: 1
+  m_Center: {x: -0.000000049769877, y: 1.67, z: 0.000000074654814}
+--- !u!114 &2642457196764670740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650862245534429748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189af6892329f8a40bf5a6a816fcd2e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 100
+  height: 100
+  start: {x: 0, y: 0}
+  goal: {x: 0, y: 0}
+  stepSize: 5
+  goalThreshold: 2
+  npc: {fileID: 0}
+--- !u!143 &1936340787992487466
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650862245534429748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 6.68
+  m_Radius: 0.81
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}

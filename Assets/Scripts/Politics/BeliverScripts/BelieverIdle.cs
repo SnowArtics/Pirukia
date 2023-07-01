@@ -112,19 +112,19 @@ public class BelieverIdle : MonoBehaviour
         float posZ = this.transform.position.z;
         int direction;
 
-        if (posX <= 2) {
-            if (posZ <= 2) { direction = 8; }                   // 맵의 가장 아래쪽으로 가면 북 방향으로만 이동
-            else if (posZ >= 98) { direction = 6; }            // 맵의 가장 왼쪽으로 가면 동 방향으로만 이동
+        if (posX <= 5) {
+            if (posZ <= 5) { direction = 8; }                   // 맵의 가장 아래쪽으로 가면 북 방향으로만 이동
+            else if (posZ >= 95) { direction = 6; }            // 맵의 가장 왼쪽으로 가면 동 방향으로만 이동
             else { direction = Random.Range(3, 5) * 2; }        // 맵의 3사분면 끝에 도달하면 동, 북 방향으로 이동
         }
-        else if(posX >= 98) {
-            if (posZ <= 2) { direction = 4; }                   // 맵의 가장 오른쪽으로 가면 서 방향으로 이동
-            else if (posZ >= 98) { direction = 2; }            // 맵의 가장 위쪽으로 가면 남 방향으로 이동
+        else if(posX >= 95) {
+            if (posZ <= 5) { direction = 4; }                   // 맵의 가장 오른쪽으로 가면 서 방향으로 이동
+            else if (posZ >= 95) { direction = 2; }            // 맵의 가장 위쪽으로 가면 남 방향으로 이동
             else { direction = Random.Range(1, 3) * 2; }        // 맵의 1사분면 끝에 도달하면 남, 서 방향으로 이동
         }
         else {
-            if (posZ <= 2) { direction = Random.Range(1, 3) * 4; }          // 맵의 4사분면 끝에 도달하면 북, 서 방향으로 이동
-            else if (posZ >= 98) { direction = (Random.Range(1, 3) * 4) - 2; }   // 맵의 2사분면 끝에 도달하면 남, 동 방향으로 이동
+            if (posZ <= 5) { direction = Random.Range(1, 3) * 4; }          // 맵의 4사분면 끝에 도달하면 북, 서 방향으로 이동
+            else if (posZ >= 95) { direction = (Random.Range(1, 3) * 4) - 2; }   // 맵의 2사분면 끝에 도달하면 남, 동 방향으로 이동
             else { direction = (Random.Range(1, 5) * 2); }      // 필드 내부에 있으면 2,4,6,8 중에 난수 생성하여 임의의 방향 지정
         }
 
