@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class BuildUIPreset : MonoBehaviour
 {
     [SerializeField]
-    private GameObject dbManageSystem;
+    private GameObject dbManageSystem, resourceSystem;
     [SerializeField]
     private List<GameObject> residentButtonLists = new List<GameObject>();
     [SerializeField]
@@ -36,55 +36,59 @@ public class BuildUIPreset : MonoBehaviour
     public void Awake() {
         buildingState = GetComponent<BuildingState>();
         database = dbManageSystem.GetComponent<DatabaseManage>();
-        database.DBCreate();        // DB¸¦ ¿¬´Ù.
+        database.DBCreate();        // DBë¥¼ ì—°ë‹¤.
 
-        // ¸®½ºÆ®¿¡ °Ç¹° ÄÚµå ¸ñ·Ï ÀúÀå
+        // ë¦¬ìŠ¤íŠ¸ì— ê±´ë¬¼ ì½”ë“œ ëª©ë¡ ì €ì¥
         IDataReader dataReader = database.ExecuteDB("SELECT Id,Name FROM building");
         while (dataReader.Read()) {
             buildingDicts.Add(dataReader.GetInt32(0), dataReader.GetString(1));
         }
 
+        residentButtonLists[0].name = buildingDicts[0];
+        foodButtonLists[0].name = buildingDicts[20];
+        foodButtonLists[1].name = buildingDicts[21];
+        religionButtonLists[0].name = buildingDicts[70];
+        /*
         int ri = 0; int fi = 0; int ei = 0; int ii = 0; int li = 0; int oi = 0;
         foreach(KeyValuePair<int, string> building in buildingDicts) {
             string nameKr = database.DBSelectOne("Name_KR", building.Key);
             int grpBuilding = building.Key / 10;
-
-            /* °¢ ºĞ·ù ÄÚµå º°·Î °Ç¹°À» º°µµÀÇ ¸®½ºÆ®¿¡ ÀúÀå */
+            /* ê° ë¶„ë¥˜ ì½”ë“œ ë³„ë¡œ ê±´ë¬¼ì„ ë³„ë„ì˜ ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
             switch(grpBuilding) {
-                // ID 00~19ÀÏ °æ¿ì ÁÖ°Å °ü·Ã °Ç¹°
+                // ID 00~19ì¼ ê²½ìš° ì£¼ê±° ê´€ë ¨ ê±´ë¬¼
                 case 0:
                 case 1:
                     residentButtonLists[ri].name = building.Value;
                     residentButtonLists[ri].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ri++;
                     break;
-                // ID 20~39ÀÏ °æ¿ì ½Ä·® °ü·Ã °Ç¹°
+                // ID 20~39ì¼ ê²½ìš° ì‹ëŸ‰ ê´€ë ¨ ê±´ë¬¼
                 case 2:
                 case 3:
                     foodButtonLists[fi].name = building.Value;
                     foodButtonLists[fi].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     fi++;
                     break;
-                // ID 40~49ÀÏ °æ¿ì °æÁ¦ °ü·Ã °Ç¹°
+                // ID 40~49ì¼ ê²½ìš° ê²½ì œ ê´€ë ¨ ê±´ë¬¼
                 case 4:
                     economyButtonLists[ei].name = building.Value;
                     economyButtonLists[ei].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ei++;
                     break;
-                // ID 50~69ÀÏ °æ¿ì »ê¾÷ °ü·Ã °Ç¹°
+                // ID 50~69ì¼ ê²½ìš° ì‚°ì—… ê´€ë ¨ ê±´ë¬¼
                 case 5:
                 case 6:
                     industryButtonLists[ii].name = building.Value;
                     industryButtonLists[ii].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     ii++;
                     break;
-                // ID 70~79ÀÏ °æ¿ì ½Å¾Ó °ü·Ã °Ç¹°
+                // ID 70~79ì¼ ê²½ìš° ì‹ ì•™ ê´€ë ¨ ê±´ë¬¼
                 case 7:
                     religionButtonLists[li].name = building.Value;
                     religionButtonLists[li].GetComponentInChildren<TextMeshProUGUI>().text = nameKr;
                     li++;
                     break;
-                // ID 80~99ÀÏ °æ¿ì ±âÅ¸(±º»ç) °ü·Ã °Ç¹°
+                // ID 80~99ì¼ ê²½ìš° ê¸°íƒ€(êµ°ì‚¬) ê´€ë ¨ ê±´ë¬¼
                 case 8:
                 case 9:
                     otherButtonLists[oi].name = building.Value;
@@ -92,29 +96,29 @@ public class BuildUIPreset : MonoBehaviour
                     oi++;
                     break;
             }
-        }
+        } */
     }
 
     public void Update() {
         foreach (int idx in buildingDicts.Keys) {
-            IDataReader content = database.DBSelectLine(idx);                           // DB¿¡¼­ °Ç¹°¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°ªÀ» ¹Ş¾Æ¿Â´Ù.
-            SetSpec(idx, StructureInfo(content, idx) + "\n" + StructureCount(idx));     // °Ç¼³¿¡ ÇÊ¿äÇÑ ÀÚ¿ø°ú ÇöÀç °³¼ö¸¦ specBuild ¸®½ºÆ®¿¡ ÀúÀåÇÑ´Ù.
+            IDataReader content = database.DBSelectLine(idx);                           // DBì—ì„œ ê±´ë¬¼ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°’ì„ ë°›ì•„ì˜¨ë‹¤.
+            SetSpec(idx, StructureInfo(content, idx) + "\n" + StructureCount(idx));     // ê±´ì„¤ì— í•„ìš”í•œ ìì›ê³¼ í˜„ì¬ ê°œìˆ˜ë¥¼ specBuild ë¦¬ìŠ¤íŠ¸ì— ì €ì¥í•œë‹¤.
         }
     }
 
-    /* °Ç¼³¿¡ ÇÊ¿äÇÑ ÀÚ¿øÀ» DB¿¡¼­ ¹Ş¾Æ¿À´Â ÇÔ¼ö */
+    /* ê±´ì„¤ì— í•„ìš”í•œ ìì›ì„ DBì—ì„œ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜ */
     public string StructureInfo(IDataReader data, int index) {
         string info = string.Empty;
-        int countWoodPlank = 0;         // ³ª¹« ÆÇÀÚ °³¼ö(101)
-        int countStone = 0;             // ¼®Àç °³¼ö(102)
-        int countIron = 0;              // Ã¶ °³¼ö(103)
-        int countGold = 0;              // ±İ °³¼ö(201)
-        int countReligiosity = 0;       // ½Å¾Ó½É °³¼ö(301)
-        int countTime = 0;              // ¼Ò¿ä ½Ã°£
+        int countWoodPlank = 0;         // ë‚˜ë¬´ íŒì ê°œìˆ˜(101)
+        int countStone = 0;             // ì„ì¬ ê°œìˆ˜(102)
+        int countIron = 0;              // ì²  ê°œìˆ˜(103)
+        int countGold = 0;              // ê¸ˆ ê°œìˆ˜(201)
+        int countReligiosity = 0;       // ì‹ ì•™ì‹¬ ê°œìˆ˜(301)
+        int countTime = 0;              // ì†Œìš” ì‹œê°„
 
         Dictionary<int, int> countResource = new Dictionary<int, int>();
 
-        // build Å×ÀÌºí¿¡¼­ ÇÊ¿ä °ª(³ª¹«, ±İ¼Ó, µ·, ¼Ò¿ä ½Ã°£)À» ¹Ş¾Æ¿Â´Ù.
+        // build í…Œì´ë¸”ì—ì„œ í•„ìš” ê°’(ë‚˜ë¬´, ê¸ˆì†, ëˆ, ì†Œìš” ì‹œê°„)ì„ ë°›ì•„ì˜¨ë‹¤.
         while (data.Read()) {
             string[] tmpRsc = (data.GetString(4)).Split(',');
             string[] tmpRscAm = (data.GetString(5)).Split(',');
@@ -129,52 +133,52 @@ public class BuildUIPreset : MonoBehaviour
             switch(pair.Key) {
                 case 101:
                     countWoodPlank = pair.Value;
-                    info += "³ª¹« ÆÇÀÚ\t: " + countWoodPlank.ToString() + "\n";
+                    info += "ë‚˜ë¬´ íŒì\t: " + countWoodPlank.ToString() + "\n";
                     break;
                 case 102:
                     countStone = pair.Value;
-                    info += "¼®Àç\t\t: " + countStone.ToString() + "\n";
+                    info += "ì„ì¬\t\t: " + countStone.ToString() + "\n";
                     break;
                 case 103:
                     countIron = pair.Value;
-                    info += "Ã¶\t\t: " + countIron.ToString() + "\n";
+                    info += "ì² \t\t: " + countIron.ToString() + "\n";
                     break;
                 case 201:
                     countGold = pair.Value;
-                    info += "±İ\t\t: " + countGold.ToString() + "\n";
+                    info += "ê¸ˆ\t\t: " + countGold.ToString() + "\n";
                     break;
                 case 301:
                     countReligiosity = pair.Value;
-                    info += "½Å¾Ó½É\t: " + countReligiosity.ToString() + "\n";
+                    info += "ì‹ ì•™ì‹¬\t: " + countReligiosity.ToString() + "\n";
                     break;
             }
         }
 
-        info += "½Ã°£\t\t: " + countTime.ToString();
+        info += "ì‹œê°„\t\t: " + countTime.ToString();
         return info;
     }
 
-    // °Ç¹°ÀÇ ÇöÀç °³¼ö¿Í ÃÑ °¡´É °³¼ö¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö
+    // ê±´ë¬¼ì˜ í˜„ì¬ ê°œìˆ˜ì™€ ì´ ê°€ëŠ¥ ê°œìˆ˜ë¥¼ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
     public string StructureCount(int index) {
         string countText = string.Empty;
-        string totalText = database.DBSelectOne("Limit_Building", index);       // build Å×ÀÌºí¿¡¼­ ÃÑ °Ç¼³ °¡´É ¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
-        int count = buildingState.get(index) ;                                   // ÇöÀç °Ç¼³µÇ¾î ÀÖ´Â °ÇÃà¹°ÀÇ ¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
+        string totalText = database.DBSelectOne("Limit_Building", index);       // build í…Œì´ë¸”ì—ì„œ ì´ ê±´ì„¤ ê°€ëŠ¥ ìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+        int count = buildingState.get(index) ;                                   // í˜„ì¬ ê±´ì„¤ë˜ì–´ ìˆëŠ” ê±´ì¶•ë¬¼ì˜ ìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
         int total;
 
-        // ¹öÆ°ÀÌ ³²À¸¸é DB°ªÀÌ ¾Æ´Ï¶ó °ø¹éÀ» Ãâ·ÂÇÑ´Ù.
+        // ë²„íŠ¼ì´ ë‚¨ìœ¼ë©´ DBê°’ì´ ì•„ë‹ˆë¼ ê³µë°±ì„ ì¶œë ¥í•œë‹¤.
         if (totalText == "-") {
             return countText;
         }
         else {
-            total = int.Parse(totalText);           // À§¿¡¼­ ¹Ş¾Æ¿Â ÃÑ °Ç¼³ °¡´É °³¼ö¸¦ intÇüÀ¸·Î º¯È¯ÇÑ´Ù.
+            total = int.Parse(totalText);           // ìœ„ì—ì„œ ë°›ì•„ì˜¨ ì´ ê±´ì„¤ ê°€ëŠ¥ ê°œìˆ˜ë¥¼ intí˜•ìœ¼ë¡œ ë³€í™˜í•œë‹¤.
         }
 
-        // DB¿¡¼­ °Ç¼³ °¡´É °³¼ö -1Àº ¹«ÇÑ´ë °Ç¼³ °¡´ÉÀÌ¹Ç·Î, ¹«ÇÑ´ë ±âÈ£·Î Ãâ·ÂÇÑ´Ù.
+        // DBì—ì„œ ê±´ì„¤ ê°€ëŠ¥ ê°œìˆ˜ -1ì€ ë¬´í•œëŒ€ ê±´ì„¤ ê°€ëŠ¥ì´ë¯€ë¡œ, ë¬´í•œëŒ€ ê¸°í˜¸ë¡œ ì¶œë ¥í•œë‹¤.
         if (total < 0) {
-            countText = "°ÇÃà¹°\t: " + count.ToString() + "/¡Ä";
+            countText = "ê±´ì¶•ë¬¼\t: " + count.ToString() + "/âˆ";
         }
         else {
-            countText = "°ÇÃà¹°\t: " + count.ToString() + "/" + total.ToString();
+            countText = "ê±´ì¶•ë¬¼\t: " + count.ToString() + "/" + total.ToString();
         }
 
         return countText;

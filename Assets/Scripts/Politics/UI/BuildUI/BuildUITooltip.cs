@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private GameObject tooltip, ctxTooltip;
-    private GameObject dbManage;
+    private GameObject tooltip, dbSystem;
+    private GameObject ctxTooltip;
     private BuildUIPreset preset;
     private DatabaseManage database;
 
@@ -19,16 +19,16 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private int typeResource;
 
     public void Awake() {
-        GameObject canvas = GameObject.Find("Canvas");
-        tooltip = (canvas.transform.GetChild(6)).gameObject;
+        GameObject canvas = GameObject.Find("MainUISystem");
+        tooltip = (canvas.transform.GetChild(12)).gameObject;
         ctxTooltip = (tooltip.transform.GetChild(0)).gameObject;
-        dbManage = GameObject.Find("DatabaseSystem");
+        dbSystem = GameObject.Find("DatabaseSystem");
 
         ctx = ctxTooltip.GetComponent<TextMeshProUGUI>();
         GameObject buildUIEventMng = GameObject.Find("BuildUIEventSystem");
         preset = buildUIEventMng.GetComponent<BuildUIPreset>();
         
-        database = dbManage.GetComponent<DatabaseManage>();
+        database = dbSystem.GetComponent<DatabaseManage>();
         database.DBCreate();
 
         tooltip.SetActive(false);
@@ -39,7 +39,7 @@ public class BuildUITooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             buttonName = this.name;
             string buildSpec = string.Empty;
 
-            // ¹öÆ°ÀÇ ÀÌ¸§À» °®´Â id¸¦ DB¿¡¼­ Ã£¾Æ º¯¼ö¿¡ ÀúÀå
+            // ë²„íŠ¼ì˜ ì´ë¦„ì„ ê°–ëŠ” idë¥¼ DBì—ì„œ ì°¾ì•„ ë³€ìˆ˜ì— ì €ì¥
             IDataReader dataReader = database.ExecuteDB("SELECT * from building where Name=\"" + buttonName + "\"");
             while (dataReader.Read()) {
                 int buildId = dataReader.GetInt32(0);

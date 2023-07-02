@@ -31,12 +31,12 @@ public class BuildUIEditMode : MonoBehaviour
     }
 
     public void Awake() {
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("MainUISystem");
         resourceManagement = GameObject.Find("ResourceSystem").GetComponent<ResourceManagement>();
         errorEventManage = GameObject.Find("EventSystem").GetComponent<ErrorEventManager>();
-        buildingModeUI = canvas.transform.GetChild(0).gameObject;
-        buildUI = canvas.transform.GetChild(2).gameObject;
-        toolTip = canvas.transform.GetChild(6).gameObject;
+        buildingModeUI = canvas.transform.GetChild(6).gameObject;
+        buildUI = canvas.transform.GetChild(7).gameObject;
+        toolTip = canvas.transform.GetChild(12).gameObject;
         isEdit = false;
         isMouseLeftClicked = false;
     }
@@ -62,7 +62,7 @@ public class BuildUIEditMode : MonoBehaviour
                 tmpBuildingTiles.transform.position = new Vector3(newPosX, tmpBuildingTiles.transform.position.y, newPosZ);
                 tmpBuilding.transform.position = new Vector3(newPosX, 0f, newPosZ);
 
-                if (tileCollision.getCollision()) {
+                if (tileCollision.GetCollision()) {
                     SpriteRenderer renderer = tmpBuildingTiles.GetComponent<SpriteRenderer>();
                     renderer.color = new Color(1f, 0f, 0f, 0.3f);   // green
                 }
@@ -72,7 +72,7 @@ public class BuildUIEditMode : MonoBehaviour
                 }
 
                 if (Input.GetMouseButtonDown(0)) {
-                    if (tileCollision.getCollision()) {
+                    if (tileCollision.GetCollision()) {
                         errorEventManage.CollisionBuildingError();
                     }
                     else {
@@ -128,9 +128,11 @@ public class BuildUIEditMode : MonoBehaviour
         CheckResource();
 
         // 건물 데이터를 초기화 한다.
+        parentTilePrefab.SetActive(false);
         buildDatabase.Clear();
         tmpBuildingTiles = null;
         buildingModeUI.SetActive(false);
+        buildUI.SetActive(true);
     }
 
     public void CheckResource() {
@@ -147,7 +149,6 @@ public class BuildUIEditMode : MonoBehaviour
             idxNeed = int.Parse(needResource[i]);
             amountNeed = float.Parse(needResourceAmount[i]);
 
-            Debug.Log(storeResource[idxNeed]);
             storeResource[idxNeed] = resourceManagement.GetResourceNum(idxNeed);
 
             if (storeResource[idxNeed] < amountNeed) {

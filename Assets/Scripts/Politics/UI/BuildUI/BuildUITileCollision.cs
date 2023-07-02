@@ -6,7 +6,7 @@ public class BuildUITileCollision : MonoBehaviour
 {
     private bool isCollided;
 
-    public bool getCollision() { return isCollided; }
+    public bool GetCollision() { return isCollided; }
 
     private void Awake() {
         isCollided = false;
