@@ -47,11 +47,22 @@ public class Believer : MonoBehaviour
     public enum Status
     {
         IDLE,
+        WALKING,
         ASSIGN,
         SLEEP,
         DEAD
     }
     private Status condition;
+
+    public Status GetStatus()
+    {
+        return condition;
+    }
+
+    public void SetStatus(Status stat)
+    {
+        this.condition = stat;
+    }
 
     // believer의 이름확인
     public string GetName()

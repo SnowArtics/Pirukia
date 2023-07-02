@@ -15,7 +15,7 @@ public class BelieverManage : MonoBehaviour
         // 테스트용: Believer태그를 가진 객체들을 가져오기
         believers.AddRange(GameObject.FindGameObjectsWithTag("Believer"));
         // TODO: 저장된 데이터에서 신도정보를 가져와 초기화
-        for (int i=0; i<5; i++)
+        for (int i=0; i<1; i++)
             AddBeliever();
     }
 

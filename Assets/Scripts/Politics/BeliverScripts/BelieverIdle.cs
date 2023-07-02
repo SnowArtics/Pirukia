@@ -99,12 +99,17 @@ public class BelieverIdle : MonoBehaviour
     }
 
     public void Update() {
-        moveTime += Time.deltaTime;
+        if (gameObject.GetComponent<Believer>().GetStatus() == Believer.Status.IDLE)
+        {
+            moveTime += Time.deltaTime;
 
-        // 5초가 지나면 RandomWalk() 함수를 실행하는 Idle() 코루틴 실행
-        if (moveTime >= 5) {
-            StartCoroutine(Idle());
+            // 5초가 지나면 RandomWalk() 함수를 실행하는 Idle() 코루틴 실행
+            if (moveTime >= 5)
+            {
+                StartCoroutine(Idle());
+            }
         }
+
     }
 
     public IEnumerator Idle() {
@@ -144,5 +149,35 @@ public class BelieverIdle : MonoBehaviour
         moveTime = 0;
         animator.SetBool("isWalk", false);
         yield break;
+    }
+
+    public void Goto(Vector3 target)
+    {
+        animator.SetBool("isWalk", true);
+
+        // 애니매이션 이동 방향 설정
+        bool isVertical;
+        int animDirection;
+        Vector3 delta = target - gameObject.transform.position;
+        isVertical = Mathf.Abs(delta.x) > Mathf.Abs(delta.z) ? true : false;
+
+        if (isVertical)
+            animDirection = (delta.x > 0) ? 8 : 2;
+        else
+            animDirection = (delta.z > 0) ? 6 : 4;
+        animator.SetInteger("toward", animDirection);
+         
+        float dist = delta.magnitude;
+        float deltaDist = speed * Time.deltaTime;
+
+        for (; dist > 0; dist -= deltaDist)
+        {
+            // Debug.Log($"dist:{dist} deltaDist:{deltaDist}");
+            transform.Translate(delta.normalized * deltaDist, Space.World);
+            Debug.Log($"pos: {transform.position} / dist: {dist}");
+        }
+
+
+        animator.SetBool("isWalk", false);
     }
 }

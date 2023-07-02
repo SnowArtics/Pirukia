@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Threading;
 
 public class RRTStarMovement : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public class RRTStarMovement : MonoBehaviour
     public Vector2Int start; // 출발점 좌표
     public Vector2Int goal;  // 목적지 좌표
 
-    public float stepSize = 5f;    // RRT* 알고리즘의 한 스텝 크기
-    public float goalThreshold = 2f; // 목적지 도달 반경
+    public float stepSize = 0.12f;    // RRT* 알고리즘의 한 스텝 크기
+    public float goalThreshold = 0.1f; // 목적지 도달 반경
 
     public GameObject npc; // NPC 게임 오브젝트
-    private CharacterController controller;
+    private BelieverIdle motion;
+    private float moveSpeed;
 
     private List<Vector2Int> tree; // RRT* 트리
 
@@ -23,8 +25,24 @@ public class RRTStarMovement : MonoBehaviour
     {
         // npc == gameObject
         npc = gameObject;
-        controller = npc.GetComponent<CharacterController>();
+        motion = npc.GetComponent<BelieverIdle>();
+        moveSpeed = npc.GetComponent<Believer>().GetSpeed();
 
+        init();
+    }
+
+    bool isFirst = true;
+    private void Update()
+    {
+        if (isFirst)
+        {
+            isFirst = false;
+            setTarget(new Vector2Int(30, 30));
+        }
+    }
+
+    private void init()
+    {
         // 2차원 배열 초기화
         grid = new int[width][];
         for (int i = 0; i < width; i++)
@@ -34,12 +52,30 @@ public class RRTStarMovement : MonoBehaviour
 
         // RRT* 트리 초기화
         tree = new List<Vector2Int>();
+    }
 
+    private void setTarget(Vector2Int goal)
+    {
+        // 자유이동 정지
+        Believer believerComp = gameObject.GetComponent<Believer>();
+        believerComp.SetStatus(Believer.Status.WALKING);
+
+        StopAllCoroutines();
+        init();
         // 출발점과 목적지 설정
-        start.x = 30;
-        start.y = 30;
+        this.goal = goal;
+        this.start.x = (int)gameObject.transform.position.x;
+        this.start.y = (int)gameObject.transform.position.z;
         tree.Add(start);
 
+        RRT();
+
+        // 자유이동 허용
+        believerComp.SetStatus(Believer.Status.IDLE);
+    }
+
+    void  RRT()
+    {
         // RRT* 알고리즘 실행
         while (!IsGoalReached())
         {
@@ -53,25 +89,39 @@ public class RRTStarMovement : MonoBehaviour
             }
         }
 
-        // 목적지 도달 시 NPC 이동 시작
-        StartCoroutine(MoveToGoal());
+        Debug.Log("reached");
+
+        // 경로 확보되면 NPC 이동 시작
+        //StartCoroutine(MoveToGoal());
+        MoveToGoal();
     }
 
-    IEnumerator MoveToGoal()
+    void MoveToGoal()
     {
+        List<Vector3> waypoints = new List<Vector3>();
         int currentPointIndex = tree.Count - 1;
+        Debug.Log($"debuging move: {currentPointIndex}");
         while (currentPointIndex > 0)
         {
             Vector2Int currentPoint = tree[currentPointIndex];
             Vector3 targetPosition = new Vector3(currentPoint.x, 0, currentPoint.y);
-            npc.transform.position = targetPosition;
 
-            yield return new WaitForSeconds(0.2f); // NPC 이동 간격
+            waypoints.Add(targetPosition);
+
+            // npc.transform.position = targetPosition;
+            // yield return new WaitForSeconds(0.2f); // NPC 이동 간격
 
             currentPointIndex = GetParentIndex(currentPointIndex);
         }
 
+        waypoints.Reverse();
+        foreach (Vector3 waypoint in waypoints)
+        {
+            Debug.Log($"targetPos: {waypoint} curPos: {npc.transform.position} distance: {Vector3.Distance(npc.transform.position, waypoint)}");
+            motion.Goto(waypoint);
+        }
         Debug.Log("NPC reached the goal!");
+        // yield return null;
     }
 
     bool IsGoalReached()
