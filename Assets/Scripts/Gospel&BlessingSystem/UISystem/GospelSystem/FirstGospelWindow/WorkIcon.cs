@@ -59,7 +59,7 @@ public class WorkIcon : MonoBehaviour
         text.SetActive(true);
         controlScript.SetActiveExplain(true);
 
-        controlScript.SetExplainNameText("삶");
+        controlScript.SetExplainNameText("노동");
         controlScript.SetExplainText("노동이란 신성한것이다.\n신성한 노동을 어떻게 할 수 있는가");
     }
 

@@ -12,11 +12,19 @@ public class AgricultureBlessing : MonoBehaviour
     [SerializeField]
     private GameObject rightBaseWindow;
 
+    private GameObject GospelBlessingWindow;
+    private GameObject BaseWindow;
+
+    private QuestMainSystem questSystem;
     private RightBaseWindowManage windowManagement;
 
     void Awake()
     {
         windowManagement = rightBaseWindow.GetComponent<RightBaseWindowManage>();
+        questSystem = GameObject.Find("QuestSystem").GetComponent<QuestMainSystem>();
+
+        GospelBlessingWindow = GameObject.Find("Gospel&BlessingWindow").gameObject;
+        BaseWindow = GospelBlessingWindow.transform.GetChild(0).gameObject;
     }
 
     // Start is called before the first frame update
@@ -32,6 +40,10 @@ public class AgricultureBlessing : MonoBehaviour
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        questSystem.CheckQuestCond(72);
+        GospelBlessingWindow.SetActive(false);
+        BaseWindow.SetActive(true);
+        this.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
         Debug.Log("Click");
     }
 
@@ -44,9 +56,9 @@ public class AgricultureBlessing : MonoBehaviour
     {
         rightBaseWindow.SetActive(true);
         windowManagement.ChangeBlessingImage(Resources.Load<Sprite>("MainGameUI/Gospel&BlessingUI/BlessingUI/AgricultureBlessing"));
-        windowManagement.ChangeBlessingNameText("³ó¾÷ Ãàº¹");
-        windowManagement.ChangeBlessingExplainText("½Å²²¼­ Ãàº¹À» ³»·Á ÀÏºÎ ³ó°æÁöÀÇ Åä¾ç¿¡ Ãàº¹À» ³»¸³´Ï´Ù. ÀÌ Åä¾ç¿¡¼­ ³ª¿Â ¼öÈ®À» ¸ÔÀº ½ÅµµµéÀº ÀÚ¿¬½º·¹ ½Å¾Ó½ÉÀÌ ±í¾îÁú °ÍÀÔ´Ï´Ù." +
-            " ³ó¾÷ÀÇ »ı»ê·®ÀÌ ´Ã¾î³ª¸ç, ÇØ´ç ³óÀÛ¹°À» ¸ÔÀº ½ÅµµµéÀÇ ½Å¾Ó½ÉÀÌ Áõ°¡ÇÕ´Ï´Ù.");
+        windowManagement.ChangeBlessingNameText("ë†ì—… ì¶•ë³µ");
+        windowManagement.ChangeBlessingExplainText("ì‹ ê»˜ì„œ ì¶•ë³µì„ ë‚´ë ¤ ì¼ë¶€ ë†ê²½ì§€ì˜ í† ì–‘ì— ì¶•ë³µì„ ë‚´ë¦½ë‹ˆë‹¤. ì´ í† ì–‘ì—ì„œ ë‚˜ì˜¨ ìˆ˜í™•ì„ ë¨¹ì€ ì‹ ë„ë“¤ì€ ìì—°ìŠ¤ë ˆ ì‹ ì•™ì‹¬ì´ ê¹Šì–´ì§ˆ ê²ƒì…ë‹ˆë‹¤." +
+            " ë†ì—…ì˜ ìƒì‚°ëŸ‰ì´ ëŠ˜ì–´ë‚˜ë©°, í•´ë‹¹ ë†ì‘ë¬¼ì„ ë¨¹ì€ ì‹ ë„ë“¤ì˜ ì‹ ì•™ì‹¬ì´ ì¦ê°€í•©ë‹ˆë‹¤.");
     }
 
     public void OnPointerExit(PointerEventData eventData)

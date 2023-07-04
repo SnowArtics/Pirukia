@@ -12,11 +12,19 @@ public class IndustryBlessing : MonoBehaviour
     [SerializeField]
     private GameObject rightBaseWindow;
 
+    private GameObject GospelBlessingWindow;
+    private GameObject BaseWindow;
+
+    private QuestMainSystem questSystem;
     private RightBaseWindowManage windowManagement;
 
     void Awake()
     {
         windowManagement = rightBaseWindow.GetComponent<RightBaseWindowManage>();
+        questSystem = GameObject.Find("QuestSystem").GetComponent<QuestMainSystem>();
+
+        GospelBlessingWindow = GameObject.Find("Gospel&BlessingWindow").gameObject;
+        BaseWindow = GospelBlessingWindow.transform.GetChild(0).gameObject;
     }
 
     // Start is called before the first frame update
@@ -32,6 +40,10 @@ public class IndustryBlessing : MonoBehaviour
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        questSystem.CheckQuestCond(72);
+        GospelBlessingWindow.SetActive(false);
+        BaseWindow.SetActive(true);
+        this.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
         Debug.Log("Click");
     }
 
@@ -44,9 +56,9 @@ public class IndustryBlessing : MonoBehaviour
     {
         rightBaseWindow.SetActive(true);
         windowManagement.ChangeBlessingImage(Resources.Load<Sprite>("MainGameUI/Gospel&BlessingUI/BlessingUI/IndustryBlessing"));
-        windowManagement.ChangeBlessingNameText("»ê¾÷ Ãàº¹");
-        windowManagement.ChangeBlessingExplainText("½Å²²¼­ Ãàº¹À» ³»·Á ÀÏºÎ ±¤»ê¿¡ Ãàº¹À» ³»¸³´Ï´Ù. ÀÌ ±¤»ê¿¡¼­ ³ª¿Â ¼öÈ®¹°Àº ´õ¿í Á¦·ÃÇÏ±â°¡ ½¬¿öÁı´Ï´Ù." +
-            " ÇØ´ç ±¤¹°À» »ç¿ëÇÏ´Â Á¦·Ã½Ã¼³ÀÇ »ı»ê·®ÀÌ Áõ°¡ÇÕ´Ï´Ù.");
+        windowManagement.ChangeBlessingNameText("ì‚°ì—… ì¶•ë³µ");
+        windowManagement.ChangeBlessingExplainText("ì‹ ê»˜ì„œ ì¶•ë³µì„ ë‚´ë ¤ ì¼ë¶€ ê´‘ì‚°ì— ì¶•ë³µì„ ë‚´ë¦½ë‹ˆë‹¤. ì´ ê´‘ì‚°ì—ì„œ ë‚˜ì˜¨ ìˆ˜í™•ë¬¼ì€ ë”ìš± ì œë ¨í•˜ê¸°ê°€ ì‰¬ì›Œì§‘ë‹ˆë‹¤." +
+            " í•´ë‹¹ ê´‘ë¬¼ì„ ì‚¬ìš©í•˜ëŠ” ì œë ¨ì‹œì„¤ì˜ ìƒì‚°ëŸ‰ì´ ì¦ê°€í•©ë‹ˆë‹¤.");
     }
 
     public void OnPointerExit(PointerEventData eventData)
