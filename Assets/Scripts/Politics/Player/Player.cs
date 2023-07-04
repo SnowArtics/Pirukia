@@ -18,6 +18,24 @@ public class Player : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
+    private void resetAnim()
+    {
+        animator.ResetTrigger("idle");
+        animator.ResetTrigger("front");
+        animator.ResetTrigger("left");
+        animator.ResetTrigger("right");
+        animator.ResetTrigger("back");
+        animator.SetTrigger("idle");
+    }
+    private void changeDirection(int dir)
+    {
+        if (dir != directionPrev)
+        {
+            resetAnim();
+            directionPrev = dir;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -27,38 +45,54 @@ public class Player : MonoBehaviour
         float horizontalAbs = MathF.Abs(horizontal);
         float verticalAbs = MathF.Abs(vertical);
         // 움직이지 않을 때
-        if (horizontalAbs + verticalAbs < float.Epsilon)
+        if (horizontalAbs + verticalAbs < float.Epsilon*100)
         {
             if (isWalking)
             {
                 isWalking = false;
-                animator.SetBool("isWalk", false);
+                resetAnim();
             }
             return;
         }
         else
         {
-            animator.SetBool("isWalk", true);
             isWalking = true;
         }
+
 
         if (verticalAbs > horizontalAbs)
         {
             // 앞으로 걷는 모션
-            if (vertical < -float.Epsilon && directionPrev != 2)
-                animator.SetInteger("toward", 2);
+            if (vertical < -float.Epsilon)
+            {
+                changeDirection(2);
+                animator.SetTrigger("front");
+            }
             // 뒤로가는 모션
-            if (vertical > float.Epsilon && directionPrev != 8)
-                animator.SetInteger("toward", 8);
+            if (vertical > float.Epsilon)
+            {
+                changeDirection(8);
+                animator.SetTrigger("back");
+                Debug.Log("back");
+            }
+            Debug.Log("vertical");
         }
         else
         {
             // 좌로가는 모션
-            if (horizontal < -float.Epsilon && directionPrev != 4)
-                animator.SetInteger("toward", 4);
+            if (horizontal < -float.Epsilon)
+            {
+                changeDirection(4);
+                animator.SetTrigger("left");
+                Debug.Log("left");
+            }
             // 우로가는 모션
-            if (horizontal > float.Epsilon && directionPrev != 6)
-                animator.SetInteger("toward", 6);
+            if (horizontal > float.Epsilon)
+            {
+                changeDirection(6);
+                animator.SetTrigger("right");
+            }
+            Debug.Log("horizontal");
         }
 
         Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
