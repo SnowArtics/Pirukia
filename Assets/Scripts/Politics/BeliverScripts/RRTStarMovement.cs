@@ -5,15 +5,15 @@ using System.Threading;
 
 public class RRTStarMovement : MonoBehaviour
 {
-    public int width = 100;  // 배열 가로 크기
-    public int height = 100; // 배열 세로 크기
+    public int width = 1000;  // 배열 가로 크기
+    public int height = 1000; // 배열 세로 크기
     public int[][] grid;     // 2차원 배열
 
     public Vector2Int start; // 출발점 좌표
     public Vector2Int goal;  // 목적지 좌표
 
-    public float stepSize = 0.12f;    // RRT* 알고리즘의 한 스텝 크기
-    public float goalThreshold = 0.1f; // 목적지 도달 반경
+    public float stepSize = 0.3f;    // RRT* 알고리즘의 한 스텝 크기
+    public float goalThreshold = 1f; // 목적지 도달 반경
 
     public GameObject npc; // NPC 게임 오브젝트
     private BelieverIdle motion;
@@ -34,11 +34,12 @@ public class RRTStarMovement : MonoBehaviour
     bool isFirst = true;
     private void Update()
     {
-        if (isFirst)
+        // 알고리즘 테스트용
+        /*if (isFirst)
         {
             isFirst = false;
             setTarget(new Vector2Int(30, 30));
-        }
+        }*/
     }
 
     private void init()
@@ -52,9 +53,18 @@ public class RRTStarMovement : MonoBehaviour
 
         // RRT* 트리 초기화
         tree = new List<Vector2Int>();
+
+        Vector3 pos = gameObject.transform.position;
+        // 오브젝트가 위치를 벗어났을 때
+        if ((pos.x < 0 || pos.x > width) || (pos.z < 0 || pos.z > height) || pos.y != 0)
+        {
+            Debug.Log($"Object position is out of range: {gameObject.transform.position}");
+            Debug.Log("Object position set default: (0, 0, 0)");
+            gameObject.transform.position = new Vector3(0, 0, 0);
+        }
     }
 
-    private void setTarget(Vector2Int goal)
+    public void setTarget(Vector2Int goal)
     {
         // 자유이동 정지
         Believer believerComp = gameObject.GetComponent<Believer>();
@@ -105,8 +115,6 @@ public class RRTStarMovement : MonoBehaviour
 
             waypoints.Add(targetPosition);
 
-            // npc.transform.position = targetPosition;
-            // yield return new WaitForSeconds(0.2f); // NPC 이동 간격
 
             currentPointIndex = GetParentIndex(currentPointIndex);
         }
@@ -114,6 +122,7 @@ public class RRTStarMovement : MonoBehaviour
         waypoints.Reverse();
         foreach (Vector3 waypoint in waypoints)
         {
+            Vector3 tar = new Vector3(goal.x, 0, goal.y);
             motion.Goto(waypoint);
         }
         // yield return null;

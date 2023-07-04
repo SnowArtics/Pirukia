@@ -53,6 +53,11 @@ public class BelieverProperty : MonoBehaviour
         this.textName.text = this.believerComp.GetName();
     }
 
+    public void SetWorkGroup(int g)
+    {
+        believerComp.SetWorkGroup(g);
+    }
+
     private void Start()
     {
 

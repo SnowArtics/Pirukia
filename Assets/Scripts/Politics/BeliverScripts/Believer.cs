@@ -40,9 +40,6 @@ public class Believer : MonoBehaviour
     // DB에 저장할 때 필요한 고유 PK
     private int believerId;
 
-    // 신도목록 관리 컴포넌트
-    BelieverProperty elementComp;
-
     // 신도의 상태
     public enum Status
     {
@@ -67,6 +64,7 @@ public class Believer : MonoBehaviour
     // believer의 이름확인
     public string GetName()
     {
+        Debug.Log($"believer Debug: {this.believerName}");
         return believerName;
     }
 
@@ -74,10 +72,6 @@ public class Believer : MonoBehaviour
     {
         // TODO: 데이터 베이스를 기반으로 이름 동적 생성 필요
         this.believerName = name;
-        if (elementComp != null)
-        {
-            elementComp.composeUI();
-        }
         return believerName;
     }
 
@@ -188,19 +182,12 @@ public class Believer : MonoBehaviour
 
     // 씬에 생성될 때 신도목록에 정보 추가
     private GameObject believerList;
-    public GameObject believerListElementPref;
     public void Awake()
     {
-        // 무직
-        workGroup = -1;
+        // 무직 == 건설자
+        workGroup = 0;
 
         believerList = GameObject.FindWithTag("BelieverList");
-        Transform believerListObj = believerList.transform;
-        Debug.Log(believerListObj);
-        GameObject element = Instantiate(believerListElementPref, believerListObj);
-
-        // 목록 내용 채워넣기
-        elementComp = (BelieverProperty)element.GetComponent("BelieverProperty");
-        elementComp.initBeliever(gameObject);
+        believerList.GetComponent<BelieverList>().UpdateList();
     }
 }

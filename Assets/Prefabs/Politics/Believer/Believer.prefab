@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6650862245534429748}
   m_LocalRotation: {x: 0.31598538, y: 0.3596048, z: -0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 8.28478, y: 0, z: 16.517532}
+  m_LocalPosition: {x: 15, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   believerName: 
   age: 0
-  speed: 0
+  speed: 5
   believerAnimation: 
   group: 0
   loyalty: 0
@@ -174,8 +174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 100
-  start: {x: 0, y: 0}
-  goal: {x: 0, y: 0}
+  start: {x: 15, y: 15}
+  goal: {x: 50, y: 50}
   stepSize: 5
   goalThreshold: 2
   npc: {fileID: 0}

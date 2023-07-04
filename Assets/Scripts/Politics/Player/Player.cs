@@ -73,9 +73,7 @@ public class Player : MonoBehaviour
             {
                 changeDirection(8);
                 animator.SetTrigger("back");
-                Debug.Log("back");
             }
-            Debug.Log("vertical");
         }
         else
         {
@@ -84,7 +82,6 @@ public class Player : MonoBehaviour
             {
                 changeDirection(4);
                 animator.SetTrigger("left");
-                Debug.Log("left");
             }
             // 우로가는 모션
             if (horizontal > float.Epsilon)
@@ -92,7 +89,6 @@ public class Player : MonoBehaviour
                 changeDirection(6);
                 animator.SetTrigger("right");
             }
-            Debug.Log("horizontal");
         }
 
         Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
