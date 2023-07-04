@@ -859,7 +859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fc2842dc8016d7244a3fbb518107ab0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5c139f7aa5441d24b98f4cc652a91095, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 0}
   m_ItemImage: {fileID: 3787453809519904318}
-  m_Value: 4
+  m_Value: 0
   m_Options:
     m_Options:
     - m_Text: 
@@ -1200,13 +1200,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 4743172771723106492}
+        m_TargetAssemblyTypeName: BelieverProperty, Assembly-CSharp
+        m_MethodName: SetWorkGroup
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
