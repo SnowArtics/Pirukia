@@ -36,10 +36,8 @@ public class ResourceManagement : MonoBehaviour
         resourceNum[402] = 1000;
         resourceNum[403] = 0;
 
-        foreach (KeyValuePair<int, float> r in resourceNum) {
-            if (r.Key / 100 == 1) { industryUsedSpaceNum = r.Value; }
-            if (r.Key / 100 == 0) { foodUsedSpaceNum += r.Value; }
-        }
+        industryUsedSpaceNum = resourceNum[101] + resourceNum[102];
+        foodUsedSpaceNum = resourceNum[1];
     }
 
     // Update is called once per frame

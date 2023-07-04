@@ -13,6 +13,7 @@ public class BuildUIEditMode : MonoBehaviour
     private GameObject editTilePrefab, parentTilePrefab;
     [SerializeField]
     private GameObject shackSprite, granarySprite, appleOrchardSprite, altarSprite, buildingDust;
+    [SerializeField]
     private GameObject canvas, buildUI, buildingModeUI, toolTip;
     private GameObject tmpBuildingTiles, tmpBuilding, tmpDust;
     private ResourceManagement resourceManagement;
@@ -34,9 +35,6 @@ public class BuildUIEditMode : MonoBehaviour
         canvas = GameObject.Find("MainUISystem");
         resourceManagement = GameObject.Find("ResourceSystem").GetComponent<ResourceManagement>();
         errorEventManage = GameObject.Find("EventSystem").GetComponent<ErrorEventManager>();
-        buildingModeUI = canvas.transform.GetChild(6).gameObject;
-        buildUI = canvas.transform.GetChild(7).gameObject;
-        toolTip = canvas.transform.GetChild(12).gameObject;
         isEdit = false;
         isMouseLeftClicked = false;
     }

@@ -508,7 +508,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335773910501362045}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3d8bd363fd736e4ca61e81a04565445, type: 3}
   m_Name: 
@@ -1160,6 +1160,7 @@ GameObject:
   - component: {fileID: 950177130777405844}
   - component: {fileID: 4883108297229870238}
   - component: {fileID: 1175873533318537832}
+  - component: {fileID: 2494506086911281091}
   m_Layer: 5
   m_Name: BuildButton
   m_TagString: Untagged
@@ -1293,6 +1294,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2494506086911281091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696160142510010768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d8bd363fd736e4ca61e81a04565445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6747617375385961163
 GameObject:
   m_ObjectHideFlags: 0

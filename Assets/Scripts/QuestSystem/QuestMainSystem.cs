@@ -78,7 +78,6 @@ public class QuestMainSystem : MonoBehaviour
     {
         while (iQuestNum < 18)
         {
-            Debug.Log(iQuestNum);
             questWindow.SetActive(true);
 /*            switch (sQuestCond[iQuestNum])
             {

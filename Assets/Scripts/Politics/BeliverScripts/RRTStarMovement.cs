@@ -89,8 +89,6 @@ public class RRTStarMovement : MonoBehaviour
             }
         }
 
-        Debug.Log("reached");
-
         // 경로 확보되면 NPC 이동 시작
         //StartCoroutine(MoveToGoal());
         MoveToGoal();
@@ -100,7 +98,6 @@ public class RRTStarMovement : MonoBehaviour
     {
         List<Vector3> waypoints = new List<Vector3>();
         int currentPointIndex = tree.Count - 1;
-        Debug.Log($"debuging move: {currentPointIndex}");
         while (currentPointIndex > 0)
         {
             Vector2Int currentPoint = tree[currentPointIndex];
@@ -117,10 +114,8 @@ public class RRTStarMovement : MonoBehaviour
         waypoints.Reverse();
         foreach (Vector3 waypoint in waypoints)
         {
-            Debug.Log($"targetPos: {waypoint} curPos: {npc.transform.position} distance: {Vector3.Distance(npc.transform.position, waypoint)}");
             motion.Goto(waypoint);
         }
-        Debug.Log("NPC reached the goal!");
         // yield return null;
     }
 

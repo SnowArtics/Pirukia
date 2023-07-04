@@ -174,7 +174,6 @@ public class BelieverIdle : MonoBehaviour
         {
             // Debug.Log($"dist:{dist} deltaDist:{deltaDist}");
             transform.Translate(delta.normalized * deltaDist, Space.World);
-            Debug.Log($"pos: {transform.position} / dist: {dist}");
         }
 
 
