@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     private Animator animator;
     private bool isWalking;
+    private int directionPrev;
 
     private void Start()
     {
@@ -23,8 +24,10 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        // ¿òÁ÷ÀÌÁö ¾ÊÀ» ¶§
-        if (Math.Abs(horizontal) + Math.Abs(vertical) < float.Epsilon)
+        float horizontalAbs = MathF.Abs(horizontal);
+        float verticalAbs = MathF.Abs(vertical);
+        // ì›€ì§ì´ì§€ ì•Šì„ ë•Œ
+        if (horizontalAbs + verticalAbs < float.Epsilon)
         {
             if (isWalking)
             {
@@ -39,23 +42,29 @@ public class Player : MonoBehaviour
             isWalking = true;
         }
 
-        // ¾ÕÀ¸·Î °È´Â ¸ğ¼Ç
-        if (vertical < -float.Epsilon)
-            animator.SetInteger("toward", 2);
-        // µÚ·Î°¡´Â ¸ğ¼Ç
-        if (vertical > float.Epsilon)
-            animator.SetInteger("toward", 8);
-        // ÁÂ·Î°¡´Â ¸ğ¼Ç
-        if (horizontal < -float.Epsilon)
-            animator.SetInteger("toward", 4);
-        // ¿ì·Î°¡´Â ¸ğ¼Ç
-        if (horizontal > float.Epsilon)
-            animator.SetInteger("toward", 6);
+        if (verticalAbs > horizontalAbs)
+        {
+            // ì•ìœ¼ë¡œ ê±·ëŠ” ëª¨ì…˜
+            if (vertical < -float.Epsilon && directionPrev != 2)
+                animator.SetInteger("toward", 2);
+            // ë’¤ë¡œê°€ëŠ” ëª¨ì…˜
+            if (vertical > float.Epsilon && directionPrev != 8)
+                animator.SetInteger("toward", 8);
+        }
+        else
+        {
+            // ì¢Œë¡œê°€ëŠ” ëª¨ì…˜
+            if (horizontal < -float.Epsilon && directionPrev != 4)
+                animator.SetInteger("toward", 4);
+            // ìš°ë¡œê°€ëŠ” ëª¨ì…˜
+            if (horizontal > float.Epsilon && directionPrev != 6)
+                animator.SetInteger("toward", 6);
+        }
 
         Vector3 moveDirection = new Vector3(horizontal, 0, vertical);
-        // ¹Ù´ÚÀÌ 45µµ È¸ÀüÇØ ÀÖ¾î¼­ Ä³¸¯ÅÍÀÇ ÀÌµ¿ ¹æÇâµµ Æ²¾îÁà¾ß Ä«¸Ş¶ó ±âÁØ ÁÂ¿ì ÀÌµ¿ÀÌ °¡´É
+        // ë°”ë‹¥ì´ 45ë„ íšŒì „í•´ ìˆì–´ì„œ ìºë¦­í„°ì˜ ì´ë™ ë°©í–¥ë„ í‹€ì–´ì¤˜ì•¼ ì¹´ë©”ë¼ ê¸°ì¤€ ì¢Œìš° ì´ë™ì´ ê°€ëŠ¥
         moveDirection = Quaternion.AngleAxis(45, Vector3.up) * moveDirection;
-        // ÀÌµ¿¼Óµµ Ãß°¡
+        // ì´ë™ì†ë„ ì¶”ê°€
         moveDirection *= moveSpeed;
 
         characterController.Move(moveDirection * Time.deltaTime);
