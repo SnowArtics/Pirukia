@@ -72,7 +72,7 @@ public class BuildUIBuilding : MonoBehaviour {
         if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
         else {
             int buildCode = int.Parse((dbSystem.DBSelectBuilding(buttonName))[0]);
-            int buildCount = buildState.get(buildCode);
+            int buildCount = buildState.getBuilding(buildCode);
 
             return buildCount;
         }

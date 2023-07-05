@@ -27,14 +27,14 @@ public class ResourceManagement : MonoBehaviour
 
     void Awake()
     {
-        resourceNum[1] = 0;
+        resourceNum[1] = 150;
         resourceNum[101] = 100;          // UI 상에 나타나지 않게 해야 함
         resourceNum[102] = 100;          // UI 상에 나타나지 않게 해야 함
 
         resourceNum[301] = 100;
-        resourceNum[401] = 0;
+        resourceNum[401] = 1000;
         resourceNum[402] = 1000;
-        resourceNum[403] = 0;
+        resourceNum[403] = 1000;
 
         industryUsedSpaceNum = resourceNum[101] + resourceNum[102];
         foodUsedSpaceNum = resourceNum[1];

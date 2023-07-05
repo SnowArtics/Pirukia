@@ -11,11 +11,11 @@ public class BuildingState : MonoBehaviour
     private GameObject dbManage;
 
     private DatabaseManage database;
-    private Dictionary<int, int> countStructure = new Dictionary<int, int>();                     // °Ç¹° °³¼ö¸¦ ÀúÀåÇÏ´Â ¸®½ºÆ®
+    private Dictionary<int, int> countStructure = new Dictionary<int, int>();                     // ê±´ë¬¼ ê°œìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
 
-    public int get(int index) { return countStructure[index]; }             // °Ç¹° °³¼ö¸¦ ¹Ş¾Æ¿À´Â ÇÔ¼ö
-    public void addBuilding(int index) { countStructure[index]++; }         // °Ç¹°ÀÌ Áö¾îÁö¸é °³¼ö¸¦ +1
-    public void removeBuilding(int index) { countStructure[index]--; }      // °Ç¹°ÀÌ »ç¶óÁö¸é °³¼ö¸¦ -1
+    public int getBuilding(int index) { return countStructure[index]; }             // ê±´ë¬¼ ê°œìˆ˜ë¥¼ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
+    public void addBuilding(int index) { countStructure[index]++; }         // ê±´ë¬¼ì´ ì§€ì–´ì§€ë©´ ê°œìˆ˜ë¥¼ +1
+    public void removeBuilding(int index) { countStructure[index]--; }      // ê±´ë¬¼ì´ ì‚¬ë¼ì§€ë©´ ê°œìˆ˜ë¥¼ -1
 
     public void Awake() {
         int count = 0;
@@ -23,7 +23,7 @@ public class BuildingState : MonoBehaviour
         database = dbManage.GetComponent<DatabaseManage>();
         database.DBCreate();
 
-        // DB¿¡¼­ °¢ °Ç¹°ÀÇ ID¸¦ ¹Ş¾Æ¿Í °³¼ö¸¦ 0À¸·Î ÃÊ±âÈ­ ÇÑ´Ù.
+        // DBì—ì„œ ê° ê±´ë¬¼ì˜ IDë¥¼ ë°›ì•„ì™€ ê°œìˆ˜ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™” í•œë‹¤.
         dataReader = database.ExecuteDB("SELECT Id FROM building");      
         while (dataReader.Read()) {
             int id = dataReader.GetInt32(0);

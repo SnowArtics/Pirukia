@@ -162,7 +162,7 @@ public class BuildUIPreset : MonoBehaviour
     public string StructureCount(int index) {
         string countText = string.Empty;
         string totalText = database.DBSelectOne("Limit_Building", index);       // build 테이블에서 총 건설 가능 수를 받아온다.
-        int count = buildingState.get(index) ;                                   // 현재 건설되어 있는 건축물의 수를 받아온다.
+        int count = buildingState.getBuilding(index) ;                                   // 현재 건설되어 있는 건축물의 수를 받아온다.
         int total;
 
         // 버튼이 남으면 DB값이 아니라 공백을 출력한다.
