@@ -3399,7 +3399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &362388885
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5062,7 +5062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &592793133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6604,6 +6604,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B85\n\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6818,7 +6822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &756959056
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8465,6 +8469,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B82"
+      objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9377,6 +9385,10 @@ PrefabInstance:
     - target: {fileID: 3787453809670499317, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B81"
       objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
@@ -10783,6 +10795,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B87"
+      objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -11225,7 +11241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1432381048
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13975,6 +13991,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B83"
+      objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -15998,6 +16018,7 @@ MonoBehaviour:
   questRewardText2: {fileID: 756959055}
   questRewardImage1: {fileID: 362388884}
   questRewardImage2: {fileID: 1432381047}
+  mEventWindow: {fileID: 0}
 --- !u!1 &1916708653
 GameObject:
   m_ObjectHideFlags: 0
@@ -16787,6 +16808,10 @@ PrefabInstance:
     - target: {fileID: 3787453809670499317, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B84"
       objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
@@ -17961,6 +17986,10 @@ PrefabInstance:
     - target: {fileID: 3787453809670499317, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787453810035561818, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
+      propertyPath: m_text
+      value: "\uD14C\uC2A4\uD2B86"
       objectReference: {fileID: 0}
     - target: {fileID: 3787453810040821292, guid: b3574d208e64e214e9c88928dcbdb601, type: 3}
       propertyPath: m_Pivot.x
