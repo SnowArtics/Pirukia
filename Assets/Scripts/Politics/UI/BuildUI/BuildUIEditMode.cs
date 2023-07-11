@@ -21,7 +21,7 @@ public class BuildUIEditMode : MonoBehaviour
     private BuildUITileCollision tileCollision;
     private bool isEdit, isMouseLeftClicked;
     private List<string> buildDatabase = new List<string>();
-    private List<GameObject> buildingPosList = new List<GameObject>();
+    private List<GameObject> buildingPosList, dustList = new List<GameObject>();
     private int sizeX, sizeY;                // 건물 크기(칸)을 저장(x, y)
     private Vector3 pos, mousePos;
 
@@ -43,6 +43,12 @@ public class BuildUIEditMode : MonoBehaviour
         // 마우스 커서의 좌표를 받아서 저장
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
+        // 건물 설치 모드에 진입 시, 함수 실행
+        if (isEdit) {
+            OnEditMode();
+            isEdit = false;
+        }
 
         // 마우스 커서 위치에 따라 건물 설치 타일 위치 이동
         if (Physics.Raycast(ray, out hit, 100f)) {
@@ -80,12 +86,6 @@ public class BuildUIEditMode : MonoBehaviour
                 }
             }
         }
-
-        // 건물 설치 모드에 진입 시, 함수 실행
-        if (isEdit) {
-            OnEditMode();
-            isEdit = false;
-        }
     }
 
     // 편집 모드에 들어갔을 때 수행
@@ -116,11 +116,10 @@ public class BuildUIEditMode : MonoBehaviour
 
     // 건물 설치 실행
     public void StartBuilding(float posX, float posZ) {
-        buildingPosList.Add(tmpBuilding);
         /* 건물 건설 중일 때 구름 스프라이트로 가린다. */
         tmpDust = Instantiate(buildingDust);
         tmpDust.transform.position = new Vector3(posX-1, 0f, posZ-1);
-        StartCoroutine(CompleteBuild());
+        StartCoroutine(CompleteBuild(tmpDust));
 
         /* 건물 자원 체크 후 차감 */
         CheckResource();
@@ -159,12 +158,11 @@ public class BuildUIEditMode : MonoBehaviour
     }
 
     /* 건물 건설 시간이 지나면 건설중 스프라이트 삭제 */
-    public IEnumerator CompleteBuild() {
+    public IEnumerator CompleteBuild(GameObject dust) {
         float buildTime = float.Parse(buildDatabase[6]);
-        Debug.Log(buildTime);
 
         yield return new WaitForSecondsRealtime(buildTime);
         Debug.Log(buildTime.ToString() + "초 경과");
-        tmpDust.SetActive(false);
+        dust.SetActive(false);
     }
 }

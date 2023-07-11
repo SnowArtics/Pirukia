@@ -28,14 +28,11 @@ public class BuildUIBuilding : MonoBehaviour {
         dbSystem = GameObject.Find("DatabaseSystem").GetComponent<DatabaseManage>();
         eventSystem = GameObject.Find("EventSystem");
         errEventMng = eventSystem.GetComponent<ErrorEventManager>();
-
- //       GameObject canvas = GameObject.Find("Canvas");
-//       tooltip = (canvas.transform.GetChild(5)).gameObject;
     }
 
     public void onClickButton() {
         buttonName = this.name;
-        List<string> buildingDataList = dbSystem.DBSelectBuilding(buttonName);
+        buildingDataList = dbSystem.DBSelectBuilding(buttonName);
         buildId = int.Parse(buildingDataList[0]);
         buildedCount = chkBuildedBuild();
         limitCount = chkLimitBuild();
@@ -44,14 +41,11 @@ public class BuildUIBuilding : MonoBehaviour {
         if (limitCount == -1 || limitCount > curBuild) {
  //           BuildUITooltip uITooltip = this.GetComponent<BuildUITooltip>();
  //           uITooltip.onTooltip();
-
-            Debug.Log(buildingDataList[1] + " 건설 시작!!");
-            buildState.addBuilding(buildId);
+            buildState.AddBuilding(buildId);
 
             // 건축물에 대한 DB 값을 buildingToEdit 함수로 전달해 편집 모드로 진행한다.
             buildUIEventSystem.GetComponent<BuildUIEditMode>().BuildingToEdit(buildingDataList);
         }
-        else if (limitCount == -2) { }
         else {
             errEventMng.ExceedLimitError();
         }
@@ -59,22 +53,15 @@ public class BuildUIBuilding : MonoBehaviour {
 
     // DB에서 건축물의 건설 제한 수를 받아온다.
     public int chkLimitBuild() {
-        if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
-        else {
-            int buildLimit = int.Parse((dbSystem.DBSelectBuilding(buttonName))[12]);
-
-            return buildLimit;
-        }
+        int buildLimit = int.Parse((dbSystem.DBSelectBuilding(buttonName))[12]);
+        return buildLimit;
     }
 
     // 현재 지어진 건축물의 개수를 받아온다.
     public int chkBuildedBuild() {
-        if (buttonName == "-" || buttonName.StartsWith("Str")) { return -2; }
-        else {
-            int buildCode = int.Parse((dbSystem.DBSelectBuilding(buttonName))[0]);
-            int buildCount = buildState.getBuilding(buildCode);
+        int buildCode = int.Parse((dbSystem.DBSelectBuilding(buttonName))[0]);
+        int buildCount = buildState.GetBuilding(buildCode);
 
-            return buildCount;
-        }
+        return buildCount;
     }
 }

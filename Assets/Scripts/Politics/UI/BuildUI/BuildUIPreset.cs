@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class BuildUIPreset : MonoBehaviour
 {
     [SerializeField]
-    private GameObject dbManageSystem, resourceSystem;
+    private GameObject dbSystem, resourceSystem;
     [SerializeField]
     private List<GameObject> residentButtonLists = new List<GameObject>();
     [SerializeField]
@@ -35,7 +35,7 @@ public class BuildUIPreset : MonoBehaviour
 
     public void Awake() {
         buildingState = GetComponent<BuildingState>();
-        database = dbManageSystem.GetComponent<DatabaseManage>();
+        database = dbSystem.GetComponent<DatabaseManage>();
         database.DBCreate();        // DB를 연다.
 
         // 리스트에 건물 코드 목록 저장
@@ -162,7 +162,7 @@ public class BuildUIPreset : MonoBehaviour
     public string StructureCount(int index) {
         string countText = string.Empty;
         string totalText = database.DBSelectOne("Limit_Building", index);       // build 테이블에서 총 건설 가능 수를 받아온다.
-        int count = buildingState.getBuilding(index) ;                                   // 현재 건설되어 있는 건축물의 수를 받아온다.
+        int count = buildingState.GetBuilding(index) ;                                   // 현재 건설되어 있는 건축물의 수를 받아온다.
         int total;
 
         // 버튼이 남으면 DB값이 아니라 공백을 출력한다.
@@ -173,13 +173,8 @@ public class BuildUIPreset : MonoBehaviour
             total = int.Parse(totalText);           // 위에서 받아온 총 건설 가능 개수를 int형으로 변환한다.
         }
 
-        // DB에서 건설 가능 개수 -1은 무한대 건설 가능이므로, 무한대 기호로 출력한다.
-        if (total < 0) {
-            countText = "건축물\t: " + count.ToString() + "/∞";
-        }
-        else {
-            countText = "건축물\t: " + count.ToString() + "/" + total.ToString();
-        }
+        //건물 건설 제한 개수
+        countText = "건축물\t: " + count.ToString() + "/" + total.ToString();
 
         return countText;
     }

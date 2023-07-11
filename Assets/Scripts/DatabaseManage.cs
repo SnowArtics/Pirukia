@@ -21,56 +21,54 @@ public class DatabaseManage : MonoBehaviour
     }
 
     public void DBCreate() {
-        filepath = string.Empty;
-        DBConnection = new SqliteConnection(GetDBFilePath());                               // DBÆÄÀÏÀ» ¿¬°áÇÏ´Â º¯¼ö
+        DBConnection = new SqliteConnection(GetDBFilePath());                               // DBíŒŒì¼ì„ ì—°ê²°í•˜ëŠ” ë³€ìˆ˜
+        filepath = Application.dataPath + "/StreamingAssets/Building_DB.db";                // DBíŒŒì¼ ê²½ë¡œ ì„¤ì •
 
-        filepath = Application.dataPath + "/StreamingAssets/Building_DB.db";                // DBÆÄÀÏ °æ·Î ¼³Á¤
-
-        // ÆÄÀÏÀÌ ¾øÀ» °æ¿ì, ¼³Á¤ÇÑ °æ·Î·Î DB ÆÄÀÏÀ» º¹»ç
+        // íŒŒì¼ì´ ì—†ì„ ê²½ìš°, ì„¤ì •í•œ ê²½ë¡œë¡œ DB íŒŒì¼ì„ ë³µì‚¬
         if (!File.Exists(filepath)) {
             File.Copy(Application.streamingAssetsPath + "/StreamingAssets/Building_DB.db", filepath);
         }
 
-        // DB ÆÄÀÏÀ» ¿¬°á
+        // DB íŒŒì¼ì„ ì—°ê²°
         DBConnection.Open();
     }
 
-    // DB ÆÄÀÏ °æ·Î¸¦ ¹Ş¾Æ¿À´Â ÇÔ¼ö
+    // DB íŒŒì¼ ê²½ë¡œë¥¼ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
     public string GetDBFilePath() {
         string str = string.Empty;
 
-        // DB ÆÄÀÏ °æ·Î¸¦ str º¯¼ö¿¡ ÀúÀå
+        // DB íŒŒì¼ ê²½ë¡œë¥¼ str ë³€ìˆ˜ì— ì €ì¥
         str = "URI=file:" + Application.dataPath + "/StreamingAssets/Building_DB.db";
 
         return str;
     }
 
-    // SQL Äõ¸®¸¦ ¹Ş¾Æ¿Í DB ³»ÀÇ µ¥ÀÌÅÍ¸¦ ÇÑ °¡Áö¸¸ ¹İÈ¯ÇÏ´Â ÇÔ¼ö
+    // SQL ì¿¼ë¦¬ë¥¼ ë°›ì•„ì™€ DB ë‚´ì˜ ë°ì´í„°ë¥¼ í•œ ê°€ì§€ë§Œ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
     public string DBSelectOne(string item, int index) {
         string result;
         string query = "SELECT " + item + " from Building where Id=" + index.ToString();
 
 
-        dataReader = ExecuteDB(query);                      // ¸í·É¹®À» ½ÇÇà
-        result = dataReader.GetValue(0).ToString();         // Ã£¾Æ³½ µ¥ÀÌÅÍ¸¦ stringÀ¸·Î Çü º¯È¯
+        dataReader = ExecuteDB(query);                      // ëª…ë ¹ë¬¸ì„ ì‹¤í–‰
+        result = dataReader.GetValue(0).ToString();         // ì°¾ì•„ë‚¸ ë°ì´í„°ë¥¼ stringìœ¼ë¡œ í˜• ë³€í™˜
 
-        // DB ³»¿¡ Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì(result°¡ ºóÄ­ÀÎ °æ¿ì)¿¡´Â DB °ªÀÌ ¾Æ´Ñ -·Î ¹İÈ¯ÇÑ´Ù.
+        // DB ë‚´ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš°(resultê°€ ë¹ˆì¹¸ì¸ ê²½ìš°)ì—ëŠ” DB ê°’ì´ ì•„ë‹Œ -ë¡œ ë°˜í™˜í•œë‹¤.
         if (result == "") { return "-"; }
         return result;
     }
 
-    // ÇØ´ç BUILDING_CODE¿¡ ÇØ´çÇÏ´Â ¿­ ÀüÃ¼¸¦ ¹Ş¾Æ¿À´Â ÇÔ¼ö
+    // í•´ë‹¹ BUILDING_CODEì— í•´ë‹¹í•˜ëŠ” ì—´ ì „ì²´ë¥¼ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
     public IDataReader DBSelectLine(int index) {
         string query = "SELECT * from Building where Id=" + index.ToString();
 
-        dataReader = ExecuteDB(query);                      // ¸í·É¹®À» ½ÇÇà
+        dataReader = ExecuteDB(query);                      // ëª…ë ¹ë¬¸ì„ ì‹¤í–‰
 
         return dataReader;
     }
 
-    // DB¸¦ ÀüºÎ ÀĞ¾îµéÀÌ´Â ÇÔ¼ö
-    public IDataReader DBSelectAll() {        // ÀÎÀÚ·Î Äõ¸®¹®À» ¹Ş´Â´Ù.        
-        // Äõ¸® ÀÔ·Â ¹× ½ÇÇà
+    // DBë¥¼ ì „ë¶€ ì½ì–´ë“¤ì´ëŠ” í•¨ìˆ˜
+    public IDataReader DBSelectAll() {        // ì¸ìë¡œ ì¿¼ë¦¬ë¬¸ì„ ë°›ëŠ”ë‹¤.        
+        // ì¿¼ë¦¬ ì…ë ¥ ë° ì‹¤í–‰
         DBCommand = DBConnection.CreateCommand();
         DBCommand.CommandText = "SELECT * from Building";
 
@@ -79,21 +77,21 @@ public class DatabaseManage : MonoBehaviour
         return dataReader;
 
         //       while (dataReader.Read()) {
-        // ½ÇÇà ¿µ¿ª
+        // ì‹¤í–‰ ì˜ì—­
         //       }
     }
 
     public IDataReader ExecuteDB(string query) {
         IDataReader result;
 
-        DBCommand = DBConnection.CreateCommand();           // SQL ¸í·É¾î ¸®½ºÆ®¸¦ ºÒ·¯¿È
-        DBCommand.CommandText = query;                      // ÀÔ·Â¹ŞÀº Äõ¸®¸¦ ÀÔ·Â
-        result = DBCommand.ExecuteReader();                 // SQL Äõ¸®¸¦ ½ÇÇà
+        DBCommand = DBConnection.CreateCommand();           // SQL ëª…ë ¹ì–´ ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶ˆëŸ¬ì˜´
+        DBCommand.CommandText = query;                      // ì…ë ¥ë°›ì€ ì¿¼ë¦¬ë¥¼ ì…ë ¥
+        result = DBCommand.ExecuteReader();                 // SQL ì¿¼ë¦¬ë¥¼ ì‹¤í–‰
 
         return result;
     }
 
-    // Æ¯Á¤ °Ç¹°¿¡ ´ëÇÑ DB °ªÀ» ¸®½ºÆ®¿¡ Á¤¸®ÇØ¼­ ¹İÈ¯
+    // íŠ¹ì • ê±´ë¬¼ì— ëŒ€í•œ DB ê°’ì„ ë¦¬ìŠ¤íŠ¸ì— ì •ë¦¬í•´ì„œ ë°˜í™˜
     public List<string> DBSelectBuilding(string name) {
         List<string> result = new List<string>();
 
@@ -133,8 +131,8 @@ public class DatabaseManage : MonoBehaviour
         return result;
     }
 
-    // ¿­¸° DB¸¦ ´İ´Â ÇÔ¼ö
-    // DB¸¦ ¿­ ¶§ ½ÇÇàÇÑ ¼ø¼­ÀÇ ¹İ´ë·Î ´İ¾ÆÁØ´Ù.
+    // ì—´ë¦° DBë¥¼ ë‹«ëŠ” í•¨ìˆ˜
+    // DBë¥¼ ì—´ ë•Œ ì‹¤í–‰í•œ ìˆœì„œì˜ ë°˜ëŒ€ë¡œ ë‹«ì•„ì¤€ë‹¤.
     public void CloseDB() {
         dataReader.Dispose();
         dataReader = null;
